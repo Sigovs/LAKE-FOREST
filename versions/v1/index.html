@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lake Forest Sports Cars — History</title>
+  <meta name="description" content="Lake Forest Sports Cars. Four generations of the Mancuso family in the automobile business, since 1923.">
+  <meta name="theme-color" content="#1d1e20">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%231d1e20%22/%3E%3Ctext x=%2216%22 y=%2222%22 font-family=%22Georgia,serif%22 font-size=%2214%22 fill=%22%23ece8e1%22 text-anchor=%22middle%22%3ELF%3C/text%3E%3C/svg%3E">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Hanken+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css">
+  <link rel="stylesheet" href="css/main.css">
+
+  <script>
+    /* Reveal state is applied before first paint so visible plates never flash. If the
+       motion scripts fail to arrive, the failsafe removes it and every plate stays visible. */
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.documentElement.classList.add('has-motion');
+      setTimeout(function () {
+        if (!document.documentElement.classList.contains('motion-ready')) document.documentElement.classList.remove('has-motion');
+      }, 4000);
+    }
+  </script>
+
+  <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
+  <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
+</head>
+<body>
+  <a class="skip" href="#family">Skip to content</a>
+
+  <header class="site-head">
+    <a class="mark" href="#top" aria-label="Lake Forest Sports Cars — home">
+      <span class="mark__letters">LFSC</span>
+      <span class="mark__rule" aria-hidden="true"></span>
+      <span class="mark__name">Lake Forest Sports Cars</span>
+    </a>
+    <nav class="site-nav" aria-label="Primary">
+      <a href="#family">Family</a>
+      <a href="#history">History</a>
+      <a href="#gt">The GT</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- HERO — full-screen scene: Le Mans, June 1976 -->
+    <section class="hero" aria-labelledby="hero-title">
+      <picture class="hero__media">
+        <source media="(max-width: 699px)" srcset="../../assets/img/hero-lemans-1976-mobile.jpg">
+        <img src="../../assets/img/hero-lemans-1976-2400.jpg"
+             srcset="../../assets/img/hero-lemans-1976-1400.jpg 1400w, ../../assets/img/hero-lemans-1976-2400.jpg 2400w"
+             sizes="100vw" width="2400" height="1609"
+             alt="The white Greenwood Corvette, 'Spirit of Le Mans 76', leads two cars past the packed grandstands at Le Mans in 1976.">
+      </picture>
+
+      <div class="hero__base">
+        <div class="hero__copy">
+          <h1 id="hero-title" class="hero__title">Lake Forest Sports Cars</h1>
+          <p class="hero__lede">Four generations of the Mancuso family in the automobile business, since&nbsp;1923.</p>
+        </div>
+        <p class="hero__caption plate">
+          <span>Le Mans · 12–13 June 1976</span>
+          <span>Greenwood Corvette, “Spirit of Le&nbsp;Mans&nbsp;76”</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- FAMILY — short introduction -->
+    <section class="family" id="family" aria-labelledby="family-title">
+      <div class="family__head">
+        <h2 id="family-title" class="family__title">A family business, four generations deep.</h2>
+      </div>
+
+      <ol class="lineage" aria-label="Four generations">
+        <li class="lineage__row">
+          <span class="lineage__year">1923</span>
+          <span class="lineage__name">Benjamin Mancuso</span>
+          <span class="lineage__line">Founds the family automobile business in Batavia, New&nbsp;York.</span>
+        </li>
+        <li class="lineage__row">
+          <span class="lineage__year">1953</span>
+          <span class="lineage__name">Jim Mancuso</span>
+          <span class="lineage__line">Establishes Mancuso Chevrolet in Skokie, Illinois.</span>
+        </li>
+        <li class="lineage__row">
+          <span class="lineage__year">1972</span>
+          <span class="lineage__name">Rick Mancuso</span>
+          <span class="lineage__line">Takes the green flag in a 1958 Corvette, B-Production. Later president and CEO of Lake Forest Sports&nbsp;Cars.</span>
+        </li>
+        <li class="lineage__row">
+          <span class="lineage__year">2005</span>
+          <span class="lineage__name">Adam Mancuso</span>
+          <span class="lineage__line">Races Lola Sports 2000s alongside his father in SCCA competition.</span>
+        </li>
+      </ol>
+
+      <figure class="family__letter reveal">
+        <img src="../../assets/img/mancuso-chevrolet-letter.jpg" width="619" height="800" loading="lazy"
+             alt="A handwritten letter on Mancuso Chevrolet letterhead, signed Rick Mancuso.">
+        <figcaption class="plate">
+          <span>Mancuso Chevrolet letterhead</span>
+          <span>4700 Golf Rd., Skokie · signed Rick Mancuso · undated</span>
+        </figcaption>
+      </figure>
+
+      <blockquote class="family__quote reveal">
+        <p>“You’re no longer just a car guy, you’re a&nbsp;<em>Mancuso</em>.”</p>
+        <footer class="plate">
+          <span>Jim Mancuso, to his son Rob</span>
+          <span>As recalled in Ward’s Dealer Business, March 2001</span>
+        </footer>
+      </blockquote>
+
+      <figure class="family__sign reveal">
+        <img src="../../assets/img/mancuso-chevrolet-sign.jpg" width="600" height="465" loading="lazy"
+             alt="A roadside 'OK Used Cars — Mancuso Chevrolet' sign on a residential street corner.">
+        <figcaption class="plate">
+          <span>“OK Used Cars”, Mancuso Chevrolet</span>
+          <span>Date and place not recorded</span>
+        </figcaption>
+      </figure>
+
+      <p class="sources">Sources: Fra Noi, “Andrettis’ heirs”, Feb 2005 · Ward’s Dealer Business, Mar 2001</p>
+    </section>
+
+    <!-- HISTORY — Chapter 01 -->
+    <section class="history" id="history" aria-labelledby="ch1-title">
+      <header class="chapter-head">
+        <p class="label"><span>History</span><span class="label__sep" aria-hidden="true"></span><span>Chapter 01</span></p>
+        <h2 id="ch1-title" class="chapter-head__title">1976. The <em>Bicentennial</em> Year.</h2>
+        <p class="chapter-head__stand">An invitation from France, a Corvette on the Mulsanne Straight, and a Chicago dealership’s own colours.</p>
+      </header>
+
+      <div class="chapter">
+        <!-- Dateline rail: where in the year the reader stands -->
+        <nav class="rail" aria-label="Chapter 01 timeline">
+          <ol>
+            <li><a href="#beat-invitation" data-rail="invitation"><span class="rail__when">1976</span><span class="rail__what">The invitation</span></a></li>
+            <li><a href="#beat-mulsanne" data-rail="mulsanne"><span class="rail__when">June</span><span class="rail__what">Mulsanne</span></a></li>
+            <li><a href="#beat-hour8" data-rail="hour8"><span class="rail__when">Hour 8</span><span class="rail__what">Retired</span></a></li>
+            <li><a href="#beat-home" data-rail="home"><span class="rail__when">1976</span><span class="rail__what">Mancuso #76</span></a></li>
+          </ol>
+        </nav>
+
+        <div class="beats">
+
+          <!-- Beat 1 — people -->
+          <article class="beat beat--invitation" id="beat-invitation" data-beat="invitation" aria-labelledby="b1-title">
+            <div class="beat__text">
+              <p class="dateline">1976</p>
+              <h3 id="b1-title" class="beat__title">France asks for an American legend.</h3>
+              <p>To mark America’s bicentennial, the French government invited Mancuso and his team to race a Corvette at the 24&nbsp;Hours of Le&nbsp;Mans.</p>
+              <p>Business commitments kept Rick Mancuso at home. He turned the Greenwood wide-body IMSA Corvette over to his teammates.</p>
+            </div>
+            <figure class="beat__img beat__img--pits reveal">
+              <img src="../../assets/img/lemans-1976-pits.jpg" width="648" height="414" loading="lazy"
+                   alt="Crew and gendarmes around the white Corvette in its pit garage under a TOTAL banner and a US flag.">
+              <figcaption class="plate"><span>Le Mans, 1976 · the pit garage</span><span>Photo courtesy of elji</span></figcaption>
+            </figure>
+            <figure class="beat__img beat__img--above reveal">
+              <img src="../../assets/img/lemans-1976-above.jpg" width="648" height="479" loading="lazy"
+                   alt="The #76 Corvette seen from above in the paddock; the side window reads John Greenwood and Bernard Darniche, the rear quarter reads Mancuso Chevrolet.">
+              <figcaption class="plate"><span>Window: John Greenwood · Bernard Darniche</span><span>Rear quarter: Mancuso Chevrolet · Photo courtesy of Albert Lamberts</span></figcaption>
+            </figure>
+          </article>
+
+          <!-- Beat 2 — the event -->
+          <article class="beat beat--mulsanne" id="beat-mulsanne" data-beat="mulsanne" aria-labelledby="b2-title">
+            <p class="speed" aria-hidden="true"><span class="speed__run">218<span class="speed__unit">mph</span></span></p>
+            <div class="beat__text">
+              <p class="dateline">June 1976</p>
+              <h3 id="b2-title" class="beat__title">218&nbsp;mph. The fastest entry on the course.</h3>
+              <p>Fra Noi records that on the long Mulsanne Straight the Greenwood Corvette reached 218&nbsp;mph, the fastest entry on the course.</p>
+            </div>
+            <figure class="beat__img beat__img--nose reveal">
+              <img src="../../assets/img/lemans-1976-nose.jpg" width="976" height="622" loading="lazy"
+                   alt="Head-on view of the 'Spirit of Le Mans 76' Corvette at speed, crowds behind the barrier.">
+              <figcaption class="plate"><span>“Spirit of Le Mans 76”</span><span>Photographer not recorded</span></figcaption>
+            </figure>
+            <figure class="beat__img beat__img--smoke reveal">
+              <img src="../../assets/img/lemans-1976-smoke-front.jpg" width="644" height="479" loading="lazy"
+                   alt="Black-and-white photograph: the Corvette leaves a cloud of tyre smoke in front of the TOTAL hoardings.">
+              <figcaption class="plate"><span>Le Mans, 1976</span><span>Photo courtesy of Albert Lamberts</span></figcaption>
+            </figure>
+          </article>
+
+          <!-- Beat 3 — the end of the race -->
+          <article class="beat beat--hour8" id="beat-hour8" data-beat="hour8" aria-labelledby="b3-title">
+            <figure class="beat__img beat__img--paper reveal">
+              <img src="../../assets/img/lemans-1976-le-maine.jpg" width="648" height="417" loading="lazy"
+                   alt="Front page of Le Maine Libre, Saturday 12 – Sunday 13 June 1976, with the Corvette pictured under the 24 H headline.">
+              <figcaption class="plate"><span>Le Maine Libre · Sat 12 – Sun 13 June 1976</span><span>Front page, race weekend</span></figcaption>
+            </figure>
+            <div class="beat__text">
+              <p class="dateline">Hour 8</p>
+              <h3 id="b3-title" class="beat__title">Out in the eighth hour.</h3>
+              <p>A fuel malfunction put the Corvette out of the race. The team did not win. But, as Fra&nbsp;Noi later wrote, it made a favourable impression while the car lasted.</p>
+            </div>
+            <figure class="beat__img beat__img--rear reveal">
+              <img src="../../assets/img/lemans-1976-smoke-rear.jpg" width="648" height="486" loading="lazy"
+                   alt="Black-and-white photograph from behind: the Corvette spinning its rear wheels in smoke on the pit straight.">
+              <figcaption class="plate"><span>Le Mans, 1976</span><span>Photo courtesy of Albert Lamberts</span></figcaption>
+            </figure>
+          </article>
+
+          <!-- Beat 4 — the family's own car: the chapter's climax -->
+          <article class="beat beat--home" id="beat-home" data-beat="home" aria-labelledby="b4-title">
+            <div class="beat__head">
+              <p class="dateline">1976 · Mancuso #76</p>
+              <h3 id="b4-title" class="beat__title">In Mancuso Chevrolet colours.</h3>
+            </div>
+            <figure class="beat__img beat__img--blue">
+              <img src="../../assets/img/mancuso-76-blue.jpg" width="2048" height="1536" loading="lazy"
+                   srcset="../../assets/img/mancuso-76-blue-1200.jpg 1200w, ../../assets/img/mancuso-76-blue.jpg 2048w" sizes="(min-width: 1440px) 1090px, (min-width: 1100px) 76vw, 100vw"
+                   alt="The pale-blue Mancuso Chevrolet #76 Corvette at the pit wall, a crowd leaning on the barrier behind it.">
+              <figcaption class="plate"><span>Mancuso Chevrolet #76</span><span>Date and venue not recorded</span></figcaption>
+            </figure>
+            <div class="beat__text">
+              <p>Fra Noi also records that in 1976, at Sebring, Rick’s Corvette became the first to break 200&nbsp;mph on each lap of the long back straight.</p>
+              <p>Revell’s model-kit notes describe the #76 as the first “customer” car John Greenwood built for a client, Rick Mancuso, raced with the dealership as sponsor and a Chicago skyline painted on the hood.</p>
+            </div>
+            <figure class="beat__img beat__img--windshield reveal">
+              <img src="../../assets/img/mancuso-76-windshield.jpg" width="648" height="414" loading="lazy"
+                   alt="Windshield banner reading Mancuso · Fyhrie · Greenwood.">
+              <figcaption class="plate"><span>Mancuso · Fyhrie · Greenwood</span><span>Photo courtesy of Buzz Fyhrie</span></figcaption>
+            </figure>
+            <figure class="beat__img beat__img--cover reveal">
+              <img src="../../assets/img/vette-vues-may-1977.jpg" width="378" height="594" loading="lazy"
+                   alt="Cover of Vette Vues magazine, May 1977, with two Mancuso Chevrolet Corvettes.">
+              <figcaption class="plate"><span>Vette Vues · May 1977</span><span>Cover</span></figcaption>
+            </figure>
+          </article>
+
+        </div>
+      </div>
+
+      <footer class="chapter-end">
+        <dl class="ledger">
+          <div><dt>Text</dt><dd>Fra Noi, “Andrettis’ heirs”, Charles P. Pecoraro, Feb 2005. Invitation, 218&nbsp;mph (session not stated), eighth hour, Sebring (event not stated).</dd></div>
+          <div><dt>#76</dt><dd>Revell-Monogram model kit, “Mancuso Corvette #76”. Secondary source, to be confirmed.</dd></div>
+          <div><dt>Date</dt><dd>Le Maine Libre, 12–13 June 1976, front page: the race weekend.</dd></div>
+          <div><dt>Photos</dt><dd>Credits as printed on the originals. Rights to be confirmed before publication.</dd></div>
+        </dl>
+      </footer>
+    </section>
+
+    <!-- BRIDGE — the family line runs on into the next chapter -->
+    <section class="bridge" aria-labelledby="bridge-title">
+      <p id="bridge-title" class="bridge__line-text">An automotive family since&nbsp;1923.</p>
+      <ol class="familyline" aria-label="Generations, and the next chapter">
+        <li class="familyline__mark"><span class="familyline__year">1923</span><span class="familyline__who">Benjamin</span></li>
+        <li class="familyline__mark"><span class="familyline__year">1953</span><span class="familyline__who">Jim</span></li>
+        <li class="familyline__mark"><span class="familyline__year">1972</span><span class="familyline__who">Rick</span></li>
+        <li class="familyline__mark"><span class="familyline__year">2005</span><span class="familyline__who">Adam</span></li>
+        <li class="familyline__mark familyline__mark--next"><span class="familyline__year">Next</span><span class="familyline__who">The GT</span></li>
+      </ol>
+      <span class="familyline__rule" aria-hidden="true"><span class="familyline__fill"></span></span>
+    </section>
+
+    <!-- GT — the next chapter and the page's culmination. Only sourced statements;
+         everything not yet published by Mancuso is marked as such. -->
+    <section class="gt" id="gt" aria-labelledby="gt-title">
+      <div class="gt__stage">
+        <!-- Reserved for GT photography: a future image slots in behind this type. -->
+        <p class="gt__reserve plate"><span>GT photography</span><span>To be supplied by Mancuso</span></p>
+        <header class="gt__head">
+          <p class="label"><span>Next chapter</span><span class="label__sep" aria-hidden="true"></span><span>Launching soon</span></p>
+          <h2 id="gt-title" class="gt__title">The GT.</h2>
+        </header>
+      </div>
+      <p class="gt__lede">A tribute to the iconic Chevrolet Corvette: the authenticity and style of original Corvettes, with modern comfort and driveability. Only by&nbsp;Mancuso.</p>
+
+      <dl class="spec" aria-label="The GT, as announced">
+        <div><dt>Tribute to</dt><dd>The Chevrolet Corvette</dd></div>
+        <div><dt>Character</dt><dd>The style and authenticity of original Corvettes; modern comfort and driveability</dd></div>
+        <div><dt>Status</dt><dd>Launching soon</dd></div>
+        <div class="spec__tba"><dt>Specification</dt><dd>To be announced</dd></div>
+        <div><dt>Film</dt><dd>
+          <a class="film-link" href="https://vimeo.com/1208516021" data-film data-vimeo="1208516021" aria-controls="film-slot">Introducing the GT · 2:19</a>
+        </dd></div>
+      </dl>
+      <div class="film-slot" id="film-slot" hidden></div>
+
+      <p class="sources">Source: “Introducing the GT”, Mancuso, July 2026</p>
+    </section>
+
+    <!-- CONTACT — the page hands over its one action -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <header class="contact__head">
+        <h2 id="contact-title" class="contact__title">Ask about the&nbsp;GT.</h2>
+        <p class="contact__lede">Or about anything else. Write to the family business.</p>
+      </header>
+
+      <form class="enquiry" novalidate>
+        <div class="field">
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" autocomplete="name" required>
+          <p class="field__error" id="f-name-err">Please enter your name.</p>
+        </div>
+        <div class="field">
+          <label for="f-email">Email</label>
+          <input id="f-email" name="email" type="email" autocomplete="email" required>
+          <p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p>
+        </div>
+        <div class="field">
+          <label for="f-phone">Phone <span class="field__opt">optional</span></label>
+          <input id="f-phone" name="phone" type="tel" autocomplete="tel">
+        </div>
+        <fieldset class="field field--choice">
+          <legend>About</legend>
+          <label class="choice"><input type="radio" name="topic" value="gt" checked> The GT</label>
+          <label class="choice"><input type="radio" name="topic" value="other"> Something else</label>
+        </fieldset>
+        <div class="field field--wide">
+          <label for="f-message">Message</label>
+          <textarea id="f-message" name="message" rows="5" required></textarea>
+          <p class="field__error" id="f-message-err">Please write a short message.</p>
+        </div>
+        <div class="enquiry__actions">
+          <button class="button" type="submit">Send enquiry</button>
+          <p class="enquiry__status" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <span class="mark__letters">LFSC</span>
+    <span>Prototype for discussion · not for publication</span>
+  </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>

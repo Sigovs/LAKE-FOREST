@@ -1,0 +1,658 @@
+/* LFSC · Sketch D2 — the scene sequence. STATIC composition (designer).
+   Spec: docs/scene-sequence-d2.md. Every scene is built in its composed resting state; this
+   file is also the reduced-motion and no-JS page. Motion (motion-designer) layers on the
+   data-* hooks in index.html and adds its own state CSS; nothing here animates.
+
+   Concept: the page holds the Mancuso name still while each generation's machine changes.
+   The hold point H = (25vw, 30vh). Photographs that carry the family lettering are placed
+   so their data-name point sits on H (.reg), never above native width.
+
+   Positions are the doc's px at 1440 and scale with the viewport: horizontal tracks are
+   written as fr in those px, vertical offsets as N × --k (1px at 1440 wide). */
+
+/* ------------------------------------------------------------------ tokens */
+:root {
+  --ground: #0f1112;
+  --ink: #edeae4;                        /* 15.8:1 on ground */
+  --ink-2: #a7abad;                      /*  8.2:1 on ground — caption */
+  --ink-body: rgba(237, 234, 228, 0.86); /* body: ink at 86% → #ceccc7 on ground, 11.8:1 */
+  --red: #ef3a4c;                        /*  4.85:1 on ground — the GT only */
+  --field-line: rgba(167, 171, 173, 0.58);  /* doc: 50% → 2.9:1, under the 3:1 non-text floor; 58% → 3.3:1 */
+  --paint: #262b2f;                      /* the trailer's painted near-black (for the lift) */
+
+  --display: "Funnel Display", "Helvetica Neue", Arial, sans-serif;
+  --text: "Funnel Sans", "Helvetica Neue", Arial, sans-serif;
+
+  /* spacing scale */
+  --s-1: 4px; --s-2: 8px; --s-3: 12px; --s-4: 16px; --s-5: 24px; --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 120px; --s-11: 168px;
+
+  /* the 1440 grid */
+  --k: calc(100vw / 1440);
+  --m: calc(64 * var(--k));              /* page margin, 64 at 1440 */
+  --strip: 64px;                         /* caption strip under pinned stages */
+  --stage-h: max(560px, calc(100svh - var(--strip)));
+
+  /* the hold point */
+  --hx: 25%;
+  --hy: 30vh;
+
+  /* type roles (desktop values at 1440, scaled down to 900) */
+  --fs-gt: clamp(96px, 10.556vw, 152px);
+  --fs-number: clamp(112px, 12.222vw, 176px);
+  --fs-makes: clamp(64px, 6.667vw, 96px);
+  --fs-h1: clamp(44px, 4.167vw, 60px);
+  --fs-line: clamp(36px, 3.611vw, 52px);
+  --fs-h2: clamp(32px, 3.056vw, 44px);
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; background: var(--ground); color: var(--ink); }
+html { overflow-x: clip; }
+body {
+  font-family: var(--text); font-size: 17px; line-height: 27px;
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  overflow-x: clip;
+}
+img { display: block; max-width: 100%; height: auto; }
+p, h1, h2, h3, figure, dl, dd, ol { margin: 0; }
+ol { padding: 0; list-style: none; }
+a { color: inherit; }
+::selection { background: var(--ink); color: var(--ground); }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.visually-hidden { position: absolute !important; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.skip { position: absolute; left: var(--m); top: -100px; z-index: 30; padding: var(--s-2) var(--s-4); background: var(--ink); color: var(--ground); font-weight: 600; text-decoration: none; }
+.skip:focus { top: var(--s-4); }
+
+/* ------------------------------------------------------------------ type roles */
+.gt     { font-family: var(--display); font-weight: 700; font-size: var(--fs-gt); line-height: 0.92; letter-spacing: -0.02em; }
+.number { font-family: var(--display); font-weight: 600; font-size: var(--fs-number); line-height: 0.9; font-variant-numeric: tabular-nums; }
+.h1     { font-family: var(--display); font-weight: 600; font-size: var(--fs-h1); line-height: 1.04; letter-spacing: -0.015em; }
+.line   { font-family: var(--display); font-weight: 600; font-size: var(--fs-line); line-height: 1.08; }
+.h2     { font-family: var(--display); font-weight: 600; font-size: var(--fs-h2); line-height: 1.1; letter-spacing: -0.01em; text-wrap: balance; }
+.lead   { font-size: 20px; line-height: 30px; }
+.body   { font-size: 17px; line-height: 27px; max-width: 36em; color: var(--ink-body); }
+.caption { font-size: 14px; line-height: 20px; color: var(--ink-2); }
+.label  { font-size: 14px; line-height: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+
+figure > .caption, figure > figcaption { margin-top: var(--s-3); max-width: 44em; }
+
+/* ------------------------------------------------------------------ controls */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 48px;
+  padding: 0 var(--s-5); font: 600 16px/1 var(--text); text-decoration: none;
+  border: 1px solid transparent; cursor: pointer;
+  transition: background-color 200ms ease, border-color 200ms ease, color 200ms ease;
+}
+.btn--ink { background: var(--ink); color: var(--ground); }
+.btn--ink:hover { background: #fff; }
+.btn--gt { background: var(--red); color: var(--ground); }
+.btn--gt:hover { background: #f25565; }
+.btn--gt-line { background: var(--ground); color: var(--red); border-color: var(--red); }
+.btn--gt-line:hover { box-shadow: inset 0 0 0 1px var(--red); }
+
+/* pending marker — one style everywhere: label in caption, value Sans 500 15 ink */
+.marker dt, .marker__k { font-size: 14px; line-height: 20px; color: var(--ink-2); }
+.marker dd, .marker__v { font-size: 15px; line-height: 22px; font-weight: 500; color: var(--ink); }
+.marker__k, .marker__v { display: block; }
+
+/* ------------------------------------------------------------------ nav (motion: hides on down, while pinned) */
+.chrome {
+  position: absolute; z-index: 20; inset: 0 0 auto 0;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: var(--s-5) var(--m);
+}
+.brand { font-family: var(--display); font-weight: 700; font-size: 20px; letter-spacing: 0.04em; text-decoration: none; }
+.nav { display: flex; gap: var(--s-6); font-weight: 500; font-size: 15px; line-height: 20px; }
+.nav a { text-decoration: none; padding-block: var(--s-2); }
+.nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ================================================================== S0 · HERO */
+.s0 { position: relative; height: 100svh; min-height: 640px; overflow: hidden; background: var(--ground); }
+.s0__media { position: absolute; inset: 0; }
+.s0__media img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+/* the page's one scrim, in two layers of the same gradient:
+   ::before — the legibility gradient over the lower-left asphalt (the safe zone, x 0–0.46):
+   the doc's 0 → 72% ramp from y 500 measured 1.2:1 on the h1 against the white curve lines and
+   the marshals, so it starts higher (y 30%) and reaches 80% by y 52%; the mask fades it out by
+   x 60%, so the lead car (x ≈ 0.6–0.8) keeps its natural brightness;
+   ::after — the handover (the photo's bottom 12% fades into the ground) and a band under the nav.
+   Contrast is measured on the composited render. */
+.s0::before, .s0::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; }
+.s0::before {
+  background: linear-gradient(to bottom, rgba(15, 17, 18, 0) 30%, rgba(15, 17, 18, 0.8) 52%, rgba(15, 17, 18, 0.86) 100%);
+  -webkit-mask-image: linear-gradient(to right, #000 0, #000 47%, transparent 60%);
+          mask-image: linear-gradient(to right, #000 0, #000 47%, transparent 60%);
+}
+.s0::after {
+  background:
+    linear-gradient(to bottom, rgba(15, 17, 18, 0) 84%, var(--ground) 100%),
+    linear-gradient(to bottom, rgba(15, 17, 18, 0.55) 0, rgba(15, 17, 18, 0) 112px);
+}
+.s0__copy {
+  position: absolute; z-index: 2; left: var(--m); bottom: var(--s-7);
+  width: min(600px, calc(100% - 2 * var(--m)));
+}
+.s0__id .h1 { margin-top: var(--s-4); }
+.s0__id .h1 span { display: block; }
+/* The company name is part of the main heading, set in the label register above the claim */
+.s0__id .h1 .h1__name { margin-bottom: var(--s-4); }
+.s0__id .h1 { margin-top: 0; }
+.s0__act { margin-top: var(--s-5); }
+.s0__gt { font-size: 17px; line-height: 27px; color: var(--ink); text-wrap: balance; }
+.s0__ctas { display: flex; flex-wrap: wrap; gap: var(--s-4); margin-top: var(--s-4); }
+.s0__cap {
+  position: absolute; z-index: 2; right: var(--m); bottom: var(--s-7);
+  max-width: 26rem; text-align: right; color: var(--ink);
+}
+
+/* ================================================================== S1 · THE HOUSE */
+.s1 {
+  display: grid;
+  /* 0 · 64 · 436 · 484 · 600 · 760 · 824 · 1376 · 1440 */
+  grid-template-columns: 64fr 372fr 48fr 116fr 160fr 64fr 552fr 64fr;
+  padding: calc(120 * var(--k)) 0 var(--s-11);
+}
+.s1 > * { min-width: 0; }
+.s1__1923 { grid-column: 2 / 5; grid-row: 1; }
+.s1__1923 .body, .s1__1953 .body { margin-top: var(--s-5); }
+.makes {
+  grid-column: 2 / 8; grid-row: 2; margin-top: var(--s-7);
+  font-family: var(--display); font-weight: 600; font-size: var(--fs-makes); line-height: 1;
+  color: var(--ink-2);
+}
+.makes__track { display: flex; flex-wrap: wrap; column-gap: 0.75em; row-gap: 0; }   /* 72px of air at 96 */
+.makes__track > span { white-space: nowrap; }
+.makes .is-lit { color: var(--ink); }
+.s1__1953 { grid-column: 6 / 8; grid-row: 3; margin-top: var(--s-9); padding-bottom: var(--s-5); }
+.s1__1953 .caption { margin-top: var(--s-4); }
+.s1__letter { grid-column: 2 / 3; grid-row: 3 / 5; margin-top: calc(var(--s-9) + 60 * var(--k)); align-self: start; }
+.s1__ad { grid-column: 4 / 7; grid-row: 4; margin-top: var(--s-5); max-width: 615px; width: 100%; align-self: start; }
+.s1__ad img { width: 100%; }
+.s1__letter img { width: 100%; max-width: 619px; }
+
+/* ================================================================== S2 · RELAY (stage frames) */
+.frame { position: relative; height: calc(var(--stage-h) + var(--strip)); background: var(--ground); }
+.frame__photo { position: absolute; inset: 0 0 var(--strip) 0; overflow: hidden; }
+.strip {
+  position: absolute; left: 0; right: 0; bottom: 0; height: var(--strip);
+  display: flex; align-items: center; padding: 0 var(--m); margin: 0;
+}
+
+/* registration: the photo's data-name point (--nx, --ny) lands on H, while the photo still
+   covers its stage and never exceeds native width (--w ≤ native) */
+.reg {
+  position: absolute; max-width: none;
+  width: var(--w); height: auto;
+  left: clamp(calc(100% - var(--w)), calc(var(--hx) - var(--w) * var(--nx)), 0px);
+  top: clamp(calc(100% - var(--w) * var(--ar)), calc(var(--hy) - var(--w) * var(--ar) * var(--ny)), 0px);
+}
+.reg--truck  { --nx: 0.25; --ny: 0.255; --ar: 0.75;   --w: min(2048px, max(100vw, calc(var(--stage-h) * 4 / 3))); }
+.reg--native { --nx: 0.28; --ny: 0.385; --ar: 0.5156; --w: 2048px; }
+/* the sign hangs at native from the top, its panel on H; on short viewports it may lose up to
+   48px of sky at the top to keep the name on H, never its sides */
+.reg--sign {
+  --nx: 0.55; --ny: 0.59; --ar: 0.775; --w: 600px;
+  left: max(0px, calc(var(--hx) - 330px)); top: clamp(-48px, calc(var(--hy) - 274px), 0px);
+}
+.s2__rick {
+  position: absolute; z-index: 1;
+  left: calc(760 / 1440 * 100%); right: var(--m); top: calc(var(--hy) + 150 * var(--k));
+}
+.s2__rick .body { margin-top: var(--s-5); }
+
+/* the dolly-out end frame: the whole #76, centred in the stage */
+.whole { position: absolute; left: 0; right: 0; top: 0; bottom: 0; margin: auto; width: 100%; max-width: 2048px; }
+
+/* the crew: inserts on the nearer plane, coordinates from the master's top edge */
+.crew {
+  --master-h: calc(min(100vw, 2048px) * 0.5156);
+  --master-top: calc((var(--stage-h) - var(--master-h)) / 2);
+  position: relative;
+  margin-top: calc(-1 * (var(--stage-h) + var(--strip) - var(--master-top)));
+  height: calc(1700 * var(--k));
+  pointer-events: none;
+}
+.crew__ins { position: absolute; pointer-events: auto; }
+.crew__ins img { width: 100%; }
+.crew__ins--glass  { right: var(--m); top: calc(640 * var(--k));  width: min(648px, 45vw); }
+.crew__ins--pit    { left: var(--m);  top: calc(884 * var(--k));  width: min(648px, 38.889vw); }
+.crew__ins--x      { right: var(--m); top: calc(1110 * var(--k)); width: min(648px, 28.889vw); }
+.crew__ins--garage { left: 23.333vw;  top: calc(1304 * var(--k)); width: min(648px, 28.889vw); }
+
+/* ================================================================== S3 · LE MANS */
+.s3 {
+  display: grid;
+  /* 0 · 64 · 544 · 600 · 640 · 728 · 1040 · 1088 · 1376 · 1440 */
+  grid-template-columns: 64fr 480fr 56fr 40fr 88fr 312fr 48fr 288fr 64fr;
+  padding: var(--s-10) 0 var(--s-11);
+}
+.s3 > * { min-width: 0; }
+.s3__text  { grid-column: 2 / 3; grid-row: 1; }
+.s3__text .body { margin-top: var(--s-5); }
+.s3__paper { grid-column: 5 / 9; grid-row: 1; justify-self: end; width: 100%; max-width: 648px; }
+.s3__paper img { width: 100%; }
+.s3__nose  { grid-column: 2 / 7; grid-row: 2; margin-top: calc(48 * var(--k)); max-width: 976px; }
+.s3__nose img { width: 100%; }
+.s3__number { grid-column: 8 / 9; grid-row: 2; margin-top: calc(48 * var(--k)); align-self: start; }
+.s3__unit { margin-top: var(--s-3); }
+.s3__number .caption { margin-top: var(--s-5); max-width: 18em; }
+.s3__above { grid-column: 2 / 4; grid-row: 3; margin-top: calc(78 * var(--k)); max-width: 648px; }
+.s3__above img { width: 100%; }
+/* static / reduced motion: the two smoke frames side by side (motion stacks them in one frame) */
+.s3__pass  { grid-column: 5 / 9; grid-row: 3; margin-top: calc(48 * var(--k)); }
+.s3__pair  { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-4); align-items: start; }
+.s3__pair img { width: 100%; }
+
+/* ================================================================== S4 · LFSC */
+.s4 {
+  display: grid; grid-template-columns: 64fr 400fr 48fr 864fr 64fr;
+  padding: var(--s-10) 0 var(--s-11);
+}
+.s4 > * { min-width: 0; }
+.s4__text { grid-column: 2 / 3; grid-row: 1; }
+.s4__text .body { margin-top: var(--s-5); }
+.s4__text .caption { margin-top: var(--s-4); }
+/* static / reduced motion: the stage at rest — the text still at left, the reel in its
+   window (x 512–1376) with the three frames scaled to fit side by side and every LFSC
+   lettering on one horizontal. (The doc's "0.5 scale" needs 1,288 px; the window holds
+   0.352: (864 − 2 × 24) / 2,320.) Motion runs the same track at display size. */
+.s4 { align-items: center; }
+.reel { grid-column: 4 / 5; grid-row: 1; }
+.reel__track { --s: calc(0.352 * var(--k)); --line: calc(411 * var(--s)); display: flex; gap: calc(24 * var(--k)); align-items: flex-start; }
+.reel__frame { flex: none; width: var(--fw); margin-top: calc(var(--line) - var(--fw) * var(--ar) * var(--ny)); }
+.reel__frame img { width: 100%; }
+.reel__frame--a { --fw: calc(800 * var(--s)); --ar: 0.6675; --ny: 0.76; }
+.reel__frame--b { --fw: calc(720 * var(--s)); --ar: 0.6675; --ny: 0.245; }
+.reel__frame--c { --fw: calc(800 * var(--s)); --ar: 0.75; --ny: 0.685; }
+
+/* ================================================================== S5 · FATHER AND SON */
+.s5 { padding-top: var(--s-10); }
+.s5__head { display: grid; grid-template-columns: 64fr 636fr 60fr 520fr 160fr; }
+.s5__head > * { min-width: 0; }
+.s5__head .h2 { grid-column: 2 / 3; }
+.s5__copy { grid-column: 4 / 5; }
+.s5__copy .caption { margin-top: var(--s-4); }
+.s5__tents { margin-top: var(--s-9); }
+.s5__tents picture { display: block; aspect-ratio: 1440 / 760; overflow: hidden; }
+.s5__tents img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 50%; }
+.s5__tents figcaption { padding: 0 var(--m); }
+.s5__row {
+  margin-top: var(--s-9);
+  display: grid; grid-template-columns: 1.5352fr 1.5038fr 0.9988fr; gap: 0;   /* the page's only abutting row */
+}
+.s5__cell { min-width: 0; }
+.s5__cell img { width: 100%; }
+.s5__cell figcaption { padding: 0 var(--s-5) 0 var(--s-4); }
+.s5__cell--track figcaption { padding-left: var(--m); }
+.silence { height: 30vh; }
+
+/* ================================================================== S6 · THE PEAK (static: trailer full bleed at 0.6) */
+.trailer { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; max-width: 2400px; }
+.s6__native { display: none; }
+
+/* ================================================================== S7 · THE GT */
+.s7 {
+  display: grid;
+  /* 0 · 64 · 624 · 760 · 884 · 1376 · 1440 */
+  grid-template-columns: 64fr 560fr 136fr 124fr 492fr 64fr;
+  align-content: start;
+  min-height: 100svh;
+  padding: calc(var(--hy) - 1.08 * var(--fs-line)) 0 var(--s-10);
+}
+.s7 > * { min-width: 0; }
+.line { grid-column: 2 / 6; grid-row: 1; color: var(--ink); white-space: nowrap; }
+.s7__print { grid-column: 2 / 3; grid-row: 2; margin-top: calc(94 * var(--k)); align-self: start; }
+.s7__crop { position: relative; aspect-ratio: 792 / 447; overflow: hidden; }
+/* CSS crop of the same file: native x 0.25–0.58, y 0.18–0.46 — lettering only, no car */
+.s7__crop img { position: absolute; max-width: none; width: calc(2400 / 792 * 100%); left: calc(-600 / 792 * 100%); top: calc(-287 / 447 * 100%); }
+.s7__gt { grid-column: 3 / 6; grid-row: 2; margin-top: calc(54 * var(--k)); padding-left: calc(136 / 752 * 100%); }
+.s7__status { margin-top: var(--s-6); font-size: 16px; line-height: 20px; font-weight: 600; color: var(--red); }
+.s7__gt .lead { margin-top: var(--s-5); max-width: 560px; }
+.s7__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4) var(--s-6); margin-top: var(--s-6); }
+.s7__film { display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 500; font-size: 16px; line-height: 24px; color: var(--ink); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; min-height: 48px; }
+.glyph { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linejoin: round; flex: none; }
+.record { display: grid; grid-template-columns: auto auto 1fr; gap: var(--s-6); margin-top: var(--s-6); }
+
+/* ================================================================== S8 · RPM CLUB */
+.s8 {
+  display: grid;
+  /* 0 · 64 · 584 · 680 · 1376 · 1440 */
+  grid-template-columns: 64fr 520fr 96fr 696fr 64fr;
+  padding: var(--s-10) 0 var(--s-10);
+}
+.s8 > * { min-width: 0; }
+.s8__label { grid-column: 4 / 5; grid-row: 1; margin-bottom: var(--s-4); }
+.s8__cover { grid-column: 2 / 3; grid-row: 2; align-self: start; max-width: 900px; }
+.s8__cover img { width: 100%; }
+.s8__main { grid-column: 4 / 5; grid-row: 2; display: flex; flex-direction: column; margin-top: calc(-0.2 * var(--fs-h2)); }
+.s8__main .body { margin-top: var(--s-4); }
+.s8__links { display: flex; gap: var(--s-6); margin-top: var(--s-3); font-weight: 500; }
+.s8__links a { text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.episodes { margin-top: auto; padding-top: var(--s-5); }
+.episodes a {
+  display: grid; grid-template-columns: 120fr 450fr 126fr; align-items: last baseline;
+  height: 72px; padding-bottom: 14px; align-content: end;
+  text-decoration: none;
+}
+.episodes li:last-child a { padding-bottom: 0; height: 58px; }
+.ep-date { font-size: 14px; line-height: 20px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ep-title { font-size: 18px; line-height: 24px; font-weight: 500; color: var(--ink); padding-right: var(--s-5); }
+.ep-len { font-size: 14px; line-height: 20px; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
+.episodes a:hover .ep-title, .episodes a:focus-visible .ep-title { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.s8__note { grid-column: 4 / 5; grid-row: 3; margin-top: var(--s-5); }
+
+/* ================================================================== S9 · INSTAGRAM + CONTACT */
+.ig {
+  display: grid; grid-template-columns: 64fr 296fr 600fr 416fr 64fr; align-items: center;
+  min-height: 24vh; padding: var(--s-8) 0;
+}
+.ig > * { min-width: 0; }
+.ig__title { grid-column: 2 / 3; font-family: var(--display); font-weight: 600; font-size: 32px; line-height: 1.1; }
+.ig__text { grid-column: 3 / 4; color: var(--ink-2); }
+.ig__marker { grid-column: 4 / 5; justify-self: end; text-align: right; }
+
+.contact {
+  display: grid; grid-template-columns: 64fr 480fr 96fr 736fr 64fr;
+  padding: var(--s-9) 0 var(--s-10);
+}
+.contact > * { min-width: 0; }
+.contact__head { grid-column: 2 / 3; }
+.contact__head .body { margin-top: var(--s-4); }
+.contact__markers { display: grid; gap: var(--s-4); margin-top: var(--s-7); }
+
+.enquiry { grid-column: 4 / 5; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-6) var(--s-6); align-content: start; }
+.field { display: flex; flex-direction: column; min-width: 0; border: 0; padding: 0; margin: 0; }
+.field--wide { grid-column: 1 / -1; }
+.field label, .field legend {
+  font-size: 14px; line-height: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink);
+  padding: 0;
+}
+.opt { text-transform: none; letter-spacing: 0; font-weight: 400; color: var(--ink-2); margin-left: var(--s-2); }
+.field input, .field textarea {
+  margin-top: var(--s-2); width: 100%;
+  font: 400 17px/27px var(--text); color: var(--ink); background: transparent;
+  border: 0; border-bottom: 1px solid var(--field-line); border-radius: 0;
+  padding: var(--s-2) 0; outline: none;
+  transition: border-color 200ms ease;
+}
+.field textarea { resize: vertical; min-height: calc(4 * 27px + 16px); }
+.field input:focus-visible, .field textarea:focus-visible { border-bottom-color: var(--ink); outline: 2px solid var(--ink); outline-offset: 4px; }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-bottom-color: #ff8a95; }
+.field__error { min-height: 20px; margin-top: var(--s-2); font-size: 14px; line-height: 20px; color: #ff8a95; visibility: hidden; }
+.field__error.is-shown { visibility: visible; }
+.choices { display: flex; flex-wrap: wrap; gap: var(--s-6); margin-top: var(--s-3); }
+.field .choice { text-transform: none; letter-spacing: 0; font-weight: 400; font-size: 17px; line-height: 27px; }
+.choice { position: relative; display: inline-flex; align-items: center; gap: var(--s-3); min-height: 44px; font-size: 17px; cursor: pointer; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice__dot { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--ink-2); display: grid; place-items: center; flex: none; }
+.choice__dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); transform: scale(0); }
+.choice input:checked + .choice__dot { border-color: var(--ink); }
+.choice input:checked + .choice__dot::after { transform: scale(1); }
+.choice--gt input:checked + .choice__dot::after { background: var(--red); }
+.choice input:focus-visible + .choice__dot { outline: 2px solid var(--ink); outline-offset: 3px; }
+.enquiry__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-5); }
+.enquiry__status { font-size: 15px; line-height: 22px; color: var(--ink-2); }
+
+/* footer */
+.foot {
+  display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: var(--s-5);
+  min-height: 120px; padding: var(--s-6) var(--m);
+}
+.foot__mark { font-family: var(--display); font-weight: 700; font-size: 24px; letter-spacing: 0.04em; }
+.foot__line { text-align: center; }
+.foot__marker { justify-self: end; text-align: right; }
+.foot__work { grid-column: 1 / -1; justify-self: end; }
+
+/* ================================================================== PHONE (< 900): authored recomposition, no pins */
+@media (max-width: 899px) {
+  :root {
+    --m: 20px;
+    --fs-gt: 72px; --fs-number: 96px; --fs-makes: 44px;
+    --fs-h1: 36px; --fs-line: 30px; --fs-h2: 28px;
+  }
+  .h1 { line-height: 38px; }
+  .line { line-height: 34px; }
+  .h2 { line-height: 1.15; }
+
+  .chrome { padding: var(--s-4) var(--m); }
+  .brand { font-size: 18px; }
+  .nav { gap: var(--s-4); font-size: 14px; }
+
+  /* S0 — the 390×560 window, the claim on the ground below */
+  .s0 { height: auto; min-height: 0; overflow: visible; display: flex; flex-direction: column; }
+  .s0::before, .s0::after { content: none; }
+  .s0__media { position: relative; inset: auto; height: calc(560 / 390 * 100vw); max-height: 820px; overflow: hidden; }
+  .s0__media::after {
+    content: ""; position: absolute; inset: 0; pointer-events: none;
+    background:
+      linear-gradient(to bottom, rgba(15, 17, 18, 0.8) 0, rgba(15, 17, 18, 0.5) 56px, rgba(15, 17, 18, 0) 140px),
+      linear-gradient(to bottom, rgba(15, 17, 18, 0) 88%, var(--ground) 100%);
+  }
+  /* car at ≈ 62% of the window: the 1100w crop scaled to 112% wide, top-anchored */
+  .s0__media img { position: absolute; top: 0; left: -6%; width: 112%; height: auto; object-fit: initial; }
+  .s0__cap { position: static; order: 2; text-align: left; padding: var(--s-3) var(--m) 0; color: var(--ink-2); max-width: none; }
+  .s0__copy { position: static; order: 3; width: auto; padding: var(--s-7) var(--m) 0; }
+  .s0__ctas { flex-direction: column; }
+  .s0__ctas .btn { width: 100%; }
+
+  /* S1 */
+  .s1 { grid-template-columns: var(--m) 1fr 1fr var(--m); column-gap: 0; padding: var(--s-9) 0 var(--s-9); }
+  .s1__1923 { grid-column: 2 / 4; grid-row: 1; }
+  .makes { grid-column: 2 / 4; grid-row: 2; margin-top: var(--s-7); }
+  .makes__track { column-gap: 0.4em; row-gap: 0.06em; }
+  .s1__letter { grid-column: 2 / 3; grid-row: 3; margin: var(--s-8) var(--s-1) 0 0; }
+  .s1__ad { grid-column: 3 / 4; grid-row: 3; margin: var(--s-8) 0 0 var(--s-1); }
+  .s1__1953 { grid-column: 2 / 4; grid-row: 4; margin-top: var(--s-8); padding: 0; }
+
+  /* S2 — the relay as an abutting stack; each crop puts the lettering at (50%, 40%) */
+  .relay { display: grid; grid-template-columns: 100%; }
+  .relay > .frame { display: contents; }
+  .frame__photo { position: relative; inset: auto; }
+  .s2__rick { position: static; grid-row: 1; padding: var(--s-9) var(--m) var(--s-8); }
+  .frame--sign .frame__photo   { grid-row: 2; aspect-ratio: 600 / 465; }
+  .frame--truck .frame__photo  { grid-row: 3; aspect-ratio: 1 / 1; }
+  .frame--native .frame__photo { grid-row: 4; aspect-ratio: 390 / 292; }
+  .frame--whole .frame__photo  { grid-row: 5; aspect-ratio: 2048 / 1056; }
+  .reg--sign { position: static; width: 100%; }
+  .reg { --hx: 50%; --hy: 40%; }
+  .reg--truck  { --w: calc(820 / 390 * 100vw); }
+  .reg--native { --w: calc(700 / 390 * 100vw); }
+  .whole { position: static; margin: 0; }
+  .strip { position: static; height: auto; display: block; padding: var(--s-1) var(--m) 0; }
+  .frame--sign .strip   { grid-row: 6; padding-top: var(--s-3); }
+  .frame--truck .strip  { grid-row: 7; }
+  .frame--native .strip { display: none; }
+  .frame--whole .strip  { grid-row: 8; }
+
+  .crew { margin-top: var(--s-8); height: auto; pointer-events: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7) var(--s-2); padding: 0 var(--m); }
+  .crew__ins { position: static; width: auto !important; }
+  .crew__ins--glass, .crew__ins--garage { grid-column: 1 / -1; }
+  .crew__ins img, .s3__pair img { width: auto; max-width: 100%; }   /* never above native on tablets */
+  .frame--sign .frame__photo { width: min(100%, 600px); justify-self: center; }
+
+  /* S3 — the pass read downward */
+  .s3 { display: flex; flex-direction: column; padding: var(--s-10) var(--m) var(--s-10); gap: 0; }
+  .s3__text { order: 1; }
+  .s3__number { order: 2; margin-top: var(--s-7); }
+  .s3__paper { order: 3; margin-top: var(--s-7); justify-self: auto; }
+  .s3__nose { order: 4; margin: var(--s-7) calc(-1 * var(--m)) 0; }
+  .s3__nose figcaption { padding: 0 var(--m); }
+  .s3__above { order: 5; margin-top: var(--s-7); }
+  .s3__pass { order: 6; margin-top: var(--s-7); }
+  .s3__pair { grid-template-columns: 1fr; gap: var(--s-2); }
+
+  /* S4 — a native swipe reel; every lettering on one line at 55% of the reel height */
+  .s4 { display: block; padding: var(--s-10) 0 var(--s-10); }
+  .s4__text { padding: 0 var(--m); }
+  .reel { margin-top: var(--s-7); overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .reel::-webkit-scrollbar { display: none; }
+  .reel__track {
+    --fh: min(300px, calc((100vw - 2 * var(--m)) / 1.5));
+    --reel-h: calc(var(--fh) / 0.596);           /* line at 55% leaves room for the lowest hang */
+    --line: calc(var(--reel-h) * 0.55);
+    gap: var(--s-5); padding: 0 var(--m); width: max-content;
+  }
+  .reel__frame { scroll-snap-align: start; scroll-margin-left: var(--m); --fw: calc(var(--fh) / var(--ar)); }
+  .reel__frame figcaption { max-width: var(--fw); }
+
+  /* S5 */
+  .s5 { padding-top: var(--s-10); }
+  .s5__head { display: block; padding: 0 var(--m); }
+  .s5__copy { margin-top: var(--s-5); }
+  .s5__tents { margin-top: var(--s-7); }
+  .s5__tents picture { aspect-ratio: 4 / 3; }
+  .s5__row { margin-top: var(--s-7); grid-template-columns: 1.5038fr 0.9988fr; }
+  .s5__cell--track { grid-column: 1 / -1; }
+  .s5__cell--track figcaption { padding-left: var(--m); margin-bottom: var(--s-5); }
+  .s5__cell--paddock figcaption { padding-left: var(--m); }
+  .silence { height: 16vh; }
+
+  /* S6 — trailer full bleed, then the painted line at native pixels */
+  .s6 .frame { height: auto; }
+  .s6 .frame__photo { position: relative; inset: auto; aspect-ratio: 2400 / 1596; }
+  .s6 .strip { position: static; height: auto; display: block; padding: var(--s-3) var(--m) 0; }
+  .s6__native { display: block; position: relative; height: calc(220 / 390 * 100vw); overflow: hidden; margin-top: var(--s-7); }
+  .s6__native img { position: absolute; max-width: none; width: 2400px; left: calc(50% - 1040.5px); top: calc(50% - 666px); }
+
+  /* S7 */
+  .s7 { display: flex; flex-direction: column; min-height: 0; padding: var(--s-5) var(--m) var(--s-10); }
+  .s7__gt { display: contents; }
+  .line { order: 1; white-space: normal; }
+  .s7 .gt { order: 2; margin-top: var(--s-9); }
+  .s7__status { order: 3; margin-top: var(--s-5); }
+  .s7__gt .lead { order: 4; margin-top: var(--s-4); }
+  .s7__ctas { order: 5; flex-direction: column; align-items: stretch; margin-top: var(--s-6); gap: var(--s-3); }
+  .s7__ctas .btn { width: 100%; }
+  .s7__film { justify-content: center; }
+  .s7__print { order: 6; margin-top: var(--s-8); }
+  .record { order: 7; grid-template-columns: 1fr; gap: var(--s-4); margin-top: var(--s-7); }
+
+  /* S8 */
+  .s8 { grid-template-columns: var(--m) 160px var(--s-4) 1fr var(--m); padding: var(--s-9) 0; }
+  .s8__cover { grid-column: 2 / 3; grid-row: 1 / 3; }
+  .s8__label { grid-column: 4 / 5; grid-row: 1; align-self: end; }
+  .s8__main { display: contents; }
+  .s8__main > * { min-width: 0; }
+  .s8__main .h2 { grid-column: 4 / 5; grid-row: 2; align-self: start; }
+  .s8__main .body { grid-column: 2 / 5; grid-row: 3; margin-top: var(--s-6); }
+  .s8__links { grid-column: 2 / 5; grid-row: 4; }
+  .episodes { grid-column: 2 / 5; grid-row: 5; margin-top: var(--s-6); padding-top: 0; }
+  .episodes a, .episodes li:last-child a { display: grid; grid-template-columns: 1fr auto; grid-template-areas: "date len" "title title"; height: auto; padding: var(--s-3) 0; row-gap: var(--s-1); }
+  .ep-date { grid-area: date; } .ep-len { grid-area: len; } .ep-title { grid-area: title; padding: 0; }
+  .s8__note { grid-column: 2 / 5; grid-row: 6; }
+
+  /* S9 */
+  .ig { display: block; min-height: 0; padding: var(--s-9) var(--m) var(--s-7); }
+  .ig__text { margin-top: var(--s-3); }
+  .ig__marker { margin-top: var(--s-5); text-align: left; justify-self: start; }
+  .contact { display: block; padding: var(--s-7) var(--m) var(--s-9); }
+  .enquiry { grid-template-columns: 1fr; margin-top: var(--s-8); }
+  .foot { grid-template-columns: 1fr; justify-items: start; gap: var(--s-3); }
+  .foot__line { text-align: left; }
+  .foot__marker, .foot__work { justify-self: start; text-align: left; }
+}
+
+/* ================================================================== MOTION BLOCK (motion-designer)
+   Everything below applies only once motion.js has run and added its classes:
+     .has-lenis   — Lenis constructed (never under prefers-reduced-motion)
+     .has-motion  — a motion mode is live; .motion-desk (≥ 900) or .motion-phone (< 900)
+   Without them — no JS, reduced motion, a failed CDN — the page above is the whole page.
+   Animated properties are transform, opacity and clip-path only (DNA76). */
+:root {
+  /* event durations and easing (G4) */
+  --dur-light: 240ms;            /* "Chevrolet" lights */
+  --dur-nav: 240ms;              /* nav hide / return */
+  --dur-fade: 300ms;             /* phone: the set line arrives under the painted one */
+  --ease-ui: cubic-bezier(0.2, 0, 0, 1);
+  /* scrub shapes, read by motion.js as GSAP ease names */
+  --ease-camera: power1.inOut;   /* push-in, dolly-out, the photo's contraction: a camera with weight */
+  --ease-type: power2.inOut;     /* the lifted line growing to its set size */
+  /* pinned distances (the doc's scroll budget) */
+  --pin-hero: 60vh;
+  --pin-relay: 180vh;
+  --pin-reel: 160vh;
+  --pin-lift: 240vh;
+  /* distances */
+  --dist-exit: 72px;             /* DNA95 text exit */
+  --dist-near: 80px;             /* the crew's nearer plane, relative to the master */
+  --dist-rise: 24px;             /* the GT mass enters */
+  /* scrub lag, in seconds (DNA48): only where weight is the point */
+  --scrub-text: 0.35;
+  --scrub-reel: 0.5;
+  --drift-phone: 1.06;
+}
+
+/* nav — fixed once Lenis runs; hidden on scroll-down and while any stage is pinned,
+   back on scroll-up with a ground band behind it */
+.has-lenis .chrome { position: fixed; transition: transform var(--dur-nav) var(--ease-ui); }
+.has-lenis .chrome::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; background: var(--ground);
+  opacity: 0; transition: opacity var(--dur-nav) var(--ease-ui);
+}
+.has-lenis .chrome.is-floating::before { opacity: 1; }
+.has-lenis .chrome.is-hidden { transform: translateY(-100%); }
+
+/* S1 — the make that lights: an ink copy over the grey word, faded (no colour tween) */
+.has-motion [data-hold] { position: relative; }
+.hold-ink {
+  position: absolute; left: 0; top: 0; color: var(--ink); white-space: nowrap; pointer-events: none;
+  opacity: 0; transition: opacity var(--dur-light) var(--ease-ui);
+}
+.hold-ink.is-on { opacity: 1; }
+.motion-desk .makes__track { flex-wrap: nowrap; width: max-content; }
+
+/* S2 — the relay: the four frames stack into one stage */
+.motion-desk .relay { position: relative; z-index: 1; height: calc(var(--stage-h) + var(--strip)); background: var(--ground); }
+.motion-desk .relay .frame { position: absolute; inset: 0; height: auto; background: none; }
+.motion-desk .reg--native { transform-origin: 0 0; }
+.motion-desk .crew { z-index: 2; }
+
+/* S3 — the pass: one frame, front under rear */
+.motion-desk .s3__pass { justify-self: end; width: min(644px, 100%); }
+.motion-desk .s3__pair { grid-template-columns: 1fr; }
+.motion-desk .s3__pair img { grid-area: 1 / 1; }
+@supports (animation-timeline: view()) {
+  .motion-desk .s3__pass { view-timeline: --pass block; }
+  .motion-desk.pass-css [data-pass-frame="rear"] {
+    animation: pass-rear linear both;
+    animation-timeline: --pass;
+    animation-range: cover 34% cover 66%;   /* the frame's centre from 75% to 25% of the viewport */
+  }
+}
+@keyframes pass-rear { from { opacity: 0; } to { opacity: 1; } }
+
+/* S4 — the reel at display size in a window that bleeds right; lettering on 55vh */
+.motion-desk .s4 { position: relative; height: 100vh; padding: 0; align-content: center; }
+.motion-desk .reel {
+  position: absolute; grid-area: auto; top: 0; bottom: 0; left: calc(512 / 1440 * 100%); right: 0;
+  overflow: hidden;
+}
+.motion-desk .reel__track { --s: min(1px, var(--k), calc(100vh / 900)); --line: 55vh; gap: calc(64 * var(--s)); }
+
+/* S6 + S7 — one pinned stage: the trailer under, S7 over it as the end frame */
+.motion-desk .peak { position: relative; display: grid; }
+.motion-desk .peak > .s6, .motion-desk .peak > .s7 { grid-area: 1 / 1; }
+.motion-desk .peak > .s7 { position: relative; z-index: 1; }   /* over the trailer frame, which is positioned */
+.motion-desk .trailer {
+  position: absolute; left: 0; top: 0; width: 2400px; height: auto; max-width: none;
+  object-fit: initial; transform-origin: 0 0;
+}
+.motion-desk .peak.is-lifting .line { color: transparent; }
+.lift { position: absolute; left: 0; top: 0; right: 0; height: var(--stage-h); z-index: 3; pointer-events: none; }
+.lift__layer { position: absolute; inset: 0; }
+.lift__g {
+  position: absolute; left: 0; top: 0; white-space: nowrap; transform-origin: 50% 50%;
+  font-family: var(--display); font-weight: 600; font-size: var(--fs-line); line-height: 1.08;
+}
+.lift__layer--dark .lift__g { color: var(--paint); }
+.lift__layer--ink .lift__g { color: var(--ink); }
+
+/* Lenis's own stylesheet puts overscroll-behavior: contain on every [data-lenis-prevent]. On a
+   box that cannot scroll on an axis (the empty message field; the phone reel vertically) that
+   swallows the wheel or swipe and the page stops dead under the pointer. Hand that axis back. */
+html.lenis textarea[data-lenis-prevent] { overscroll-behavior: auto; }
+html.lenis .reel[data-lenis-prevent] { overscroll-behavior-y: auto; }

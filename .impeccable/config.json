@@ -1,0 +1,26 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "index.html"
+        ],
+        "createdAt": "2026-10-15T21:57:13.913Z",
+        "reason": "Claude: static scan cannot resolve var() spacing; every flagged element (ruled lists, spec/ledger rows, GT placeholder) has 16-40px token padding and the rendered-page scan reports zero cramped-padding"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "sketches/d2-scenes/index.html"
+        ],
+        "createdAt": "2026-10-16T20:26:26.496Z",
+        "reason": "Claude: html/body use overflow-x: clip only, to stop full-bleed scenes from causing horizontal page scroll; the positioned children (fixed nav, pinned scenes) are not tooltips or menus and are not clipped vertically"
+      }
+    ]
+  }
+}

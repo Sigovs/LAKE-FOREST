@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LFSC — Sketch B · The family file</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css">
+  <style>
+    /* Idea: since 1923 the business is the fixed sheet the racing came back to.
+       The history is filed on Mancuso Chevrolet's own letterhead: speed rules running
+       into an extended MANCUSO, a condensed oblique second line, an address line.
+       That letterhead line is the masthead and the head of every entry.
+       Colours from the letterhead scan: paper stock and its navy. The photographs
+       bring all the colour. */
+    :root {
+      --paper: #eceae5;
+      --ink: #26285a;          /* letterhead navy, deepened; 11.4:1 on paper */
+      --ink-2: #4f5170;        /* 6.4:1 on paper */
+      --sans: "Archivo", "Helvetica Neue", Arial, sans-serif;
+      --m: 48px;
+      --g: 8px;                /* prints in a file sit close: contact-sheet gutter */
+      color-scheme: light;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--paper); color: var(--ink); }
+    body { font-family: var(--sans); font-size: 18px; line-height: 1.6; font-variation-settings: "wdth" 100; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; height: auto; }
+    p, h1, h2, h3, figure { margin: 0; }
+    a { color: inherit; }
+
+    /* The letterhead line: rules in · extended word · condensed oblique slot · address · rules out */
+    .lh { display: grid; grid-template-columns: 96px auto 1fr 96px; align-items: center; column-gap: 24px; }
+    .lh__side { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+    .rules { display: grid; gap: 6px; }
+    .rules i { display: block; height: 3px; background: var(--ink); }
+    .lh__word { font-weight: 800; font-variation-settings: "wdth" 125; text-transform: uppercase; letter-spacing: 0.08em; line-height: 0.9; white-space: nowrap; }
+    .lh__slot { font-style: italic; font-weight: 500; font-variation-settings: "wdth" 72; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1; white-space: nowrap; }
+    .lh__addr { font-size: 15px; letter-spacing: 0.04em; color: var(--ink-2); }
+    .lh--mast .lh__word { font-size: 104px; }
+    .lh--mast .lh__slot { font-size: 30px; }
+    .lh--entry .lh__word { font-size: 64px; }
+    .lh--entry .lh__slot { font-size: 30px; }
+    .lh--entry { margin-bottom: 40px; }
+
+    .top { display: flex; justify-content: flex-end; gap: 28px; padding: 18px var(--m) 0; font-size: 14px; font-weight: 600; font-variation-settings: "wdth" 110; letter-spacing: 0.1em; text-transform: uppercase; }
+    .top a { text-decoration: none; }
+    .mast { padding: 22px 0 28px; }
+
+    .wrap { padding: 0 var(--m); }
+    .cap { margin-top: 10px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+    .cap b { color: var(--ink); font-weight: 600; }
+    .body { max-width: 52ch; }
+    .cols { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 48px; align-items: end; margin-top: 16px; }
+    .cta { display: flex; gap: 28px; font-size: 14px; font-weight: 700; font-variation-settings: "wdth" 125; letter-spacing: 0.08em; text-transform: uppercase; white-space: nowrap; }
+
+    /* Hero print: the family's own car, across the full sheet */
+    .hero-print img { aspect-ratio: 2048 / 1056; object-fit: cover; }
+
+    .entry { padding-top: 112px; }
+    .entry + .entry { padding-top: 120px; }
+
+    /* Makes that followed the name — a typographic mass, content not decoration */
+    .makes { display: flex; flex-wrap: wrap; gap: 0 22px; font-style: italic; font-weight: 500; font-variation-settings: "wdth" 70; text-transform: uppercase; font-size: 46px; line-height: 1.12; letter-spacing: 0.01em; }
+    .makes span::after { content: " /"; color: var(--ink-2); font-weight: 400; }
+    .makes span:last-child::after { content: ""; }
+
+    /* A file of prints: one height, contact-sheet gutters, the full sheet */
+    .strip-prints { display: flex; gap: var(--g); margin-top: 40px; }
+    .strip-prints figure { flex: none; }
+    .strip-prints--h465 img { height: 465px; width: auto; }
+    .strip-prints--h280 img { height: 280px; width: auto; }
+
+    .big-print img { aspect-ratio: 16 / 9; object-fit: cover; object-position: 50% 40%; }
+
+    .quote { padding: 104px 0 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: 24px; }
+    .quote blockquote { margin: 0; font-style: italic; font-weight: 500; font-variation-settings: "wdth" 80; font-size: 48px; line-height: 1.1; max-width: 26ch; }
+    .pending { display: inline-block; margin-left: 10px; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--paper); background: var(--ink-2); padding: 2px 8px; }
+
+    .two { display: grid; grid-template-columns: repeat(2, 648px); gap: var(--g); margin-top: 32px; align-items: start; justify-content: end; }
+    .continues { margin: 56px 0 120px; font-size: 14px; font-weight: 700; font-variation-settings: "wdth" 125; letter-spacing: 0.1em; text-transform: uppercase; }
+
+    .sketch-tag { position: fixed; right: 12px; bottom: 12px; z-index: 9; font: 700 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; background: var(--ink); color: var(--paper); padding: 6px 8px; }
+
+    /* Phone — authored separately */
+    @media (max-width: 759px) {
+      :root { --m: 16px; --g: 6px; }
+      .top { display: none; }
+      .lh { grid-template-columns: 12px minmax(0, 1fr) 28px; column-gap: 10px; }
+      .lh__side { grid-column: 2; }
+      .lh > .rules:last-child { grid-column: 3; grid-row: 1; }
+      .lh__slot { white-space: normal; }
+      .lh--mast .lh__word { font-size: 40px; }
+      .lh--mast .lh__slot { font-size: 18px; margin-top: 6px; }
+      .lh--entry .lh__word { font-size: 36px; }
+      .lh--entry .lh__slot { font-size: 18px; margin-top: 4px; }
+      .lh__addr { font-size: 14px; }
+      .mast { padding: 24px 0 20px; }
+      .hero-print { margin: 0 calc(-1 * var(--m)); }
+      .hero-print img { aspect-ratio: 1 / 1; object-position: 42% 50%; }
+      .hero-print .cap, .hero-print .cols { padding: 0 var(--m); }
+      .cols { grid-template-columns: 1fr; gap: 16px; }
+      .cta { flex-direction: column; gap: 12px; }
+      .entry { padding-top: 72px; }
+      .entry + .entry { padding-top: 80px; }
+      .makes { font-size: 26px; gap: 0 10px; }
+      .strip-prints { flex-wrap: wrap; }
+      .strip-prints figure { flex: 1 1 calc(50% - var(--g)); }
+      .strip-prints figure.wide { flex-basis: 100%; }
+      .strip-prints--h465 img, .strip-prints--h280 img { height: auto; width: 100%; }
+      .big-print { margin: 0 calc(-1 * var(--m)); }
+      .big-print img { aspect-ratio: 4 / 3; }
+      .big-print .cap { padding: 0 var(--m); }
+      .quote { grid-template-columns: 1fr; padding-top: 72px; }
+      .quote .rules { display: none; }
+      .quote blockquote { font-size: 30px; }
+      .two { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <span class="sketch-tag">Sketch B · The family file</span>
+
+  <!-- HERO: masthead + the family's own car -->
+  <nav class="top"><a href="#">History</a><a href="#">The GT</a><a href="#">Contact</a></nav>
+  <header class="mast">
+    <div class="lh lh--mast">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lh__word">Mancuso</span>
+      <span class="lh__side"><span class="lh__slot">Lake Forest Sports Cars</span><span class="lh__addr">An automotive family since 1923</span></span>
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+  </header>
+  <section class="wrap">
+    <figure class="hero-print">
+      <img src="../../../assets/img/mancuso-76-blue-wide.jpg" width="2048" height="1056" alt="The pale-blue Mancuso Chevrolet #76 Corvette at the pit wall, crew and crowd behind.">
+      <div class="cols">
+        <p class="cap"><b>Mancuso Chevrolet #76.</b> The dealership's own Corvette, “Mancuso · Fyhrie · Greenwood” across its windscreen. Circuit and date not recorded.</p>
+        <p class="cta"><a href="#">The family file ↓</a><a href="#">The GT — launching soon →</a></p>
+      </div>
+    </figure>
+  </section>
+
+  <!-- 1 · DENSE GROUP: the house -->
+  <section class="wrap entry">
+    <div class="lh lh--entry">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lh__word">1923</span>
+      <span class="lh__side"><span class="lh__slot">Batavia, New York</span><span class="lh__addr">Source: Fra Noi, Feb 2005</span></span>
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <p class="body">Benjamin Mancuso founds the family's automobile business. Over the next eight decades these are the names it sells under:</p>
+    <p class="makes" style="margin-top:24px"><span>Studebaker</span><span>Oldsmobile</span><span>Chevrolet</span><span>Buick</span><span>Pontiac</span><span>Cadillac</span><span>Honda</span><span>Saab</span><span>Peugeot</span><span>Aston Martin</span><span>Maserati</span><span>Ferrari</span></p>
+  </section>
+
+  <section class="wrap entry">
+    <div class="lh lh--entry">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lh__word">1953</span>
+      <span class="lh__side"><span class="lh__slot">Skokie, Illinois</span><span class="lh__addr">Mancuso Chevrolet · 4700 Golf Rd.</span></span>
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <p class="body">Jim Mancuso establishes Mancuso Chevrolet. The letterhead this page is set from is theirs.</p>
+    <div class="strip-prints strip-prints--h465">
+      <figure><img src="../../../assets/img/mancuso-chevrolet-letter.jpg" width="619" height="800" alt="Handwritten letter on Mancuso Chevrolet letterhead, signed Rick Mancuso."><p class="cap"><b>The letterhead</b> · signed Rick Mancuso</p></figure>
+      <figure class="wide"><img src="../../../assets/img/mancuso-chevrolet-sign.jpg" width="600" height="465" alt="'OK Used Cars — Mancuso Chevrolet' roadside sign."><p class="cap"><b>“OK Used Cars”</b> · date and place not recorded</p></figure>
+      <figure><img src="../../../assets/img/yenko-deuce-ad.jpg" width="615" height="800" alt="Yenko Deuce advertisement listing Mancuso Chevrolet, 4700 Golf Road, Skokie."><p class="cap"><b>Yenko “Deuce”</b> ad</p></figure>
+    </div>
+    <div class="quote">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <div>
+        <blockquote>“You're no longer just a car guy, you're a Mancuso, and I'm proud of you.”</blockquote>
+        <p class="cap">Jim Mancuso to his son Rob · Ward's Dealer Business, March 2001 <span class="pending">Pending approval</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 · LARGE FRAME + 3 · PEOPLE -->
+  <section class="wrap entry">
+    <div class="lh lh--entry">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lh__word">1976</span>
+      <span class="lh__side"><span class="lh__slot">Mancuso Chevrolet, Chicago</span><span class="lh__addr">Lettered on the transporter</span></span>
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <figure class="big-print">
+      <img src="../../../assets/img/mancuso-truck.jpg" width="2048" height="1536" alt="The Mancuso Chevrolet Chicago transporter, a white #76 Corvette with its engine open under the awning.">
+      <p class="cap"><b>The dealership's transporter</b> with a #76 Corvette under the awning. Circuit and date not recorded.</p>
+    </figure>
+    <div class="strip-prints strip-prints--h280">
+      <figure><img src="../../../assets/img/crew-kodak.jpg" width="648" height="414" alt="Two men beside the white Mancuso Chevrolet #76 under a Kodak sign."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+      <figure><img src="../../../assets/img/crew-garage.jpg" width="648" height="414" alt="Mechanics working on the #76 in a garage."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+      <figure><img src="../../../assets/img/crew-x.jpg" width="648" height="414" alt="A crew member in a 'Crew-X' T-shirt beside the #76 with the engine open."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+    </div>
+  </section>
+
+  <!-- 5 · NEXT EPISODE -->
+  <section class="wrap entry">
+    <div class="lh lh--entry">
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="lh__word">1976</span>
+      <span class="lh__side"><span class="lh__slot">Le Mans, France</span><span class="lh__addr">Source: Fra Noi, Feb 2005</span></span>
+      <span class="rules" aria-hidden="true"><i></i><i></i><i></i></span>
+    </div>
+    <p class="body">For the bicentennial, the French government invites Mancuso and his team to race a Corvette at Le Mans. Rick stays in Skokie to run the business and turns the Greenwood wide-body Corvette over to his teammates. The Mancuso name rides on the rear quarter.</p>
+    <div class="two">
+      <figure><img src="../../../assets/img/lemans-1976-le-maine.jpg" width="648" height="417" alt="Le Maine Libre front page, 12–13 June 1976, with the Corvette."><p class="cap"><b>Le Maine Libre</b> · 12–13 June 1976</p></figure>
+      <figure><img src="../../../assets/img/lemans-1976-above.jpg" width="648" height="479" alt="The #76 from above; driver names on the side window, Mancuso Chevrolet on the rear quarter."><p class="cap"><b>Mancuso Chevrolet on the rear quarter</b> · Photo courtesy of Albert Lamberts</p></figure>
+    </div>
+    <p class="continues">The file continues →</p>
+  </section>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.Lenis) {
+      const lenis = new Lenis({ anchors: true });
+      (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+      window.lenis = lenis;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+node_modules/
+dist/
+build/
+.cache/
+*.log
+.env
+.env.*
+.DS_Store
+Thumbs.db
+
+# Client source archive (photos with unconfirmed publishing rights, PDFs, PSDs).
+# Not pushed to the public repository; web derivatives live in assets/img.
+lake photos/

@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LFSC — Sketch A · On the glass</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@0,500;0,600;0,800;1,500&family=Libre+Franklin:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.13/dist/lenis.css">
+  <style>
+    /* Idea: the family's history is what was lettered on the car. Every scene opens
+       with a sun strip — the band across the top of a race car's windscreen — carrying
+       the names actually painted on the car in view. Colours sampled from the archive:
+       ground = the #76 windscreen tint, strip letters = the banner gold. */
+    :root {
+      --tint: #141e1a;          /* windscreen tint, deepened */
+      --tint-2: #1b2823;
+      --gold: #e9bc6e;          /* banner gold — strip lettering only */
+      --ink: #eee8da;           /* white of the Le Mans car body; 14.0:1 on tint */
+      --ink-2: #a9b3ac;         /* 7.9:1 on tint */
+      --serif: "Besley", Georgia, serif;
+      --sans: "Libre Franklin", "Helvetica Neue", Arial, sans-serif;
+      --m: 48px;                /* outer margin */
+      --g: 12px;                /* gutter between prints in a group */
+      color-scheme: dark;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--tint); color: var(--ink); }
+    body { font-family: var(--sans); font-size: 18px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    img { display: block; width: 100%; height: auto; }
+    p, h1, h2, h3, figure { margin: 0; }
+    a { color: inherit; }
+
+    /* The sun strip */
+    .strip {
+      display: flex; align-items: center; justify-content: space-between; gap: 32px;
+      height: 96px; padding: 0 var(--m);
+      background: #0e1512;
+      border-bottom: 1px solid rgba(233, 188, 110, 0.18);
+    }
+    .strip__letters {
+      font-family: var(--serif); font-weight: 800; font-size: 34px; line-height: 1;
+      letter-spacing: 0.05em; text-transform: uppercase; color: var(--gold);
+      white-space: nowrap;
+    }
+    .strip__note { font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); white-space: nowrap; }
+    .nav { display: flex; gap: 28px; font-size: 14px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; }
+    .nav a { text-decoration: none; }
+
+    /* Hero: the full-screen scene */
+    .hero { position: relative; height: calc(100vh - 96px); min-height: 640px; overflow: hidden; }
+    .hero img { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: 50% 62%; }
+    .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 34%;
+      background: linear-gradient(to bottom, rgba(20,30,26,0) 0%, rgba(20,30,26,0.78) 55%, var(--tint) 100%); }
+    .hero__claim { position: absolute; z-index: 1; left: var(--m); right: var(--m); bottom: 40px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: end; }
+    .hero__claim h1 { font-family: var(--serif); font-weight: 600; font-size: 46px; line-height: 1.08; max-width: 22ch; text-wrap: balance; }
+    .hero__claim p { font-size: 16px; color: var(--ink); max-width: 46ch; justify-self: end; }
+
+    /* Scenes */
+    .scene { padding: 72px var(--m) 120px; }
+    .scene--tight { padding-bottom: 72px; }
+    .lede { display: grid; grid-template-columns: 220px minmax(0, 640px); gap: 40px; margin-bottom: 40px; }
+    .lede__when { font-size: 14px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-2); padding-top: 10px; }
+    .lede h2 { font-family: var(--serif); font-weight: 600; font-size: 40px; line-height: 1.1; margin-bottom: 16px; }
+    .lede p { color: var(--ink-2); }
+    .cap { margin-top: 10px; font-size: 15px; line-height: 1.45; color: var(--ink-2); }
+    .cap b { color: var(--ink); font-weight: 500; }
+
+    /* Dense group: three prints at one height, tight gutters, the whole width */
+    .group { display: flex; gap: var(--g); align-items: flex-start; }
+    .group figure { flex: none; }
+    .group img { height: 465px; width: auto; }
+
+    /* Large frame: bleeds edge to edge */
+    .frame { margin: 0 calc(-1 * var(--m)); }
+    .frame img { width: 100%; }
+    .frame .cap { padding: 0 var(--m); max-width: 900px; }
+
+    /* People: four prints at native size, a 2 × 2 block */
+    .people { display: grid; grid-template-columns: repeat(2, 648px); gap: var(--g); justify-content: center; }
+    .people-row { display: grid; grid-template-columns: 1fr 648px 648px; gap: var(--g); }
+
+    /* Pause */
+    .pause { padding: 96px var(--m) 104px; display: grid; grid-template-columns: 220px minmax(0, 980px); gap: 40px; border-top: 1px solid rgba(238,232,218,0.12); }
+    .pause blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-weight: 500; font-size: 44px; line-height: 1.18; }
+    .pending { display: inline-block; margin-top: 18px; font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--tint); background: var(--ink-2); padding: 2px 8px; }
+
+    /* Next episode: the pair */
+    .pair { display: grid; grid-template-columns: repeat(2, 648px); gap: var(--g); justify-content: end; }
+    .continues { margin-top: 48px; font-size: 14px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-2); }
+
+    .sketch-tag { position: fixed; right: 12px; bottom: 12px; z-index: 9; font: 600 12px/1 var(--sans); letter-spacing: .08em; text-transform: uppercase; background: var(--gold); color: #141e1a; padding: 6px 8px; }
+
+    /* Phone — authored separately */
+    @media (max-width: 759px) {
+      :root { --m: 16px; --g: 8px; }
+      .strip { height: 64px; }
+      .strip { height: auto; min-height: 64px; padding-block: 14px; }
+      .strip__letters { font-size: 19px; letter-spacing: 0.02em; white-space: normal; line-height: 1.15; }
+      .strip--hero .strip__letters { font-size: 26px; }
+      .nav { display: none; }
+      .strip__note { display: none; }
+      .hero { height: auto; min-height: 0; }
+      .hero img { position: relative; height: 62vh; object-position: 62% 62%; }
+      .hero::after { display: none; }
+      .hero__claim { position: relative; inset: auto; padding: 24px var(--m) 40px; grid-template-columns: 1fr; gap: 16px; }
+      .hero__claim h1 { font-size: 32px; }
+      .hero__claim p { justify-self: start; font-size: 15px; }
+      .scene { padding: 40px var(--m) 72px; }
+      .lede { grid-template-columns: 1fr; gap: 8px; margin-bottom: 24px; }
+      .lede h2 { font-size: 30px; }
+      .group { flex-wrap: wrap; }
+      .group figure { flex: 1 1 calc(50% - var(--g)); }
+      .group figure.wide { flex-basis: 100%; }
+      .group img { height: auto; width: 100%; }
+      .people, .pair { grid-template-columns: 1fr; }
+      .people-row { grid-template-columns: 1fr 1fr; }
+      .people-row > :first-child { grid-column: 1 / -1; }
+      .pause { grid-template-columns: 1fr; padding: 56px var(--m) 64px; gap: 8px; }
+      .pause blockquote { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+  <span class="sketch-tag">Sketch A · On the glass</span>
+
+  <!-- HERO -->
+  <header class="strip strip--hero">
+    <span class="strip__letters">Mancuso · Lake Forest Sports Cars</span>
+    <nav class="nav"><a href="#">History</a><a href="#">The GT</a><a href="#">Contact</a></nav>
+  </header>
+  <section class="hero">
+    <img src="../../../assets/img/hero-lemans-1976-2400.jpg" width="2400" height="1609" alt="The white Greenwood Corvette leads two cars past the packed grandstands at Le Mans, 1976.">
+    <div class="hero__claim">
+      <h1>An automotive family<br> since&nbsp;1923.</h1>
+      <p>Le Mans, June 1976 — the Greenwood Corvette Rick Mancuso turned over to his teammates. He stayed home to run the business.</p>
+    </div>
+  </section>
+
+  <!-- 1 · DENSE GROUP: the house -->
+  <div class="strip"><span class="strip__letters">Mancuso Chevrolet</span><span class="strip__note">Lettered on the sign, the letterhead, the ad</span></div>
+  <section class="scene scene--tight">
+    <div class="lede">
+      <p class="lede__when">1923 — 1953</p>
+      <div>
+        <h2>Batavia, then Skokie.</h2>
+        <p>Benjamin Mancuso founds the family's automobile business in Batavia, New York, in 1923. In 1953 Jim Mancuso establishes Mancuso Chevrolet in Skokie, Illinois.</p>
+      </div>
+    </div>
+    <div class="group">
+      <figure><img src="../../../assets/img/mancuso-chevrolet-letter.jpg" width="619" height="800" alt="Handwritten letter on Mancuso Chevrolet letterhead, signed Rick Mancuso."><p class="cap"><b>Letterhead</b> · 4700 Golf Rd., Skokie</p></figure>
+      <figure class="wide"><img src="../../../assets/img/mancuso-chevrolet-sign.jpg" width="600" height="465" alt="'OK Used Cars — Mancuso Chevrolet' roadside sign."><p class="cap"><b>“OK Used Cars”</b> · date and place not recorded</p></figure>
+      <figure><img src="../../../assets/img/yenko-deuce-ad.jpg" width="615" height="800" alt="Yenko Deuce advertisement listing Mancuso Chevrolet, 4700 Golf Road, Skokie."><p class="cap"><b>Yenko “Deuce”</b> · Mancuso Chevrolet, dealer</p></figure>
+    </div>
+  </section>
+
+  <!-- 2 · LARGE FRAME: the family's own car -->
+  <div class="strip"><span class="strip__letters">Mancuso · Fyhrie · Greenwood</span><span class="strip__note">Lettered on the windscreen of the #76</span></div>
+  <section class="scene scene--tight" style="padding-top:0">
+    <figure class="frame">
+      <img src="../../../assets/img/mancuso-76-blue-wide.jpg" width="2048" height="1056" alt="The pale-blue Mancuso Chevrolet #76 Corvette at the pit wall, crew and crowd behind.">
+      <p class="cap"><b>Mancuso Chevrolet #76.</b> By the Revell kit's account, the first “customer” car John Greenwood built — for Rick Mancuso. Circuit and date not recorded.</p>
+    </figure>
+  </section>
+
+  <!-- 3 · PEOPLE -->
+  <section class="scene">
+    <div class="lede">
+      <p class="lede__when">1972 — 1976</p>
+      <div>
+        <h2>The people around the #76.</h2>
+        <p>Rick Mancuso took the green flag in 1972, in a 1958 Corvette, B-Production. By 1976 the dealership's own Corvette had a crew.</p>
+      </div>
+    </div>
+    <div class="people">
+      <figure><img src="../../../assets/img/crew-pitwall.jpg" width="648" height="414" alt="The blue #76 at the pit wall, spectators seated behind."><p class="cap">Photo courtesy of Bob Brandle &amp; Tony Mezzacca</p></figure>
+      <figure><img src="../../../assets/img/crew-kodak.jpg" width="648" height="414" alt="Two men beside the white Mancuso Chevrolet #76 under a Kodak sign."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+      <figure><img src="../../../assets/img/crew-garage.jpg" width="648" height="414" alt="Mechanics working on the #76 in a garage."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+      <figure><img src="../../../assets/img/crew-x.jpg" width="648" height="414" alt="A crew member in a 'Crew-X' T-shirt beside the #76 with the engine open."><p class="cap">Photo courtesy of Buzz Fyhrie</p></figure>
+    </div>
+  </section>
+
+  <!-- 4 · PAUSE -->
+  <section class="pause">
+    <p class="lede__when">Jim Mancuso, to his son Rob</p>
+    <div>
+      <blockquote>“You're no longer just a car guy, you're a Mancuso, and I'm proud of you.”</blockquote>
+      <p class="cap">Ward's Dealer Business, March 2001 <span class="pending">Pending client approval</span></p>
+    </div>
+  </section>
+
+  <!-- 5 · NEXT EPISODE -->
+  <div class="strip"><span class="strip__letters">John Greenwood · Bernard Darniche</span><span class="strip__note">Mancuso Chevrolet — rear quarter only</span></div>
+  <section class="scene">
+    <div class="lede">
+      <p class="lede__when">June 1976 · Le Mans</p>
+      <div>
+        <h2>Other men's names on the glass.</h2>
+        <p>For America's bicentennial, the French government invited Mancuso and his team to race a Corvette at Le Mans. Rick stayed home to run the business; his teammates drove.</p>
+      </div>
+    </div>
+    <div class="pair">
+      <figure><img src="../../../assets/img/lemans-1976-le-maine.jpg" width="648" height="417" alt="Le Maine Libre front page, 12–13 June 1976, with the Corvette."><p class="cap"><b>Le Maine Libre</b> · 12–13 June 1976</p></figure>
+      <figure><img src="../../../assets/img/lemans-1976-above.jpg" width="648" height="479" alt="The #76 from above; driver names on the side window, Mancuso Chevrolet on the rear quarter."><p class="cap"><b>Drivers' names on the glass</b> · Mancuso Chevrolet on the rear quarter · Photo courtesy of Albert Lamberts</p></figure>
+    </div>
+    <p class="continues">The episode continues →</p>
+  </section>
+
+  <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+  <script>
+    if (!matchMedia('(prefers-reduced-motion: reduce)').matches && window.Lenis) {
+      const lenis = new Lenis({ anchors: true });
+      (function raf(t) { lenis.raf(t); requestAnimationFrame(raf); })(performance.now());
+      window.lenis = lenis;
+    }
+  </script>
+</body>
+</html>
