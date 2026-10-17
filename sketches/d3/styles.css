@@ -220,11 +220,14 @@ ol { list-style: none; }
 }
 .hero__car {
   z-index: 2;
-  clip-path: polygon(63.000% 54.941%, 65.250% 54.692%, 65.500% 53.822%, 66.458% 53.325%, 72.917% 53.139%, 74.875% 53.822%, 75.917% 54.630%, 79.500% 54.630%, 79.833% 55.749%, 80.250% 58.111%, 80.625% 60.597%, 80.833% 63.393%, 80.750% 67.122%, 80.625% 69.733%, 79.167% 70.106%, 78.125% 70.976%, 60.417% 70.976%, 60.083% 69.608%, 60.000% 64.326%, 60.208% 61.218%, 61.000% 59.789%, 61.083% 58.421%, 61.750% 56.246%, 62.500% 55.314%);
+  /* alpha matte derived from the photograph itself (tools/make-car-matte.py, GrabCut) */
+  -webkit-mask: url(../../assets/img/hero-car-matte.png) 0 0 / 100% 100% no-repeat;
+          mask: url(../../assets/img/hero-car-matte.png) 0 0 / 100% 100% no-repeat;
 }
 @media (max-width: 999px) {
   .hero__car {
-    clip-path: polygon(33.333% 46.360%, 39.103% 46.064%, 39.744% 45.028%, 42.201% 44.436%, 58.761% 44.214%, 63.782% 45.028%, 66.453% 45.990%, 75.641% 45.990%, 76.496% 47.322%, 77.564% 50.133%, 78.526% 53.093%, 79.060% 56.422%, 78.846% 60.861%, 78.526% 63.969%, 74.786% 64.413%, 72.115% 65.448%, 26.709% 65.448%, 25.855% 63.821%, 25.641% 57.532%, 26.175% 53.832%, 28.205% 52.131%, 28.419% 50.503%, 30.128% 47.914%, 32.051% 46.804%);
+    -webkit-mask-image: url(../../assets/img/hero-car-matte-mobile.png);
+            mask-image: url(../../assets/img/hero-car-matte-mobile.png);
   }
 }
 /* legibility constructions, measured (not mood): top for the nav, bottom for the lines */
