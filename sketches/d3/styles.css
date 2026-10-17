@@ -1,0 +1,655 @@
+/* =====================================================================================
+   Mancuso — homepage sketch D3
+   Direction: docs/d3-key-scenes.md ("the name is set at the size it was painted, and the
+   machines park in front of it"). Static composition; motion is layered on by motion.js.
+
+   Paddock rule (page-wide)
+   1. The name is the back wall: one `livery` line per type-led scene, fitted to its measure.
+   2. Photographs park in front of it: a master print overlaps the lower THIRD of the cap
+      (desktop) / lower QUARTER (mobile) — never more, never less than 20%.
+   3. Prints on a kerb share one bottom line; captions hang under them.
+   4. One reversal: at the transition the name stands in front of the photograph.
+   5. No frames: no borders, radii, shadows, grades or rotations on photographs.
+   Optical ceilings (§2.4): every print carries --ceil, its display ceiling in CSS px.
+   ===================================================================================== */
+
+:root {
+  /* colour — ground / ink / secondary from D2 (carried); dim = makes wall only; red = GT only */
+  --ground: #0f1112;
+  --ink: #edeae4;
+  --ink-2: #a7abad;          /* 8.2:1 on ground */
+  --dim: #6b7073;            /* 3.78:1 on ground — large type only (the makes wall) */
+  --red: #ef3a4c;            /* from the #76 Spirit of Le Mans livery; GT only (4.85:1) */
+  --error: #ff8a95;          /* form errors: 7.6:1 on ground; distinct from the GT red */
+  --rule: rgba(237, 234, 228, 0.16);
+  --field-line: rgba(167, 171, 173, 0.6);   /* 3.4:1 non-text */
+
+  --f: "Archivo", "Helvetica Neue", Arial, sans-serif;
+
+  /* spacing scale (4-based, then a doubling run for section intervals) */
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px;
+  --s7: 48px; --s8: 64px; --s9: 96px; --s10: 128px; --s11: 192px;
+
+  /* viewport width without the classic scrollbar (ui.js sets it; 1vw is the no-JS fallback) */
+  --vw: 1vw;
+  --u: calc(var(--vw) / 14.4);           /* 1px at the 1440 blocking frames */
+  --g: 20px;                              /* page gutter */
+  --m: calc(100 * var(--vw) - 2 * var(--g));   /* the measure every livery line is fitted to */
+
+  /* livery geometry (Archivo 800, measured in the render) */
+  --cap: 0.686;           /* cap height / em */
+  --pitch: 0.86;          /* stacked line pitch / em */
+  --lap: 0.25;            /* paddock overlap: quarter on mobile, third on desktop */
+
+  --nav-h: 64px;
+  --sec: var(--s10);                       /* interval between chapters */
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  --t-fast: 160ms;
+  --t-base: 240ms;
+}
+@media (min-width: 700px) { :root { --g: 32px; } }
+@media (min-width: 1000px) { :root { --g: max(32px, calc(48 * var(--u))); --lap: 0.3333; --nav-h: 80px; --sec: clamp(128px, calc(192 * var(--u)), 192px); } }
+
+/* ------------------------------------------------------------------------- base */
+*, *::before, *::after { box-sizing: border-box; }
+html { background: var(--ground); color-scheme: dark; -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--ground); color: var(--ink);
+  font-family: var(--f); font-size: 17px; line-height: 27px; font-weight: 400;
+  font-stretch: 100%; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img { display: block; max-width: 100%; height: auto; }
+a { color: inherit; }
+h1, h2, h3, p, figure, dl, dd, ol { margin: 0; padding: 0; }
+ol { list-style: none; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+[tabindex="-1"]:focus { outline: none; }
+
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; margin: -1px; padding: 0;
+  overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; border: 0;
+}
+.skip {
+  position: absolute; left: var(--g); top: -100px; z-index: 100;
+  background: var(--ink); color: var(--ground); padding: var(--s3) var(--s4);
+  font-weight: 600; font-size: 16px; text-decoration: none;
+}
+.skip:focus { top: var(--s3); }
+
+/* ------------------------------------------------------------------------- type roles */
+.livery {
+  margin: 0; color: var(--ink);
+  font-family: var(--f); font-weight: 800; font-stretch: 100%;
+  text-transform: uppercase; letter-spacing: 0; line-height: var(--pitch);
+  white-space: nowrap; font-kerning: normal;
+  font-size: calc(var(--m) / var(--k));
+  text-box: trim-both cap alphabetic;     /* the box IS the cap: top = cap-top, bottom = baseline */
+  user-select: none;
+}
+.livery--stack .livery__line { display: block; text-box: trim-both cap alphabetic; }
+.livery--stack .livery__line + .livery__line { margin-top: calc((var(--pitch) - var(--cap)) * 1em); }
+@media (min-width: 1000px) { .livery { font-stretch: 125%; } }
+
+.statement { font-size: 24px; line-height: 30px; font-weight: 600; letter-spacing: -0.005em; text-wrap: balance; }
+.lead { font-size: 17px; line-height: 25px; font-weight: 500; }
+.body { font-size: 16px; line-height: 25px; max-width: 36em; text-wrap: pretty; }
+.caption { font-size: 14px; line-height: 20px; color: var(--ink-2); text-wrap: pretty; }
+.label { font-size: 14px; line-height: 18px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; }
+@media (min-width: 1000px) {
+  .statement { font-size: 34px; line-height: 41px; }
+  .lead { font-size: 24px; line-height: 32px; }
+  .body { font-size: 17px; line-height: 27px; }
+}
+
+/* ------------------------------------------------------------------------- UI: buttons, links */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 48px; padding: 0 20px; border: 1px solid transparent;
+  font: 600 16px/1 var(--f); text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease), border-color var(--t-fast) var(--ease);
+}
+.btn--ink { background: var(--ink); color: var(--ground); }
+.btn--ink:hover { background: #ffffff; }
+.btn--gt { background: var(--red); color: var(--ground); }          /* ground on red 4.85:1 */
+.btn--gt:hover { background: #f4596a; }
+.btn--gt-line { border-color: var(--red); color: var(--red); background: rgba(15, 17, 18, 0.78); }  /* measured ≥ 4.9:1 on the photo */
+.btn--gt-line:hover { background: var(--red); color: var(--ground); }
+.link {
+  font-weight: 600; font-size: 16px; line-height: 24px; text-decoration: underline;
+  text-decoration-thickness: 1px; text-underline-offset: 5px; text-decoration-color: var(--ink-2);
+}
+.link:hover { text-decoration-color: var(--ink); }
+.glyph { width: 14px; height: 14px; fill: currentColor; flex: none; }
+
+/* ------------------------------------------------------------------------- prints */
+.print { margin: 0; }
+.print img { width: 100%; height: auto; }
+.print figcaption { margin-top: var(--s3); max-width: 40em; }
+
+/* ======================================================================== NAV */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 40; height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s5);
+  padding: 0 var(--g);
+  transition: transform var(--t-base) var(--ease), background-color var(--t-base) var(--ease);
+}
+.nav.is-solid { background: var(--ground); }
+.nav.is-hidden { transform: translateY(-100%); }
+.nav__mark {
+  font-weight: 700; font-stretch: 125%; font-size: 14px; line-height: 20px; letter-spacing: 0.04em;
+  text-transform: uppercase; text-decoration: none; color: var(--ink);
+  padding: var(--s3) 0; transition: opacity var(--t-base) var(--ease);
+}
+.nav.is-over-hero .nav__mark { opacity: 0; pointer-events: none; }
+.nav__links { display: none; gap: var(--s6); margin-left: auto; }
+.nav__links a {
+  font-size: 14px; line-height: 20px; font-weight: 500; text-decoration: none; color: var(--ink);
+  padding: var(--s3) 0; position: relative;
+}
+.nav__links a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 6px; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: left; transition: transform var(--t-base) var(--ease);
+}
+.nav__links a:hover::after, .nav__links a[aria-current="true"]::after { transform: scaleX(1); }
+.nav__menu {
+  margin-left: auto; min-height: 44px; min-width: 64px; padding: 0 var(--s2);
+  background: none; border: 0; color: var(--ink); font: 600 16px/1 var(--f); cursor: pointer;
+}
+@media (min-width: 1000px) {
+  .nav__links { display: flex; }
+  .nav__menu { display: none; }
+}
+
+/* the menu sheet */
+.menu {
+  position: fixed; inset: 0; z-index: 60; background: var(--ground);
+  display: flex; flex-direction: column; padding: 0 var(--g) var(--s7);
+  overflow-y: auto; overscroll-behavior: contain;
+}
+.menu__bar { height: var(--nav-h); display: flex; align-items: center; justify-content: space-between; flex: none; }
+.menu__links { display: flex; flex-direction: column; margin-top: var(--s8); }
+.menu__links a {
+  font-weight: 800; font-stretch: 100%; text-transform: uppercase; text-decoration: none;
+  font-size: clamp(40px, 12vw, 64px); line-height: 1; padding: var(--s3) 0; color: var(--ink);
+}
+.menu__links a:hover { color: var(--ink-2); }
+.menu__foot { margin-top: auto; padding-top: var(--s8); }
+.menu-open { overflow: hidden; }
+@media (min-width: 1000px) { .menu { display: none !important; } }
+
+/* ======================================================================== HERO
+   A scaled poster: the photograph, the name and the car share one coordinate system (the
+   photo's own box, sized like object-fit: cover, top-anchored), so the roof enters the name's
+   cap by the same fraction at every viewport. */
+.hero {
+  --ar: 1.4916;            /* 2400 / 1609 */
+  --px: 0.5;               /* horizontal anchor of the cover crop */
+  --roof: 0.5320;          /* roof line of the lead car, fraction of photo height */
+  --hh: max(100svh, 560px);
+  --sw: max(calc(100 * var(--vw)), calc(var(--hh) * var(--ar)));
+  --sh: calc(var(--sw) / var(--ar));
+  --k: 6.859;              /* MANCUSO advance at wdth 125 */
+  --fs: min(calc(var(--sw) * 0.136), calc(var(--m) / var(--k)));
+  position: relative; height: var(--hh); overflow: hidden; isolation: isolate;
+  background: #2a2c2b;
+}
+@media (max-width: 999px) {
+  .hero {
+    --ar: 0.6918;          /* 1100 / 1590, authored portrait crop */
+    --px: 0.62;            /* shifts the frame 120px left at 390 (doc §3.3) */
+    --roof: 0.4429;
+    --hh: max(100svh, 640px);
+    --k: 5.489;            /* MANCUSO at wdth 100 */
+    --fs: calc(var(--m) / var(--k));
+  }
+}
+.hero__group { position: absolute; inset: 0; transform-origin: 70.4% 62%; }
+.hero__stage {
+  position: absolute; top: 0;
+  left: calc((100 * var(--vw) - var(--sw)) * var(--px));
+  width: var(--sw); height: var(--sh);
+}
+.hero__stage img { width: 100%; height: 100%; max-width: none; }
+.hero__title { margin: 0; font: inherit; }
+.hero__livery {
+  position: absolute; left: var(--g); z-index: 1;
+  font-size: var(--fs);
+  /* cap-top so that the roof enters the bottom --lap of the cap */
+  top: calc(var(--sh) * var(--roof) - (1 - var(--lap)) * var(--cap) * var(--fs));
+}
+.hero__car {
+  z-index: 2;
+  clip-path: polygon(63.000% 54.941%, 65.250% 54.692%, 65.500% 53.822%, 66.458% 53.325%, 72.917% 53.139%, 74.875% 53.822%, 75.917% 54.630%, 79.500% 54.630%, 79.833% 55.749%, 80.250% 58.111%, 80.625% 60.597%, 80.833% 63.393%, 80.750% 67.122%, 80.625% 69.733%, 79.167% 70.106%, 78.125% 70.976%, 60.417% 70.976%, 60.083% 69.608%, 60.000% 64.326%, 60.208% 61.218%, 61.000% 59.789%, 61.083% 58.421%, 61.750% 56.246%, 62.500% 55.314%);
+}
+@media (max-width: 999px) {
+  .hero__car {
+    clip-path: polygon(33.333% 46.360%, 39.103% 46.064%, 39.744% 45.028%, 42.201% 44.436%, 58.761% 44.214%, 63.782% 45.028%, 66.453% 45.990%, 75.641% 45.990%, 76.496% 47.322%, 77.564% 50.133%, 78.526% 53.093%, 79.060% 56.422%, 78.846% 60.861%, 78.526% 63.969%, 74.786% 64.413%, 72.115% 65.448%, 26.709% 65.448%, 25.855% 63.821%, 25.641% 57.532%, 26.175% 53.832%, 28.205% 52.131%, 28.419% 50.503%, 30.128% 47.914%, 32.051% 46.804%);
+  }
+}
+/* legibility constructions, measured (not mood): top for the nav, bottom for the lines */
+.hero__ramp {
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  background:
+    linear-gradient(to bottom, rgba(15,17,18,.55) 0, rgba(15,17,18,0) 120px),
+    linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 62%, rgba(15,17,18,.62) 82%, rgba(15,17,18,.9) 100%);
+}
+@media (max-width: 999px) {
+  .hero__ramp {
+    background:
+      linear-gradient(to bottom, rgba(15,17,18,.74) 0, rgba(15,17,18,.5) 56px, rgba(15,17,18,0) 120px),
+      linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 66%, rgba(15,17,18,.7) 80%, rgba(15,17,18,.9) 100%);
+  }
+}
+.hero__foot {
+  position: absolute; z-index: 4; left: var(--g); right: var(--g); bottom: var(--s6);
+  display: flex; flex-direction: column; gap: var(--s5);
+}
+.hero__lines { max-width: 34em; }
+.hero__ctas { display: flex; flex-wrap: wrap; gap: var(--s3); }
+.hero__cap { position: absolute; z-index: 4; right: var(--g); bottom: var(--s6); line-height: 48px; color: #c4c6c4; }
+@media (max-width: 999px) {
+  .hero__foot { bottom: calc(var(--s7) + 20px); gap: var(--s5); }
+  .hero__ctas .btn { flex: 1 1 0; padding: 0 var(--s3); }
+  .hero__cap { left: var(--g); right: auto; bottom: var(--s4); line-height: 20px; }
+}
+@media (max-width: 359px) { .hero__ctas { flex-direction: column; } }
+
+/* ======================================================================== HISTORY */
+.history { position: relative; }
+.ch { position: relative; padding: var(--s10) var(--g) 0; }
+.ch + .ch, .s1s2 + .ch { padding-top: var(--sec); }
+
+/* mobile prints: masters bleed to the right edge (full bleed on phones), capped by their ceiling */
+.print { width: min(100%, var(--ceil)); }
+@media (max-width: 999px) {
+  .ch .print[data-print] {
+    --pw: min(calc(100% + 2 * var(--g)), var(--ceil));
+    width: var(--pw);
+    margin-left: calc(100% + var(--g) - var(--pw)); margin-right: 0;   /* right edge on the viewport edge */
+  }
+  .ch .print[data-print] figcaption { padding-right: var(--g); padding-left: var(--g); }
+}
+
+/* --- S1 · 1923: the names it sold (a quiet texture under the statement) */
+.ch--1923 { padding-top: var(--s10); }
+.makes {
+  margin: var(--s7) 0 0; color: var(--dim);
+  font-weight: 700; font-stretch: 100%; text-transform: uppercase; letter-spacing: 0;
+  font-size: 28px; line-height: 0.92; word-spacing: 0.08em;
+  text-wrap: pretty;
+}
+.makes .is-lit { color: var(--ink); }
+.makes span { display: inline-block; }
+.ch1923__cap { margin-top: var(--s5); max-width: 32em; }
+@media (min-width: 700px) { .makes { font-size: 40px; } }
+@media (min-width: 1000px) {
+  .ch--1923 {
+    display: grid; grid-template-columns: calc(600 * var(--u)) 1fr; column-gap: calc(120 * var(--u));
+    align-items: start; padding-top: var(--sec);
+  }
+  .ch1923__statement { max-width: 600px; }
+  .makes { margin-top: 0; font-stretch: 125%; font-size: calc(46 * var(--u)); line-height: 0.9; word-spacing: 0.12em; }
+  .ch1923__wall { padding-top: 6px; }
+}
+
+/* --- S2 · 1953: the name above the maker's */
+.ch--1953 { --k: 6.522; padding-top: var(--s10); }
+.ch1953__livery { position: relative; z-index: 0; }
+.ch1953__sign { position: relative; z-index: 1; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--m) / var(--k)); }
+.ch1953__text { margin-top: var(--s7); }
+.ch1953__text .body { margin-top: var(--s4); }
+.ch1953__text .caption { margin-top: var(--s4); }
+.kerb {
+  display: grid; grid-auto-flow: column; grid-template-rows: auto auto;
+  align-items: end; column-gap: var(--s4); row-gap: 0;
+}
+.kerb > .print { display: grid; grid-row: span 2; grid-template-rows: subgrid; width: min(100%, var(--ceil)); }
+.kerb > .print img { align-self: end; }
+.kerb > .print figcaption { align-self: start; }
+.ch1953__kerb { margin-top: var(--s8); }
+.ch1953__kerb { grid-template-columns: 1fr 1fr; }
+@media (min-width: 1000px) {
+  .ch--1953 {
+    --k: 8.108;
+    display: grid;
+    grid-template-columns: 1fr calc(540 * var(--u) + 48 * var(--u));
+    grid-template-areas: "liv liv" "text sign" "kerb sign" "kerb .";
+    padding-top: var(--sec);
+  }
+  .ch1953__livery { grid-area: liv; }
+  .ch1953__sign { grid-area: sign; width: min(calc(540 * var(--u)), 540px); align-self: start; }
+  .ch1953__text { grid-area: text; max-width: 600px; margin-top: calc(72 * var(--u)); }
+  .ch1953__kerb {
+    grid-area: kerb; margin-top: var(--s9); align-self: start; column-gap: calc(48 * var(--u));
+    grid-template-columns: min(calc(320 * var(--u)), 372px) min(calc(292 * var(--u)), 340px); justify-content: start;
+  }
+}
+
+/* --- S3 · the #76: the number from the door */
+.ch--76 { --k: 1.251; }
+.ch76__num { position: relative; z-index: 0; }
+.ch76__master { position: relative; z-index: 1; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--m) / var(--k)); }
+.ch76__text { margin-top: var(--s7); }
+.ch76__text .body, .ch76__text .caption { margin-top: var(--s4); }
+.ch76__kerb { margin-top: var(--s8); position: relative; z-index: 1; }
+@media (max-width: 999px) {
+  .ch76__kerb { grid-auto-flow: row; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); }
+  .ch76__kerb .print--truck { grid-column: 1 / -1; grid-row: 1 / span 2; max-width: 400px; margin-bottom: var(--s5); }
+  .ch76__kerb .print--glass { grid-column: 1; grid-row: 3 / span 2; }
+  .ch76__kerb .print--crew { grid-column: 2; grid-row: 3 / span 2; }
+}
+@media (min-width: 1000px) {
+  .ch--76 {
+    --fs76: calc(640 * var(--u));
+    display: grid;
+    grid-template-columns: 1fr min(calc(720 * var(--u)), 900px);
+    grid-template-areas: "num num" "text master" "kerb kerb";
+  }
+  .ch76__num { grid-area: num; font-size: var(--fs76); }
+  .ch76__master { grid-area: master; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--fs76)); width: 100%; }
+  .ch76__text { grid-area: text; max-width: 400px; margin-top: calc(56 * var(--u)); }
+  .ch76__kerb {
+    grid-area: kerb; margin-top: var(--s9); justify-content: space-between;
+    grid-template-columns: min(calc(400 * var(--u)), 400px) min(calc(440 * var(--u)), 440px) min(calc(440 * var(--u)), 440px);
+  }
+}
+
+/* --- S4 · Le Mans, June 1976 (compact): the word from the hood, the one number */
+.ch--lemans { --k: 4.655; }
+.ch-lm__livery { position: relative; z-index: 0; }
+.ch-lm__nose { position: relative; z-index: 1; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--fs-lm, calc(var(--m) / var(--k)))); }
+.ch-lm__text { margin-top: var(--s7); }
+.ch-lm__text .body, .ch-lm__text .caption { margin-top: var(--s4); }
+.ch-lm__paper { margin-top: var(--s7); width: min(72%, var(--ceil)); }
+@media (min-width: 1000px) {
+  .ch--lemans {
+    --fs-lm: calc(168 * var(--u));
+    display: grid;
+    grid-template-columns: min(calc(600 * var(--u)), 640px) 1fr;
+    column-gap: calc(80 * var(--u));
+    grid-template-areas: "liv liv" "nose text" "paper text";
+  }
+  .ch-lm__livery { grid-area: liv; justify-self: end; font-size: var(--fs-lm); }
+  .ch-lm__nose { grid-area: nose; align-self: start; }
+  .ch-lm__text { grid-area: text; max-width: 600px; margin-top: calc(56 * var(--u)); }
+  .ch-lm__text { grid-row: 2 / span 2; align-self: start; }
+  .ch-lm__paper { grid-area: paper; width: min(calc(320 * var(--u)), 320px); margin-top: var(--s8); justify-self: end; }
+}
+
+/* --- S5 · Lake Forest Sports Cars (history): the name painted inside the photograph */
+.ch-lfsc__copy { margin-top: var(--s5); }
+.ch-lfsc__copy > * + * { margin-top: var(--s4); }
+.ch-lfsc__sold { color: var(--ink); font-weight: 500; }
+.ch-lfsc__kerb { margin-top: var(--s7); grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); }
+.ch-lfsc__kerb .ch-lfsc__ferrari { margin-top: var(--s6); }
+.ch-lfsc__kerb > .ch-lfsc__master { width: calc(100% + 2 * var(--g)); max-width: var(--ceil); margin-left: calc(-1 * var(--g)); }
+.ch-lfsc__master figcaption { padding-left: var(--g); }
+.ch-lfsc__kerb > .ch-lfsc__ferrari { width: min(78%, var(--ceil)); justify-self: end; }
+@media (min-width: 700px) and (max-width: 999px) {
+  .ch-lfsc__kerb > .ch-lfsc__master { margin-left: 0; width: 100%; }
+  .ch-lfsc__master figcaption { padding-left: 0; }
+}
+@media (min-width: 1000px) {
+  .ch-lfsc__head { display: grid; grid-template-columns: calc(600 * var(--u)) 1fr; column-gap: calc(120 * var(--u)); align-items: start; }
+  .ch-lfsc__copy { margin-top: 6px; }
+  .ch-lfsc__kerb {
+    grid-auto-flow: column; grid-template-rows: auto auto; margin-top: var(--s9);
+    grid-template-columns: min(calc(912 * var(--u)), 1040px) min(calc(400 * var(--u)), 440px);
+    justify-content: space-between; column-gap: calc(32 * var(--u));
+  }
+  .ch-lfsc__kerb > .ch-lfsc__master { width: 100%; margin-left: 0; }
+  .ch-lfsc__master figcaption { padding-left: 0; }
+  .ch-lfsc__kerb > .ch-lfsc__ferrari { width: 100%; margin-top: 0; }
+}
+
+/* --- S6 · Father and son */
+.ch-lola__tents { margin-top: var(--s7); }
+.ch-lola__kerb { margin-top: var(--s7); }
+.ch-lola__kerb { grid-template-columns: 38fr 62fr; }
+@media (max-width: 999px) {
+
+  .ch-lola__tents figcaption { padding-right: var(--g); }
+}
+@media (min-width: 1000px) {
+  .ch--lola {
+    display: grid; grid-template-columns: 1fr min(calc(816 * var(--u)), 960px); column-gap: calc(64 * var(--u));
+    grid-template-areas: "text tents" "kerb tents";
+    grid-template-rows: auto 1fr;
+  }
+  .ch-lola__text { grid-area: text; }
+  .ch-lola__tents { grid-area: tents; margin-top: 0; width: 100%; }
+  .ch-lola__kerb { grid-area: kerb; align-self: end; margin-top: var(--s8); column-gap: calc(24 * var(--u)); grid-template-columns: 42fr 58fr; }
+}
+.ch-lola__text .body, .ch-lola__text .caption { margin-top: var(--s4); }
+
+/* ======================================================================== SILENCE + TRANSITION */
+.silence { height: 30vh; }
+.transition { position: relative; }
+.tr { position: relative; --k: 5.489; }
+.tr__photo { position: relative; z-index: 0; margin: 0; }
+.tr__frame { position: relative; overflow: hidden; }
+.tr__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
+/* the evidence box: exactly around the painted line inside the print (image fractions) */
+.tr__box {
+  position: absolute; border: 1px solid var(--ink);
+  left: 40.2%; width: 6.3%; top: 39.3%; height: 4.6%;
+}
+.tr__ramp {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 62%, rgba(15,17,18,.72) 84%, rgba(15,17,18,.94) 100%);
+}
+.tr__livery {
+  position: relative; z-index: 1; padding: 0 var(--g);
+  /* MANCUSO overlaps the photo's bottom edge by --lap of its cap; BY stands on the photo */
+  margin-top: calc(-1 * (var(--cap) + (var(--pitch) - var(--cap)) + var(--lap) * var(--cap)) * var(--m) / var(--k));
+}
+.tr__statement { padding: var(--s5) var(--g) 0; }
+.tr__after { padding: 0 var(--g); }
+.tr__note { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s5) var(--g) 0; max-width: calc(36em + 2 * var(--g)); }
+@media (min-width: 700px) {
+  .tr__frame { aspect-ratio: 2400 / 1404; }   /* landscape master; cuts the plastic chairs (rows 0–88%) */
+  .tr__box { top: 45.2%; height: 4.6%; }
+}
+@media (max-width: 699px) {
+  .tr__frame { aspect-ratio: 902 / 1460; }
+  .tr__box { left: 49.6%; width: 21%; top: 46.2%; height: 6.2%; }
+  .tr__ramp { background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 58%, rgba(15,17,18,.62) 76%, rgba(15,17,18,.94) 100%); }
+}
+@media (min-width: 1000px) {
+  .tr { --k: 6.859; display: grid; grid-template-columns: calc(720 * var(--u) + var(--g)) 1fr; grid-template-areas: "photo photo" "liv liv" "stmt note"; }
+  .tr__photo { grid-area: photo; }
+  .tr__livery { grid-area: liv; }
+  .tr__statement { grid-area: stmt; padding-top: var(--s7); }
+  .tr__note { grid-area: note; padding: calc(var(--s7) + 6px) var(--g) 0 0; }
+}
+
+/* ======================================================================== THE GT */
+.gt { padding: var(--s10) var(--g) 0; }
+.gt__title { font-size: 48px; line-height: 1; font-weight: 600; letter-spacing: -0.015em; }
+.gt__status { color: var(--red); margin-top: var(--s4); }
+.gt__body { margin-top: var(--s6); }
+.gt__lead { max-width: 30em; font-size: 18px; line-height: 27px; font-weight: 500; }
+.gt__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s6); margin-top: var(--s6); }
+.gt__film {
+  display: inline-flex; align-items: center; gap: var(--s3); min-height: 48px;
+  font-weight: 600; font-size: 16px; text-decoration: none;
+}
+.gt__film:hover { text-decoration: underline; text-underline-offset: 5px; text-decoration-thickness: 1px; }
+.gt__dur { color: var(--ink-2); font-weight: 500; }
+.record { display: grid; grid-template-columns: 1fr; gap: var(--s4); margin-top: var(--s8); padding-top: var(--s5); border-top: 1px solid var(--rule); }
+.record dt { font-size: 14px; line-height: 20px; color: var(--ink-2); }
+.record dd { font-size: 16px; line-height: 24px; font-weight: 500; margin-top: 2px; }
+@media (min-width: 700px) { .record { grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); justify-content: start; column-gap: var(--s8); } }
+@media (min-width: 1000px) {
+  .gt {
+    display: grid; grid-template-columns: calc(720 * var(--u)) minmax(0, 640px);
+    padding-top: var(--s10);
+  }
+  .gt__head { grid-column: 1; }
+  .gt__title { font-size: 72px; line-height: 1; }
+  .gt__body { grid-column: 2; margin-top: 4px; }
+  .gt__lead { font-size: 21px; line-height: 31px; max-width: 600px; }
+}
+
+/* ======================================================================== RPM CLUB + INSTAGRAM */
+.rpm { padding: var(--s10) var(--g) 0; display: grid; gap: var(--s8); }
+@media (min-width: 1000px) { .rpm { padding-top: var(--sec); } }
+.rpm__station { color: var(--ink-2); margin-bottom: var(--s4); }
+.rpm__intro .body { margin-top: var(--s4); }
+.rpm__links { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); margin-top: var(--s5); }
+.rpm__links .link { min-height: 44px; display: inline-flex; align-items: center; }
+.ig { margin-top: var(--s4); padding-top: var(--s5); border-top: 1px solid var(--rule); max-width: 30em; }
+@media (min-width: 1000px) { .ig { margin-top: var(--s8); } }
+.ig__title { font-size: 16px; line-height: 24px; font-weight: 600; }
+.ig__text { font-size: 16px; line-height: 25px; color: var(--ink-2); margin-top: var(--s2); }
+.pending { color: var(--ink); }
+
+.ep-latest { padding-bottom: var(--s2); }
+.ep-latest__title { font-size: 24px; line-height: 30px; font-weight: 600; margin-top: var(--s3); text-wrap: balance; max-width: 18em; }
+.ep-latest__act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s5); }
+.ep-list__title { margin-top: var(--s8); }
+.ep-list { margin-top: var(--s3); border-top: 1px solid var(--rule); }
+.ep-list li { border-bottom: 1px solid var(--rule); }
+.ep-list a {
+  display: grid; grid-template-columns: 72px 1fr; gap: var(--s4); align-items: baseline;
+  padding: var(--s4) 0; min-height: 56px; text-decoration: none;
+}
+.ep-list time { font-size: 14px; line-height: 20px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.ep-list__name { font-size: 17px; line-height: 25px; font-weight: 500; }
+.ep-list a:hover .ep-list__name { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.rpm__note { margin-top: var(--s4); }
+@media (min-width: 1000px) {
+  .rpm { grid-template-columns: calc(600 * var(--u)) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: calc(120 * var(--u)); row-gap: 0; }
+  .rpm__intro { grid-column: 1; grid-row: 1; }
+  .rpm__episodes { grid-column: 2; grid-row: 1 / span 2; }
+  .ig { grid-column: 1; grid-row: 2; align-self: start; }
+  .rpm__intro { max-width: 560px; }
+  .ep-latest__title { font-size: 34px; line-height: 41px; }
+}
+
+/* ======================================================================== CONTACT */
+.contact { padding: var(--s10) var(--g) var(--s10); display: grid; gap: var(--s8); }
+.contact__head .body { margin-top: var(--s4); }
+.record--stack { grid-template-columns: 1fr !important; margin-top: var(--s7); max-width: 360px; }
+.record--stack > div { display: grid; grid-template-columns: 96px 1fr; align-items: baseline; }
+.record--stack dd { margin: 0; }
+.enquiry { display: grid; grid-template-columns: 1fr; gap: var(--s5) var(--s6); align-content: start; }
+.field { display: flex; flex-direction: column; min-width: 0; border: 0; padding: 0; margin: 0; }
+.field label, .field legend { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--ink); padding: 0; }
+.opt { font-weight: 400; color: var(--ink-2); margin-left: var(--s2); }
+.field input, .field textarea {
+  margin-top: var(--s2); width: 100%; min-height: 48px;
+  font: 400 17px/27px var(--f); color: var(--ink); background: transparent;
+  border: 0; border-bottom: 1px solid var(--field-line); border-radius: 0;
+  padding: var(--s2) 0; transition: border-color var(--t-fast) var(--ease);
+}
+.field input:hover, .field textarea:hover { border-bottom-color: var(--ink-2); }
+.field input:focus-visible, .field textarea:focus-visible { border-bottom-color: var(--ink); outline: 2px solid var(--ink); outline-offset: 4px; }
+.field input[aria-invalid="true"], .field textarea[aria-invalid="true"] { border-bottom-color: var(--error); }
+.field textarea { resize: vertical; min-height: calc(4 * 27px + 16px); }
+.field__error { min-height: 20px; margin-top: var(--s2); font-size: 14px; line-height: 20px; color: var(--error); visibility: hidden; }
+.field__error.is-shown { visibility: visible; }
+.choices { display: flex; flex-wrap: wrap; gap: var(--s2) var(--s6); margin-top: var(--s2); }
+.choice { position: relative; display: inline-flex; align-items: center; gap: var(--s3); min-height: 44px; font-size: 17px; cursor: pointer; }
+.choice input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.choice__dot { width: 20px; height: 20px; border-radius: 50%; border: 1px solid var(--ink-2); display: grid; place-items: center; flex: none; }
+.choice__dot::after { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--ink); transform: scale(0); transition: transform var(--t-fast) var(--ease); }
+.choice input:checked + .choice__dot { border-color: var(--ink); }
+.choice input:checked + .choice__dot::after { transform: scale(1); }
+.choice input:focus-visible + .choice__dot { outline: 2px solid var(--ink); outline-offset: 3px; }
+.enquiry__actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s5); margin-top: var(--s2); }
+.enquiry__status { font-size: 16px; line-height: 24px; color: var(--ink); }
+.enquiry__status:empty { display: none; }
+@media (min-width: 700px) { .enquiry { grid-template-columns: 1fr 1fr; } .field--wide { grid-column: 1 / -1; } }
+@media (min-width: 1000px) {
+  .contact { grid-template-columns: calc(600 * var(--u)) minmax(0, 1fr); column-gap: calc(120 * var(--u)); }
+}
+
+/* ======================================================================== FOOTER: the page lands */
+.foot {
+  border-top: 1px solid var(--rule);
+  padding: var(--s8) var(--g) var(--s7);
+  display: grid; gap: var(--s6);
+}
+.foot__sign .nav__mark { padding: 0; font-size: 16px; }
+.foot__line { margin-top: var(--s2); font-size: 16px; line-height: 24px; color: var(--ink-2); }
+.foot__nav { display: flex; flex-wrap: wrap; gap: 0 var(--s5); }
+.foot__nav a { font-size: 14px; line-height: 20px; font-weight: 500; text-decoration: none; padding: var(--s3) 0; }
+.foot__nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+.foot__top { text-decoration: none; align-self: end; }
+.foot__top:hover { color: var(--ink); }
+@media (min-width: 1000px) {
+  .foot {
+    grid-template-columns: calc(720 * var(--u)) 1fr auto;
+    grid-template-areas: "sign nav top" "credits credits credits";
+    align-items: start; row-gap: var(--s8);
+  }
+  .foot__sign { grid-area: sign; }
+  .foot__nav { grid-area: nav; padding-top: 0; margin-top: -12px; }
+  .foot__top { grid-area: top; align-self: start; }
+  .foot__credits { grid-area: credits; }
+}
+
+/* ======================================================================== Lenis */
+html.lenis textarea[data-lenis-prevent] { overscroll-behavior: auto; }
+
+/* ======================================================================== no-JS / reduced motion
+   Without scripts the nav scrolls away with the hero (it never floats, unbacked, over content);
+   under reduced motion nothing slides or fades — states change instantly. */
+html:not(.js) .nav { position: absolute; }
+html:not(.js) .nav__mark { opacity: 0; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation-duration: 0ms !important; scroll-behavior: auto !important; }
+}
+
+/* LFSC master: crop the empty showroom wall, keep the #009 and #007 (object-fit crop, never a stretch) */
+.ch-lfsc__master img { aspect-ratio: 2000 / 1240; object-fit: cover; object-position: 50% 100%; }
+
+/* ======================================================================== MOTION BLOCK (motion-designer)
+   Owned by motion.js / motion-designer. Tokens first (G4): scrubbed devices map scroll
+   ranges, so these are distances, scales and curve names — not durations. Everything below
+   is gated by html.js (no-JS = the static page) and prefers-reduced-motion: no-preference
+   (reduced motion = the static page). Animated: transform, opacity, clip-path only. */
+:root {
+  --m-push: 1.08;               /* hero push-in, desk (doc §3.4) */
+  --m-push-phone: 1.06;         /* phone: less travel, the name keeps a margin */
+  --m-fall: 16;                 /* px — the dim makes fall away */
+  --m-lift: 24;                 /* px — a statement lifts as it leaves */
+  --m-park-sign: 110;           /* px @1440 — the 1953 sign parks */
+  --m-park-76: 80;              /* px @1440 — the #76 parks (capped by the kerb gap) */
+  --m-peak-pin: 1.4;            /* viewport heights held at the peak */
+  --m-print: 0.6;               /* the trailer photo contracts to 0.6 (864 px at 1440) */
+  --m-ease-travel: power2.inOut;   /* CHEVROLET's drop into its painted line (weight) */
+  --m-ease-park: power2.out;       /* an object arriving and stopping */
+  --m-ease-contract: power1.inOut; /* the photograph becoming a print */
+  --m-ease-rise: power2.out;       /* the name rising into place */
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* hero · the car keeps coming: photo + name + car as ONE group, 1.00 → 1.08 while the
+       hero scrolls out; linear (the scroll is the easing); never above native width */
+    html.js .hero { view-timeline: --d3-hero block; }
+    html.js .hero__group {
+      animation: d3-push linear both;
+      animation-timeline: --d3-hero;
+      animation-range: exit 0% exit 100%;
+    }
+  }
+  @media (max-width: 999px) and (prefers-reduced-motion: no-preference) {
+    /* phone: push about the lead car's centre in the authored portrait crop */
+    html.js .hero__group { --m-push-to: var(--m-push-phone); transform-origin: 47.4% 54.8%; }
+    /* phone · 1953: MANCUSO is painted above CHEVROLET, left → right, as it crosses the
+       lower half of the screen (no pin) */
+    html.js [data-livery="1953"] [data-livery-line="mancuso"] {
+      animation: d3-paint linear both;
+      animation-timeline: view();
+      animation-range: cover 22% cover 50%;
+    }
+  }
+}
+@keyframes d3-push { from { transform: none; } to { transform: scale(var(--m-push-to, var(--m-push))); } }
+@keyframes d3-paint { from { clip-path: inset(-25% 100% -25% -3%); } to { clip-path: inset(-25% 0 -25% -3%); } }
+/* desk: the evidence box is drawn at the print's scale — 1 px once contracted */
+html.motion-desk .tr__box { border-width: calc(1px / var(--m-print)); }
+/* ======================================================================== /MOTION BLOCK */

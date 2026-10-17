@@ -3,8 +3,10 @@
 Originals are only read, never written. Archive frames smaller than the
 target are re-encoded at their native size — never upscaled.
 
-Run: PYTHONPATH=<site-packages with Pillow> python3 -E tools/prepare-images.py
+Run: PYTHONPATH=<site-packages with Pillow> python3 -E tools/prepare-images.py [output names…]
+With output names, only those derivatives are rebuilt.
 """
+import sys
 import os
 from PIL import Image
 
@@ -50,6 +52,10 @@ JOBS = [
     # Sketch D2 — the tents wide shot never shows above 0.72 of 2000 at 1440 (downscale only;
     # the 2000w file stays for viewports wider than 1440).
     ('100_0104 Adam.JPG', 'lola-tents-1440.jpg', 1440, None),
+    # Sketch D3 — sharpness-led derivatives (docs/d3-key-scenes.md §2.4, §7)
+    ('76_mancuso-fyhrie_credit_tonymezzacca Adam.jpg', 'mancuso-76-mezzacca.jpg', 900, None),  # native, the #76 master
+    ('Mancuso truck Adam.jpg', 'mancuso-truck-400.jpg', 400, None),   # upscaled scan: 400 is its honest ceiling
+    ('DSC03090 Adam.JPG', 'aston-009-007.jpg', 2000, None),           # Aston Martin #009 + #007, showroom
 ]
 
 # Images embedded in the Lola PDFs: (pdf, page index, output, max width[, crop l,t,r,b])
@@ -61,9 +67,15 @@ PDF_JOBS = [
     # Sketch D2 — square crest close for the S5 abutting row; 832 px native so the row can
     # run to 1920 wide (needs 475) without upscaling. No credit band in the crop.
     ("Lola's Adam.pdf", 3, 'lola-crest-square.jpg', 832, (0.275, 0.1583, 0.6, 0.5917)),
+    # Sketch D3 — authored portrait crop of the trailer frame for phones, native pixels (902×1460)
+    ("Lola's Adam.pdf", 8, 'lola-trailer-mobile.jpg', 1460, (0.255, 0.06, 0.555, 0.79)),
 ]
 
+ONLY = set(sys.argv[1:])
+
 for src, out, max_w, crop in JOBS:
+    if ONLY and out not in ONLY:
+        continue
     im = Image.open(os.path.join(SRC, src)).convert('RGB')
     if crop:
         w, h = im.size
@@ -80,6 +92,8 @@ except ImportError:
     fitz = None
 if fitz:
     for pdf, page, out, max_w, *crop in PDF_JOBS:
+        if ONLY and out not in ONLY:
+            continue
         doc = fitz.open(os.path.join(SRC, pdf))
         xref = doc[page].get_images(full=True)[0][0]
         im = Image.open(io.BytesIO(doc.extract_image(xref)['image'])).convert('RGB')
