@@ -135,6 +135,44 @@ Information never depends on a painted word. Every livery word is repeated in re
 or in the accessible name (`DNA17`). The livery is `aria-hidden`; the reading text carries
 the semantics.
 
+### 2.1a Applying the rule past the three key scenes (fix1, 2026-10-16, after the D3 review)
+
+The paddock rule is page-wide, so the scenes built after the key three either carry one painted
+line taken from what is actually painted in their photographs, or **declare the yield** and are
+composed as one master at its sharpness ceiling with the prints on one kerb. No scene repeats
+another's unit.
+
+| Scene | Painted line | Composition |
+|---|---|---|
+| Le Mans 1976 | **LE MANS** (the hood) | right-aligned line; the nose print (600) and *Le Maine Libre* (320) stand on **one kerb**, the nose parked on the line's lower third; the text follows at the newspaper's left edge |
+| Lake Forest Sports Cars | **009** (the Aston's door; the master's own paint) | head (statement + copy) first; 009 right-aligned at 400 px (cap 274 @1440); the Aston (912) parks on its lower third, the Ferrari (400) on the same kerb |
+| Father and son (Lola) | **Yield, declared.** No painted line. | The run-down into the page's only silence: the tents master at 816 (ceiling 960) beside the text; the crest (≥ 320 desktop, ≥ 260 phone) and the #61 (520) on one kerb under them. A third numeral in a row (76, 009, 61) would make the device a formula and would spend the scale the peak needs. |
+| RPM Club | **RPM CLUB** at 150 px @1440 (below BY / MANCUSO's 196, so the peak keeps the page's scale) | **fix2 (critic2 NEW-2/3):** desktop opens on its reading text (statement, station, copy, links) one larger step (192 @1440, ≤ 22 vh) after the GT record, and RPM CLUB arrives *after* it — so after the pin releases the peak exhales: MANCUSO's baseline → RPM's cap-top is 677 px at 1440 with motion, 540 at 1280×720, 802 at 1024, ≥ 1243 reduced motion; no frame shows both lines whole, and at 1440 they overlap in one viewport only while MANCUSO leaves the top edge and RPM's cap enters the bottom. The episode plate is **dropped**: CLUB stands whole, the latest episode and the list stand one beat under the line in CLUB's column, the Instagram note under RPM. The old plate parked 18–19 % with a hairline through CLUB's feet and read as a clipping bug; nothing in this scene is a photograph, so there is nothing that can honestly park. `[data-rpm-plate]` keeps the motion hook: the episodes now arrive and stop *under* the line. Tablet (700–999) follows the desktop order; phones (< 700): the line, then the copy (≥ 961 px clear of BY / MANCUSO). The show's artwork stays withheld (permission pending). |
+| Footer | **SINCE 1923**, fitted to the measure | the page closes on type (Oilstain HF/11 ending); chrome above it, quiet |
+
+**The register rule's single exception (fix2, critic2 NEW-5): "The GT." at 72 px @1440 (48 phone).**
+§2.2 allows only two large sizes — the livery line and the 34 px statement. The GT's title sits
+between them, at 72 px, on purpose and only there: the GT's name is **not painted on anything
+yet** (no released car, no lettering, the brand still pending — §5.3), so it cannot be livery,
+and at statement size it would read as one more chapter heading instead of the thing the peak
+hands over to. It is the one product name on a page of painted family names, set in the reading
+voice (wdth 100 / 600) at the size between the two registers. No other element may use that
+step; when the GT's name is painted on a released car, it becomes livery and the exception ends.
+
+Makes wall (1923, phones — fix2, critic2 NEW-4): livery voice at wdth 100 / 800, fitted to the
+measure (the longest line spans it), two makes per line where they fit and one where they do
+not, ≥ 44 px at 375, CHEVROLET lit; 768 sets three per line. At 28 / 40 px it read as a grey
+paragraph next to the 24 px statement.
+
+Makes wall (1923, desktop): livery 800 / wdth 125 at 78 px (5.4 vw), across the full measure,
+dim except CHEVROLET — still a third of the hero's MANCUSO (196), so it never outranks it.
+
+Transition, static / reduced motion / phone: BY stands on the photograph, MANCUSO overlaps its
+bottom edge by a third of the cap; the ramp lives between BY's baseline and that edge on phones
+and starts half a cap above BY on landscape (BY measured 1.6:1 on the bare trailer skirt). With
+desk motion the ramp is the print's own ~90 px (T-B). The GT bay stands at the print's left edge
+(`--tr-print-x`), so T-C is a vertical hand-over.
+
 ### 2.2 Type: Archivo, one family, two voices
 
 **Funnel Display and Funnel Sans are killed.** The Funnel pair has no relation to the
@@ -165,7 +203,7 @@ sans is this family's own voice.
 - the `livery` line, between 7× and 26× the body size;
 - the `statement`, at 2× the body size.
 
-Nothing sits between them. The scale collision between those two is the rhythm, as in
+Nothing sits between them — with one declared exception, "The GT." at 72 px (§2.1a). The scale collision between those two is the rhythm, as in
 Oilstain's "HF" against "LESS IS MORE".
 
 Before adoption, verify I10 in the render: set "76", "1923", "CHEVROLET" and the 14 px
@@ -274,6 +312,17 @@ file has a period race photograph doing it.
 
   The trailer line ("an automotive family since 1923") is **not** used here. It is saved
   for the transition.
+
+**fix2 (critic2 NEW-1) — the photo-space lift.** The name, the car, the photograph and the veil
+stay locked in the photograph's coordinates (the overlap is unchanged: 0.333 desktop, 0.20
+phone), but the whole group is lifted when the foot (lines + CTAs, anchored to the viewport
+bottom) would come within 48 px of the name's baseline:
+`--lift = max(hh − sh, min(0, footTop − 48 − capBottom))`. The crop loses grandstand at the
+top, never the name or the car; the clamp keeps the photograph covering the hero's bottom edge.
+`footTop` is measured by ui.js (`--hero-foot-top` on `.hero`, never on `[data-hero-push]`), with
+a CSS fallback for no-JS. The bottom ramp now starts *at* the baseline with zero slope and eases
+to .36 at the lead's top, .62 at 40 % of the foot, .9 at the edge — no stop that can draw a line
+across the letters or the car.
 
 ### 3.3 Mobile 390×844 (authored, `m-hero.png`)
 
@@ -501,8 +550,14 @@ Preceded by 30 vh of plain ground: the page's only silence.
     Mancuso."
   - CTA row: **"Ask about the GT"** (red fill, ground text, 4.85:1) and "Watch
     'Introducing the GT' · 2:19" (ui, ink, play glyph from the page's one icon set).
-- This frame is the GT scene's opening. The record row (Specification / Photography /
-  Source) follows below it in flow. That row is out of scope here.
+- This frame is the GT scene's opening. The record row ("Specification and photography — to be
+  announced" folded into one cell, then Source) follows below it in flow.
+- **T-C has no machine image, and that is a fact, not a gap in the design** (fix2, critic2
+  contrarian, customer desire): the family has released **no GT imagery** — no photograph, no
+  render, no clean still. The only pictures of the car are frames inside the film "Introducing
+  the GT", and a still taken from it would need the client's permission (asked:
+  `docs/client-questions.md` #10). Until it is granted, the bay is type only; no GT image is
+  added, generated or borrowed from the film.
 
 ### 5.4 Motion (`motion-designer`)
 

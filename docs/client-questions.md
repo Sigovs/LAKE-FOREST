@@ -23,6 +23,7 @@ These are the open points from the first website prototype. Until each one is an
 8. **The family crest** as a vector file (SVG, AI or PDF). It appears on the "Introducing the GT" film card and on the race cars, but we only have photographs of decals.
 9. **The hero video** for the top of the homepage.
 10. **A clean still of the GT** — a frame from the film with no lettering, for the GT section.
+    - **May we use a still from "Introducing the GT" on the site?** No GT photograph or render has been released, so the GT section currently has no image of the car. A frame from the film is the only picture of it we have, and we will not use one without your permission. If yes: which frame (or send one), and may it appear before the launch?
 11. **The GT's launch timing and any copy** you want beyond the Vimeo description.
     - What should the car be called on the site: "The GT", "The Mancuso GT", or something else?
     - Which details can be published, and when (specification, production, availability)? Until then the site shows "To be announced".

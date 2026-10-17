@@ -1,4 +1,4 @@
-/* motion.js — Mancuso · Sketch D3 · motion layer (motion-designer, 2026-10-16)
+/* motion.js — Mancuso · Sketch D3 · motion layer (motion-designer, 2026-10-16, pass 2)
  * Direction: docs/d3-key-scenes.md §3.4, §4.5, §5.4. The static page is complete without
  * this file (no-JS and reduced motion are the static page, DNA39 / MJ5 / MJ9).
  *
@@ -13,8 +13,12 @@
  *          into its painted line, MANCUSO is painted above it,     (1923 frame held while the
  *          the sign parks in front                                 1953 frame rises over it)
  *   park   #76    hierarchy — the car parks in front of its number ScrollTrigger, no pin
- *   peak   transition — THE signature: the trailer photo contracts ScrollTrigger, pin ~1.4 vh
- *          into a print and BY / MANCUSO rises in front of it
+ *   park   009, RPM — the same grammar, small: the #009 master /   ScrollTrigger, no pin
+ *          the episode plate arrive on their line's lower third
+ *   peak   transition — THE signature: the trailer photo contracts ScrollTrigger, pin 2.1 vh on
+ *          into a print and BY / MANCUSO rises in front of it (T-B);  the whole wrapper
+ *          T-C: the archive leaves upward and the GT bay rises into
+ *          its place, CTA row on BY's baseline; release after T-C
  *
  * Every device is a pure function of scroll progress: any stop is a frame, reverse is the
  * same frames backwards, nothing snaps (MJ4, MJ6). Animated: transform, opacity, clip-path
@@ -24,7 +28,7 @@
 (() => {
   'use strict';
   const html = document.documentElement;
-  const status = { version: 'd3-motion-1', lenis: false, mode: null, devices: [], pins: {}, ranges: {} };
+  const status = { version: 'd3-motion-2', lenis: false, mode: null, devices: [], pins: {}, ranges: {} };
   window.__motion = status; // checkable presence (MJ11)
 
   const { gsap, ScrollTrigger, Lenis } = window;
@@ -106,7 +110,9 @@
       e.preventDefault();
       e.stopPropagation(); // keeps Lenis's own window listener from starting a second scroll
       if (location.hash !== hash) history.pushState(null, '', hash);
-      lenis.scrollTo(target);
+      // a target inside a pinned scene lands on its composed frame (#gt → T-C), not its box
+      const y = status.anchorY ? status.anchorY(hash) : null;
+      lenis.scrollTo(y !== null && y !== undefined ? y : target);
     };
     document.addEventListener('click', onAnchor);
 
@@ -165,7 +171,10 @@
 
       /* the schedule (fractions of the held distance); the statement's exit is solved per
          geometry so that nothing ever crosses it while it is still visible */
-      const T = { m0: 0.03, m1: 0.24, w0: 0.2, w1: 0.5, p0: 0.52, p1: 0.82, k0: 0.44, k1: 0.94, s0: 0.6, s1: 0.76 };
+      /* the wall holds first (a composed frame, not a countdown), then empties; CHEVROLET's
+         lone travel is kept short so the frame is never a word over a void for long */
+      const T = { m0: 0.12, m1: 0.36, w0: 0.27, w1: 0.54, p0: 0.52, p1: 0.82, k0: 0.44, k1: 0.94, s0: 0.4, s1: 0.52 };
+      const stmt2 = q('[data-statement="1953"]', s2);
       let G = null;
 
       const measure = (st) => {
@@ -197,14 +206,22 @@
 
         // solve the statement's exit: first progress at which the travelling word or the
         // painted part of MANCUSO would touch it
+        const vh = window.innerHeight;
+        // MANCUSO is painted once its line is well inside the frame (lower quarter)
+        T.p0 = Math.max(T.w1 - 0.04, Math.min(0.6, (M.y - 0.78 * vh) / D));
+        T.p1 = Math.min(0.92, T.p0 + 0.3);
         let pHit = 0.8;
         for (let p = 0; p <= 1; p += 0.0025) {
           const wb = wordBox(p), mb = paintBox(p);
           if ((wb && hit(wb, stBox)) || (mb && hit(mb, stBox))) { pHit = Math.min(pHit, p); break; }
         }
-        T.s1 = Math.max(0.12, pHit - 0.02);
-        T.s0 = Math.max(0.06, T.s1 - 0.16);
-        status.ranges.join = { start: Math.round(st.start), end: Math.round(st.end), statementExit: [r2(T.s0), r2(T.s1)] };
+        // the hand-over of the two statements (review #5): 1923 is gone before the 1953
+        // statement enters the frame — one reading headline at a time, at every width
+        const y2 = stmt2 ? textBox(stmt2).top - s1r.top - (dTop - D) : Infinity; // in the pin's frame at p = 0
+        const pEnter = stmt2 ? (y2 - 0.97 * vh) / D : 1;   // 1953 statement's top crosses the fold
+        T.s1 = clamp01(Math.min(pHit - 0.02, pEnter));
+        T.s0 = Math.max(T.m0 + 0.06, T.s1 - 0.14);
+        status.ranges.join = { start: Math.round(st.start), end: Math.round(st.end), statementExit: [r2(T.s0), r2(T.s1)], paint: [r2(T.p0), r2(T.p1)], p1953at70: r2((y2 - 0.7 * vh) / D) };
       };
       const travel = (p) => easeTravel(seg(p, T.w0, T.w1));
       const wordPos = (p) => {
@@ -298,29 +315,115 @@
       cleanups.push(() => st.kill());
     })();
 
-    /* ---------------------------------------------------------------- peak: the transition */
+    /* ---------------------------------------------------------------- park: 009, RPM CLUB
+       The page's one grammar, applied twice more and kept small: a photograph (the #009 master)
+       and the present-day plate (the RPM episodes) arrive and stop on their painted line's lower
+       third. No pin; the travel is capped by the free room below so nothing is ever crossed. */
+    const park = (el, scope, tokenName, fallback, endSpec) => {
+      if (!el || !scope) return;
+      const w = W(el);
+      const easePark = tokEase('--m-ease-park', 'power2.out');
+      let off = 0;
+      const room = () => {
+        const r = el.getBoundingClientRect();
+        let min = Infinity;
+        const cands = [...scope.querySelectorAll(':scope > *, :scope > * > *')];
+        // the next scene's content (its box starts at our bottom; its padding is the room)
+        if (scope.nextElementSibling) cands.push(...scope.nextElementSibling.querySelectorAll(':scope > *'));
+        cands.forEach((c) => {
+          if (c === el || c.contains(el) || el.contains(c)) return;
+          const cr = c.getBoundingClientRect();
+          if (cr.height === 0 || cr.left >= r.right || cr.right <= r.left || cr.top < r.bottom - 1) return;
+          min = Math.min(min, cr.top - r.bottom);
+        });
+        return min;
+      };
+      const measure = () => { w.clear(); off = Math.max(0, Math.min(tokNum(tokenName, fallback) * u(), room() - 16)); };
+      const render = (p) => w.tf(0, off * (1 - easePark(p)));
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: 'top bottom',
+        end: endSpec,
+        invalidateOnRefresh: true,
+        onRefresh: (self) => { measure(); render(self.progress); status.ranges[tokenName] = { start: Math.round(self.start), end: Math.round(self.end), off: Math.round(off) }; },
+        onUpdate: (self) => render(self.progress),
+      });
+      status.devices.push(tokenName.replace('--m-park-', 'park'));
+      cleanups.push(() => st.kill());
+    };
+    park(q('[data-print="aston"]'), q('[data-scene="lfsc"]'), '--m-park-009', 72, 'top 45%');
+
+    /* ---------------------------------------------------------------- peak: T-A → T-B → T-C
+       One pin on the whole transition wrapper (the trailer scene AND the GT), so the hand-over
+       happens inside the held frame and the release only comes once T-C is composed.
+         T-A  the paddock, full bleed                         hold
+         T-B  the photo contracts into a print; BY / MANCUSO rises in front of it   hold
+         T-C  the archive leaves upward (print + its annotation), and the GT bay rises into the
+              print's place, its CTA row standing on BY's baseline: "The GT … by Mancuso".
+              Sequenced, never superimposed: the bay starts only once the print has cleared its
+              rectangle.                                                            hold → release
+       The bay is taken out of flow on desk-with-motion (motion block) and parked at its T-C
+       place; the record row is pulled up so it follows the statement by one beat after the
+       release. Static / phone / reduced: untouched flow. */
     (() => {
-      const tr = q('[data-scene="transition"]');
+      const wrap = q('[data-pin="transition"]');
+      const tr = wrap && q('[data-scene="transition"]', wrap);
+      const gt = wrap && q('[data-scene="gt"]', wrap);
+      const bay = gt && q('[data-gt-bay]', gt);
       const photo = tr && q('[data-trailer]', tr);
       const box = tr && q('[data-evidence-box]', tr);
       const by = tr && q('[data-livery-line="by"]', tr);
       const bym = tr && q('[data-livery-line="by-mancuso"]', tr);
       const stmt = tr && q('[data-statement="family"]', tr);
       const note = tr && q('[data-annotation]', tr);
-      if (!photo || !by || !bym || !stmt) return;
+      const rec = gt && q('[data-gt-record]', gt);
+      if (!wrap || !photo || !by || !bym || !stmt || !bay || !rec) return;
+      html.classList.add('motion-tc');
       const wPhoto = W(photo), wBox = box ? W(box) : null, wBy = W(by), wBym = W(bym), wSt = W(stmt), wNote = note ? W(note) : null;
+      const wBay = W(bay);
+      const wParts = Array.from(bay.children).map(W);
       wPhoto.origin('0 0');
       const easeC = tokEase('--m-ease-contract', 'power1.inOut');
       const easeR = tokEase('--m-ease-rise', 'power2.out');
-      const T = { c0: 0.16, c1: 0.6, b0: 0.48, b1: 0.6, y0: 0.26, y1: 0.56, m0: 0.32, m1: 0.62, t0: 0.38, t1: 0.66 };
+      const easeX = tokEase('--m-ease-exit', 'power2.in');
+      const lift = tokNum('--m-lift', 24);
+      /* schedule, fractions of the pin (2.1 vh at the token's default):
+         T-A hold · contraction + rise · T-B hold · archive exit · bay entry · T-C hold */
+      const T = { c0: 0.107, c1: 0.4, b0: 0.32, b1: 0.4, y0: 0.173, y1: 0.373, m0: 0.213, m1: 0.413, t0: 0.253, t1: 0.44,
+        x0: 0.56, x1: 0.8, n1: 0.66, e0: 0.72, e1: 0.9 };
       let G = null;
+      let pullPx = 0;
+
+      /* before ScrollTrigger measures the pin: the record row's pull is layout, so it is set
+         here (never during a refresh's callbacks), from geometry inside the wrapper only */
+      const prelayout = () => {
+        if (!html.classList.contains('motion-desk')) return;
+        [wPhoto, wBy, wBym, wSt, wNote, wBay].forEach((w) => w && w.clear());
+        wrap.style.setProperty('--m-tc-pull', '0px');
+        const vh = window.innerHeight;
+        const trTop = tr.getBoundingClientRect().top;
+        const stB = textBox(stmt).bottom - trTop;
+        const noteB = note ? relRect(note, tr).b : 0;
+        const d1 = Math.max(0, Math.max(stB, noteB) - (vh - 24));
+        const recTop0 = rec.getBoundingClientRect().top - trTop;
+        const beat = tokNum('--m-tc-gap', 96) * Math.max(u(), 0.75);
+        // after the release the record follows the statement by one beat; during the pin it
+        // always stays below the fold
+        pullPx = Math.max(0, Math.min(recTop0 - (stB - d1) - beat, recTop0 - (vh + 8)));
+        wrap.style.setProperty('--m-tc-pull', Math.round(pullPx) + 'px');
+      };
+      ScrollTrigger.addEventListener('refreshInit', prelayout);
+      prelayout();
+
       const measure = (self) => {
-        [wPhoto, wBy, wBym, wSt, wNote].forEach((w) => w && w.clear());
+        [wPhoto, wBy, wBym, wSt, wNote, wBay].forEach((w) => w && w.clear());
+        wParts.forEach((w) => w.clear());
         const vh = window.innerHeight;
         const ph = relRect(photo, tr), byR = relRect(by, tr), bmR = relRect(bym, tr);
-        const stT = textBox(stmt); const trTop = tr.getBoundingClientRect().top;
+        const trTop = tr.getBoundingClientRect().top;
+        const stB = textBox(stmt).bottom - trTop;
         const noteB = note ? relRect(note, tr).b : 0;
-        const groupBottom = Math.max(stT.bottom - trTop, noteB);
+        const groupBottom = Math.max(stB, noteB);
         const gutter = byR.x;
         const s = tokNum('--m-print', 0.6);
         const d1 = Math.max(0, groupBottom - (vh - 24)); // the whole name group lifts by d1
@@ -328,27 +431,66 @@
         const mTop = bmR.y - d1;
         const printBottom = mTop + bmR.h / 3;              // MANCUSO stands on the print's lower third
         const pw = ph.w * s, phh = ph.h * s;
-        G = { s, d0, d1, tx: ph.w - gutter - pw, ty: printBottom - phh, pw, phh };
-        status.ranges.peak = { start: Math.round(self.start), end: Math.round(self.end), print: [Math.round(G.tx), Math.round(G.ty), Math.round(pw), Math.round(phh)] };
+        const tx = ph.w - gutter - pw, ty = printBottom - phh;
+        // T-C: the bay's last line stands on BY's baseline, inside the print's rectangle
+        const bayR = relRect(bay, tr);
+        const byBase = byR.b - d1;
+        const navH = tokNum('--nav-h', 80);
+        const bayY = Math.max(navH + 24, Math.min(byBase, printBottom) - bayR.h);
+        const bayDy = bayY - bayR.y;
+        const exitDy = ty + phh + 48;                      // the print leaves the frame entirely
+        // sequence, solved: the bay's first line may start only once the print's bottom has
+        // cleared the bay's rectangle (no double exposure)
+        let e0 = T.x1;
+        for (let p = T.x0; p <= T.x1; p += 0.002) {
+          if (ty + phh - exitDy * easeX(seg(p, T.x0, T.x1)) <= bayY - 8) { e0 = p; break; }
+        }
+        T.e0 = Math.min(Math.max(e0, T.x0 + 0.08), T.e1 - 0.1);
+        G = { s, d0, d1, tx, ty, pw, phh, bayDy, exitDy, bayY };
+        wBay.tf(0, bayDy);
+        status.ranges.peak = {
+          start: Math.round(self.start), end: Math.round(self.end),
+          print: [Math.round(tx), Math.round(ty), Math.round(pw), Math.round(phh)],
+          bay: [Math.round(bayR.x), Math.round(bayY), Math.round(bayR.w), Math.round(bayR.h)],
+          tb: [T.t1, T.x0], tc: [T.x0, T.e1], tcHold: T.e1, bayIn: [r2(T.e0), T.e1], pull: Math.round(pullPx),
+        };
       };
       const render = (p) => {
         if (!G) return;
         const c = easeC(seg(p, T.c0, T.c1));
-        wPhoto.tf(G.tx * c, G.ty * c, lerp(1, G.s, c));
+        const x = easeX(seg(p, T.x0, T.x1));
+        wPhoto.tf(G.tx * c, G.ty * c - G.exitDy * x, lerp(1, G.s, c));
+        wPhoto.op(1 - seg(p, lerp(T.x0, T.x1, 0.7), T.x1));
         if (wBox) wBox.op(seg(p, T.b0, T.b1));
         const rise = (a, b) => { const t = easeR(seg(p, a, b)); return lerp(G.d0, -G.d1, t); };
         wBy.tf(0, rise(T.y0, T.y1));
         wBym.tf(0, rise(T.m0, T.m1));
-        const yt = rise(T.t0, T.t1);
-        wSt.tf(0, yt);
-        if (wNote) wNote.tf(0, yt);
+        wSt.tf(0, rise(T.t0, T.t1));
+        if (wNote) { // the print's annotation leaves with the print
+          const n = seg(p, T.x0, T.n1);
+          wNote.tf(0, rise(T.t0, T.t1) - lift * n);
+          wNote.op(1 - n);
+        }
+        // the bay, line by line: title first, the CTA row last, landing on BY's baseline
+        const k = wParts.length;
+        const span = T.e1 - T.e0, win = span * 0.55;
+        let shown = 0;
+        wParts.forEach((w, i) => {
+          const a = T.e0 + (k > 1 ? (i / (k - 1)) * (span - win) : 0);
+          const t = easeR(seg(p, a, a + win));
+          w.tf(0, lift * 1.5 * (1 - t));
+          w.op(t);
+          shown = Math.max(shown, t);
+        });
+        // not reachable by the pointer while it is not there; focus is handled below
+        bay.style.pointerEvents = shown > 0.5 ? '' : 'none';
       };
-      const len = () => tokNum('--m-peak-pin', 1.4) * window.innerHeight;
+      const len = () => tokNum('--m-peak-pin', 2.1) * window.innerHeight;
       const st = ScrollTrigger.create({
-        trigger: tr,
+        trigger: wrap,
         start: 'top top',
         end: () => '+=' + Math.round(len()),
-        pin: tr,
+        pin: wrap,
         pinSpacing: true,
         anticipatePin: 0,
         invalidateOnRefresh: true,
@@ -357,9 +499,30 @@
       });
       pinTriggers.add(st);
       status.pins.peak = st;
-      status.devices.push('peak');
-      cleanups.push(() => pinTriggers.delete(st));
+      status.devices.push('peak', 'tc');
+
+      /* #gt lands on the composed T-C frame (the bay landed, before the release) */
+      const tcY = () => Math.round(st.start + (T.e1 + 0.02) * (st.end - st.start));
+      status.anchorY = (hash) => (hash === '#gt' ? tcY() : null);
+      // keyboard: focus entering the bay before T-C is composed brings the reader to T-C
+      const onFocus = () => {
+        const y = window.scrollY;
+        if (y < tcY() - 2 || y > st.end) { if (window.lenis) window.lenis.scrollTo(tcY(), { immediate: true, force: true }); else window.scrollTo(0, tcY()); }
+      };
+      bay.addEventListener('focusin', onFocus);
+      cleanups.push(() => {
+        pinTriggers.delete(st);
+        bay.removeEventListener('focusin', onFocus);
+        bay.style.pointerEvents = '';
+        ScrollTrigger.removeEventListener('refreshInit', prelayout);
+        wrap.style.removeProperty('--m-tc-pull');
+        html.classList.remove('motion-tc');
+        status.anchorY = null;
+      });
     })();
+
+    // after the peak in creation order, so its range accounts for the peak's pin spacing
+    park(q('[data-rpm-plate]'), q('[data-scene="rpm"]'), '--m-park-plate', 40, 'top 55%');
 
     // ScrollTrigger reverts pins on refresh; our transforms are cleared in each measure()
     return () => {
@@ -409,7 +572,9 @@
     const t = document.getElementById(decodeURIComponent(location.hash.slice(1)));
     if (!t) return;
     const land = () => {
-      if (window.lenis) window.lenis.scrollTo(t, { immediate: true, force: true });
+      const y = status.anchorY ? status.anchorY(location.hash) : null;
+      if (y !== null && y !== undefined) { if (window.lenis) window.lenis.scrollTo(y, { immediate: true, force: true }); else window.scrollTo(0, y); }
+      else if (window.lenis) window.lenis.scrollTo(t, { immediate: true, force: true });
       else t.scrollIntoView({ block: 'start' });
     };
     // re-land after any late geometry refresh (font swap, lazy image) for 2 s, unless the

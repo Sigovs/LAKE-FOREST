@@ -18,10 +18,12 @@ OUT = os.path.join(ROOT, 'assets', 'img')
 JOBS = [
     ('11.1-1-1976-Le-Mans-Greenwood-in-Front-of-Keyser-Oursler Adam.jpg', 'hero-lemans-1976-2400.jpg', 2400, None),
     ('11.1-1-1976-Le-Mans-Greenwood-in-Front-of-Keyser-Oursler Adam.jpg', 'hero-lemans-1976-1400.jpg', 1400, None),
+    # D3 fix1: the film scan at its native width, for viewports wider than 2400 (never upscaled)
+    ('11.1-1-1976-Le-Mans-Greenwood-in-Front-of-Keyser-Oursler Adam.jpg', 'hero-lemans-1976-native.jpg', 4000, None),
     # Portrait frame authored for phones: the Corvette with the asphalt below it.
     ('11.1-1-1976-Le-Mans-Greenwood-in-Front-of-Keyser-Oursler Adam.jpg', 'hero-lemans-1976-mobile.jpg', 1100, (0.50, 0.16, 0.89, 1.0)),
     ('Mancuso Adam.jpg', 'mancuso-chevrolet-letter.jpg', 2000, None),
-    ('Mancuso Chevy Adam.jpg', 'mancuso-chevrolet-sign.jpg', 2000, None),
+    ('Mancuso Chevy Adam.jpg', 'mancuso-chevrolet-sign.jpg', 2000, ('inset', 4)),   # D3 fix1: 4 px off every edge removes the dark scan tick at the top-right corner
     ('76LeMansElji4 Adam.jpg', 'lemans-1976-pits.jpg', 2000, None),
     ('76LeMansaboveright Adam.jpg', 'lemans-1976-above.jpg', 2000, None),
     ('1976-1976-mans_76_chevrolet-corvette_ab_150a-big Adam.jpg', 'lemans-1976-nose.jpg', 2000, None),
@@ -61,6 +63,7 @@ JOBS = [
 # Images embedded in the Lola PDFs: (pdf, page index, output, max width[, crop l,t,r,b])
 PDF_JOBS = [
     ("Lola's Adam.pdf", 8, 'lola-paddock-trailer.jpg', 2400),   # LAKE FOREST SPORTSCARS trailer, #9
+    ("Lola's Adam.pdf", 8, 'lola-paddock-trailer-native.jpg', 4000),   # D3 fix1: native 3008 for viewports > 2400
     ("Lola's Adam.pdf", 3, 'lola-crest-nose.jpg', 1600),        # family crest on the nose
     ("Lola's Adam.pdf", 5, 'lola-paddock-1.jpg', 1600),
     ("LFSC Lola's (2) Adam.pdf", 13, 'lola-on-track.jpg', 1024),
@@ -77,7 +80,10 @@ for src, out, max_w, crop in JOBS:
     if ONLY and out not in ONLY:
         continue
     im = Image.open(os.path.join(SRC, src)).convert('RGB')
-    if crop:
+    if crop and crop[0] == 'inset':          # a pixel inset on every edge (scan borders)
+        n = crop[1]
+        im = im.crop((n, n, im.width - n, im.height - n))
+    elif crop:
         w, h = im.size
         im = im.crop((int(w * crop[0]), int(h * crop[1]), int(w * crop[2]), int(h * crop[3])))
     if im.width > max_w:

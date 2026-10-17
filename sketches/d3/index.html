@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
   <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 1000px)">
   <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 999px)">
-  <link rel="stylesheet" href="styles.css?v=5">
+  <link rel="stylesheet" href="styles.css?v=8">
   <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -59,11 +59,12 @@
           <picture>
             <source media="(max-width: 999px)" srcset="../../assets/img/hero-lemans-1976-mobile.jpg" width="1100" height="1590">
             <img src="../../assets/img/hero-lemans-1976-2400.jpg"
-                 srcset="../../assets/img/hero-lemans-1976-1400.jpg 1400w, ../../assets/img/hero-lemans-1976-2400.jpg 2400w"
+                 srcset="../../assets/img/hero-lemans-1976-1400.jpg 1400w, ../../assets/img/hero-lemans-1976-2400.jpg 2400w, ../../assets/img/hero-lemans-1976-native.jpg 3030w"
                  sizes="(min-aspect-ratio: 1491/1000) 100vw, 150vh" width="2400" height="1609" fetchpriority="high"
                  alt="Le Mans, June 1976: a white Greenwood Corvette, lettered “Spirit of Le Mans 76”, leads two cars down the pit straight past a packed grandstand.">
           </picture>
         </div>
+        <div class="hero__veil" aria-hidden="true"></div>
         <h1 id="hero-title" class="hero__title">
           <span class="livery hero__livery" aria-hidden="true" data-livery="hero">Mancuso</span>
           <span class="visually-hidden">The Mancuso family — car dealers since 1923, racers since 1972.</span>
@@ -72,7 +73,7 @@
           <picture>
             <source media="(max-width: 999px)" srcset="../../assets/img/hero-lemans-1976-mobile.jpg" width="1100" height="1590">
             <img src="../../assets/img/hero-lemans-1976-2400.jpg"
-                 srcset="../../assets/img/hero-lemans-1976-1400.jpg 1400w, ../../assets/img/hero-lemans-1976-2400.jpg 2400w"
+                 srcset="../../assets/img/hero-lemans-1976-1400.jpg 1400w, ../../assets/img/hero-lemans-1976-2400.jpg 2400w, ../../assets/img/hero-lemans-1976-native.jpg 3030w"
                  sizes="(min-aspect-ratio: 1491/1000) 100vw, 150vh" width="2400" height="1609" alt="">
           </picture>
         </div>
@@ -103,7 +104,7 @@
           <div class="ch1923__wall">
             <p class="visually-hidden">Over the decades the family's dealerships sold Studebaker, Oldsmobile, Chevrolet, Buick, Pontiac, Cadillac, Honda, Saab, Peugeot, Aston Martin, Maserati and Ferrari.</p>
             <p class="makes" aria-hidden="true" data-makes><span data-make>Studebaker</span> <span data-make>Oldsmobile</span> <span class="is-lit" data-make="chevrolet">Chevrolet</span> <span data-make>Buick</span> <span data-make>Pontiac</span> <span data-make>Cadillac</span> <span data-make>Honda</span> <span data-make>Saab</span> <span data-make>Peugeot</span> <span data-make>Aston&nbsp;Martin</span> <span data-make>Maserati</span> <span data-make>Ferrari</span></p>
-            <p class="caption ch1923__cap">Makes sold by the family's dealerships over the decades. Source: Fra Noi, “Andrettis' heirs”, February 2005.</p>
+            <p class="caption ch1923__cap">Makes sold by the family's dealerships over the decades. Source: Fra&nbsp;Noi, “Andrettis' heirs”, February 2005.</p>
           </div>
         </section>
 
@@ -113,14 +114,14 @@
             <span class="livery__line" data-livery-line="chevrolet">Chevrolet</span>
           </p>
           <figure class="print ch1953__sign" style="--ceil: 540px" data-print="sign">
-            <img src="../../assets/img/mancuso-chevrolet-sign.jpg" width="600" height="465" loading="lazy"
+            <img src="../../assets/img/mancuso-chevrolet-sign.jpg" width="592" height="457" loading="lazy"
                  alt="A roadside sign: “OK Used Cars — Mancuso Chevrolet, follow arrow 4 blocks”.">
             <figcaption class="caption">“OK Used Cars” — Mancuso Chevrolet. Date and place not recorded.</figcaption>
           </figure>
           <div class="ch1953__text">
             <h2 id="h-1953" class="statement" data-statement="1953">1953 — His son Jim opens Mancuso Chevrolet in Skokie, Illinois.</h2>
             <p class="body">Jim was also an avid road rallyer, a regular in a Great Lakes version of Italy's Mille Miglia — the first sign of the racing that would follow.</p>
-            <p class="caption">Source: Fra Noi, “Andrettis' heirs”, February 2005.</p>
+            <p class="caption">Source: Fra&nbsp;Noi, “Andrettis' heirs”, February 2005.</p>
           </div>
           <div class="kerb ch1953__kerb" data-kerb="1953">
             <figure class="print print--letter" style="--ceil: 372px">
@@ -152,7 +153,7 @@
         <div class="ch76__text">
           <h2 id="h-76" class="statement" data-statement="76">1972 — Jim's son Rick takes the dealership racing.</h2>
           <p class="body">Rick Mancuso took the green flag in 1972, in a 1958 Corvette prepared to B-Production specs. By 1976 Mancuso Chevrolet had its own Corvette on track — the pale-blue #76, by the Revell kit's account the first “customer” car John Greenwood built.</p>
-          <p class="caption">Source: Fra Noi, February 2005; Revell model kit (customer-car claim, to be confirmed).</p>
+          <p class="caption">Source: Fra&nbsp;Noi, February 2005; Revell model kit (customer-car claim, to be confirmed).</p>
         </div>
         <div class="kerb ch76__kerb" data-kerb="76">
           <figure class="print print--truck" style="--ceil: 400px">
@@ -174,39 +175,43 @@
       </section>
 
       <!-- ========================================================== S4 · LE MANS, JUNE 1976 (compact)
-           The cold open, explained. The painted word from the hood; the one number of the history. -->
+           The cold open, explained. The painted word from the hood; the nose print and the newspaper
+           stand on ONE kerb (shared bottom line), the nose parked on the word's lower third. -->
       <section class="ch ch--lemans" data-scene="lemans" aria-labelledby="h-lemans">
         <p class="livery ch-lm__livery" aria-hidden="true" data-livery="lemans">Le Mans</p>
-        <figure class="print ch-lm__nose" style="--ceil: 640px" data-print="nose">
-          <img src="../../assets/img/lemans-1976-nose.jpg" width="976" height="622" loading="lazy"
-               alt="Head-on: the white “Spirit of Le Mans 76” Corvette at speed, LE MANS painted across the hood.">
-          <figcaption class="caption">“Spirit of Le Mans 76”. Photographer not recorded.</figcaption>
-        </figure>
+        <div class="kerb ch-lm__kerb" data-kerb="lemans">
+          <figure class="print ch-lm__nose" style="--ceil: 640px" data-print="nose">
+            <img src="../../assets/img/lemans-1976-nose.jpg" width="976" height="622" loading="lazy"
+                 alt="Head-on: the white “Spirit of Le Mans 76” Corvette at speed, LE MANS painted across the hood.">
+            <figcaption class="caption">“Spirit of Le Mans 76”. Photographer not recorded.</figcaption>
+          </figure>
+          <figure class="print ch-lm__paper" style="--ceil: 520px">
+            <img src="../../assets/img/lemans-1976-le-maine.jpg" width="648" height="417" loading="lazy"
+                 alt="Le Maine Libre front page, 12–13 June 1976, with the Corvette under the 24-hour headline.">
+            <figcaption class="caption">Le Maine Libre, 12–13 June 1976.</figcaption>
+          </figure>
+        </div>
         <div class="ch-lm__text">
           <h2 id="h-lemans" class="statement" data-statement="lemans">June 1976 — 218&nbsp;mph on the Mulsanne Straight, the fastest entry on the&nbsp;course.</h2>
           <p class="body">For America's bicentennial the French government invited Mancuso and his team to race a Corvette at Le Mans. Rick stayed home to run the business and turned the Greenwood wide-body Corvette over to his teammates. A fuel malfunction ended its race in the eighth hour.</p>
-          <p class="caption">Source: Fra Noi, February 2005. The session of the 218&nbsp;mph run is not recorded.</p>
+          <p class="caption">Source: Fra&nbsp;Noi, February 2005. The session of the 218&nbsp;mph run is not recorded.</p>
         </div>
-        <figure class="print ch-lm__paper" style="--ceil: 520px">
-          <img src="../../assets/img/lemans-1976-le-maine.jpg" width="648" height="417" loading="lazy"
-               alt="Le Maine Libre front page, 12–13 June 1976, with the Corvette under the 24-hour headline.">
-          <figcaption class="caption">Le Maine Libre, 12–13 June 1976.</figcaption>
-        </figure>
       </section>
 
       <!-- ========================================================== S5 · LAKE FOREST SPORTS CARS (history)
-           The sharp digital era: here the name is painted inside the photographs, so the scale
-           moves from the type to the photograph. LFSC is past tense — the dealership was sold. -->
+           The painted line is the number on the master's own door: 009. The Aston parks on its lower
+           third, the Ferrari stands on the same kerb. LFSC is past tense — the dealership was sold. -->
       <section class="ch ch--lfsc" data-scene="lfsc" aria-labelledby="h-lfsc">
         <div class="ch-lfsc__head">
           <h2 id="h-lfsc" class="statement" data-statement="lfsc">Lake Forest Sports Cars — Rick's dealership for Ferrari, Maserati and Aston&nbsp;Martin.</h2>
           <div class="ch-lfsc__copy">
             <p class="body">Rick became president and CEO of Lake Forest Sports Cars, the family's dealership for premium imports. He raced a Ferrari BB512LM, 308 GTB, 348, 355 and F40, a Maserati Bi-Turbo SSGT and a Mosler Consulier GTP in endurance races at Sebring, Daytona, Mid-Ohio and Nelson Ledges. His brother Rob was crowned 1986 SCCA Midwest Council champion.</p>
             <p class="body ch-lfsc__sold">The dealership has since been sold. It remains part of the family's story.</p>
-            <p class="caption">Source: Fra Noi, February 2005; the family, October 2026.</p>
+            <p class="caption">Source: Fra&nbsp;Noi, February 2005; the family, October 2026.</p>
           </div>
         </div>
-        <div class="kerb ch-lfsc__kerb">
+        <p class="livery ch-lfsc__num" aria-hidden="true" data-livery="009">009</p>
+        <div class="kerb ch-lfsc__kerb" data-kerb="lfsc">
           <figure class="print ch-lfsc__master" style="--ceil: 1040px" data-print="aston">
             <img src="../../assets/img/aston-009-007.jpg" width="2000" height="1500" loading="lazy"
                  alt="In a showroom, Aston Martin #009 lettered “Lake Forest Sportscars”, with the #007 prototype behind it.">
@@ -221,12 +226,14 @@
       </section>
 
       <!-- ========================================================== S6 · FATHER AND SON
-           data-preload-peak: motion may preload the trailer when this scene enters. -->
+           Declared yield (docs/d3-key-scenes.md §2.1a): no painted line. The scene is one master at
+           its sharpness ceiling; the crest and the #61 stand on one kerb under it — the run-down into
+           the page's only silence. data-preload-peak: motion may preload the trailer here. -->
       <section class="ch ch--lola" data-scene="lola" data-preload-peak aria-labelledby="h-lola">
         <div class="ch-lola__text">
           <h2 id="h-lola" class="statement" data-statement="lola">2000s — Father and son, in Aston Martin racing green.</h2>
           <p class="body">Rick's son Adam started driving go-karts at 12 and trained at the Skip Barber Racing School at Road America. Father and son raced custom Lola Sports Racers in SCCA competition, painted Aston Martin racing green and carrying the family crest on the nose.</p>
-          <p class="caption">Source: Fra Noi, February 2005.</p>
+          <p class="caption">Source: Fra&nbsp;Noi, February 2005.</p>
         </div>
         <figure class="print ch-lola__tents" style="--ceil: 960px" data-print="tents">
           <picture>
@@ -236,7 +243,7 @@
           </picture>
           <figcaption class="caption">Three Lolas under the team's tents. Circuit and date not recorded.</figcaption>
         </figure>
-        <div class="kerb ch-lola__kerb">
+        <div class="kerb ch-lola__kerb" data-kerb="lola">
           <figure class="print ch-lola__crest" style="--ceil: 416px">
             <img src="../../assets/img/lola-crest-square.jpg" width="832" height="833" loading="lazy"
                  alt="The Mancuso family crest on the green nose of a Lola, above the Aston Martin wings.">
@@ -259,9 +266,12 @@
          Motion: [data-pin="transition"] ~180vh. [data-trailer] contracts to the print (FLIP + clip);
          [data-evidence-box] + [data-trailer-ramp] fade in; [data-livery-line="by"] and
          [data-livery-line="by-mancuso"] rise 120 → 0, MANCUSO last, landing OVER the print;
-         [data-annotation] fades in; hold; the print exits up; [data-gt-block] enters in its place.
+         [data-annotation] fades in; hold; the print exits up; [data-gt-bay] enters in its place (T-C).
+         T-C hooks: [data-gt-bay] is the part of the GT that takes the print's place (title, status,
+         lead, CTAs); it already stands at the print's left edge (--tr-print-x) in the static layout,
+         so the hand-over is a vertical move only. [data-gt-record] stays in flow after the release.
          Static / reduced motion / mobile: the photograph once, full width, the name standing in front
-         of its bottom edge, then the GT in flow. -->
+         of its bottom edge, the statement, then the GT bay in flow — no gap beyond one section beat. -->
     <div class="transition" data-pin="transition">
       <section class="tr" data-scene="transition" aria-labelledby="h-family">
         <figure class="tr__photo" data-trailer>
@@ -269,6 +279,7 @@
             <picture>
               <source media="(max-width: 699px)" srcset="../../assets/img/lola-trailer-mobile.jpg" width="902" height="1460">
               <img src="../../assets/img/lola-paddock-trailer.jpg" width="2400" height="1596" loading="lazy" data-trailer-img
+                   srcset="../../assets/img/lola-paddock-trailer.jpg 2400w, ../../assets/img/lola-paddock-trailer-native.jpg 3008w" sizes="100vw"
                    alt="Green Lola sports racers in a grass paddock in front of the Lake Forest Sportscars trailer; under the company name, in small capitals: By Mancuso, an automotive family since 1923.">
             </picture>
             <span class="tr__box" aria-hidden="true" data-evidence-box></span>
@@ -288,40 +299,41 @@
       </section>
 
       <!-- ========================================================== THE GT · compact announcement
-           Confirmed text only. The empty bay in front of the name is the announcement. -->
+           Confirmed text only. Not livery: the GT's name is not painted on anything yet. The bay
+           stands at the print's left edge so that it can take the print's place in T-C. -->
       <section class="gt" id="gt" data-scene="gt" data-gt-block aria-labelledby="h-gt" tabindex="-1">
-        <div class="gt__head">
+        <div class="gt__bay" data-gt-bay>
           <h2 id="h-gt" class="gt__title">The GT.</h2>
           <p class="label gt__status">Launching soon</p>
-        </div>
-        <div class="gt__body">
           <p class="lead gt__lead">A tribute to the iconic Chevrolet Corvette — the authenticity and style of original Corvettes, with modern comfort and driveability. Only by Mancuso.</p>
           <p class="gt__ctas">
             <a class="btn btn--gt" href="#contact" data-topic="gt">Ask about the GT</a>
             <a class="gt__film" href="https://vimeo.com/1208516021"><svg class="glyph" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15L19.5 12z"/></svg>Watch “Introducing the GT” <span class="gt__dur">· 2:19</span></a>
           </p>
-          <dl class="record">
-            <div><dt>Specification</dt><dd>To be announced</dd></div>
-            <div><dt>Photography</dt><dd>To be announced</dd></div>
-            <div><dt>Source</dt><dd>“Introducing the GT”, July 2026</dd></div>
-          </dl>
         </div>
+        <dl class="record gt__record" data-gt-record>
+          <div><dt>Specification and photography</dt><dd>To be announced</dd></div>
+          <div><dt>Source</dt><dd>“Introducing the GT”, July 2026</dd></div>
+        </dl>
       </section>
     </div>
 
     <!-- ============================================================ RPM CLUB + INSTAGRAM
-         The family in public today. One episode leads; the earlier three are a list. -->
+         The family in public today. One painted line (RPM CLUB, the show's name); the latest
+         episode and the list park on its lower third, the way the prints park on the history's
+         names (desktop). The show's artwork is withheld until its use is cleared. -->
     <section class="rpm" id="rpm-club" data-scene="rpm" aria-labelledby="h-rpm" tabindex="-1">
+      <p class="livery rpm__livery" aria-hidden="true" data-livery="rpm"><span class="rpm__w1">RPM</span> <span class="rpm__w2">Club</span></p>
       <div class="rpm__intro">
+        <h2 id="h-rpm" class="statement"><span class="visually-hidden">RPM Club — </span>A weekly radio show with Rick and Rob&nbsp;Mancuso.</h2>
         <p class="caption rpm__station">AM 560 The Answer · Chicago</p>
-        <h2 id="h-rpm" class="statement">RPM Club — a weekly radio show with Rick and Rob&nbsp;Mancuso.</h2>
         <p class="body">The love of cars and the joy of driving: the business and the pleasure of all things automotive, with industry guests and callers.</p>
         <p class="rpm__links">
           <a class="link" href="https://560theanswer.com/radioshow/rpm-club">The show on AM 560</a>
           <a class="link" href="https://omny.fm/shows/rpm-club">All episodes</a>
         </p>
       </div>
-      <div class="rpm__episodes">
+      <div class="rpm__episodes" data-rpm-plate>
         <article class="ep-latest" aria-labelledby="ep-1">
           <p class="caption">Latest episode · <time datetime="2026-10-12">12 October 2026</time></p>
           <h3 id="ep-1" class="ep-latest__title">Coach Tony and driving tips, and “Shift Point”</h3>
@@ -356,27 +368,23 @@
         </dl>
       </div>
       <form class="enquiry" novalidate>
-        <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
-        <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
-        <div class="field field--wide"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
-        <fieldset class="field field--wide field--choice"><legend>About</legend>
+        <div class="field field--name"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
+        <div class="field field--email"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
+        <div class="field field--wide field--phone"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+        <fieldset class="field field--wide field--choice field--about"><legend>About</legend>
           <div class="choices">
             <label class="choice"><input type="radio" name="topic" value="gt" checked><span class="choice__dot" aria-hidden="true"></span>The GT</label>
             <label class="choice"><input type="radio" name="topic" value="other"><span class="choice__dot" aria-hidden="true"></span>Something else</label>
           </div>
         </fieldset>
-        <div class="field field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
-        <div class="enquiry__actions field--wide"><button class="btn btn--ink" type="submit">Send</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
+        <div class="field field--wide field--msg"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
+        <div class="enquiry__actions field--wide field--actions"><button class="btn btn--ink" type="submit">Send</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
       </form>
     </section>
 
   </main>
 
   <footer class="foot">
-    <div class="foot__sign">
-      <p class="nav__mark nav__mark--static">Mancuso</p>
-      <p class="foot__line">An automotive family since 1923.</p>
-    </div>
     <nav class="foot__nav" aria-label="Footer">
       <a href="#history">History</a>
       <a href="#gt">The GT</a>
@@ -385,13 +393,19 @@
     </nav>
     <p class="caption foot__credits">Archive photographs keep their printed credits. Sketch D3 — prototype, not for publication.</p>
     <a class="caption foot__top" href="#top">Back to the top</a>
+    <!-- The page closes on type: the family's line at painted scale, the last mass. -->
+    <p class="foot__sign">
+      <span class="foot__mark">Mancuso</span>
+      <span class="livery foot__livery" aria-hidden="true" data-livery="since">Since 1923</span>
+      <span class="visually-hidden">An automotive family since 1923.</span>
+    </p>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js" defer></script>
-  <script src="motion.js?v=4" defer></script>
-  <script src="ui.js?v=1" defer></script>
+  <script src="motion.js?v=5" defer></script>
+  <script src="ui.js?v=3" defer></script>
   <script src="form.js?v=1" defer></script>
 </body>
 </html>

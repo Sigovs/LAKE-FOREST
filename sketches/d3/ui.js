@@ -13,14 +13,31 @@
   const nav = document.querySelector('[data-nav]');
   const hero = document.querySelector('[data-scene="hero"]');
   let holdNavUntil = 0;   // after a jump to an anchor the nav stays reachable
+  const heroFoot = hero && hero.querySelector('[data-hero-copy]');
+
+  /* the hero's photo-space lift (styles.css, .hero --lift) needs the foot's real top: the lead
+     wraps differently per width and font. Measured from layout (offsetTop ignores transforms,
+     and the foot is outside the scaled group), written to the hero, never to [data-hero-push]. */
+  const setFootTop = () => {
+    if (!hero || !heroFoot) return;
+    hero.style.setProperty('--hero-foot-top', heroFoot.offsetTop + 'px');
+  };
+  setFootTop();
+  window.addEventListener('resize', setFootTop, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(setFootTop);
   if (nav && hero) {
     let lastY = window.scrollY;
     const update = () => {
       const y = window.scrollY;
-      const heroBottom = hero.offsetTop + hero.offsetHeight - nav.offsetHeight;
+      const navH = nav.offsetHeight;
+      const heroBottom = hero.offsetTop + hero.offsetHeight - navH;
       const overHero = y < heroBottom;
+      /* the bar turns solid as soon as the hero's lines / CTAs reach the nav band, so the Menu
+         label never sits over them; there the photo is already under the bottom ramp (≈ ground),
+         so the bar's edge does not cut through a lit photograph */
+      const footTop = heroFoot ? hero.offsetTop + heroFoot.offsetTop - 8 : heroBottom;
       nav.classList.toggle('is-over-hero', overHero);
-      nav.classList.toggle('is-solid', !overHero);
+      nav.classList.toggle('is-solid', y + navH > footTop);
       const goingDown = y > lastY + 2;
       const goingUp = y < lastY - 2;
       if (overHero || goingUp) nav.classList.remove('is-hidden');

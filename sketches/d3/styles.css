@@ -42,13 +42,13 @@
   --lap: 0.25;            /* paddock overlap: quarter on mobile, third on desktop */
 
   --nav-h: 64px;
-  --sec: var(--s10);                       /* interval between chapters */
+  --sec: var(--s9);                        /* interval between chapters (fix1: −25%, so the 30vh silence stays the only pause over 24vh) */
   --ease: cubic-bezier(.2, .7, .2, 1);
   --t-fast: 160ms;
   --t-base: 240ms;
 }
 @media (min-width: 700px) { :root { --g: 32px; } }
-@media (min-width: 1000px) { :root { --g: max(32px, calc(48 * var(--u))); --lap: 0.3333; --nav-h: 80px; --sec: clamp(128px, calc(192 * var(--u)), 192px); } }
+@media (min-width: 1000px) { :root { --g: max(32px, calc(48 * var(--u))); --lap: 0.3333; --nav-h: 80px; --sec: clamp(96px, calc(144 * var(--u)), 144px); } }
 
 /* ------------------------------------------------------------------------- base */
 *, *::before, *::after { box-sizing: border-box; }
@@ -191,6 +191,21 @@ ol { list-style: none; }
   --sh: calc(var(--sw) / var(--ar));
   --k: 6.859;              /* MANCUSO advance at wdth 125 */
   --fs: min(calc(var(--sw) * 0.136), calc(var(--m) / var(--k)));
+  /* cap-top in the PHOTO's coordinates: the stage is the cover box (scale --sw/2400, top-anchored),
+     so the roof (a fraction of the photo's height) enters the bottom --lap of the cap at every aspect */
+  --cap-h: calc(var(--cap) * var(--fs));
+  --cap-top: calc(var(--sh) * var(--roof) - (1 - var(--lap)) * var(--cap-h));
+  --veil: 0.25;            /* ground veil behind the name band only (item 9): every letter ≥ 3.2:1 at p5, 1024–2560 */
+  /* fix2 (critic2 NEW-1) — the photo-space lift. Name, car, photo and veil stay locked in the
+     photo's coordinates; when the foot (lines + CTAs, anchored to the viewport bottom) would
+     reach the name, the WHOLE photo-space group moves up together, so the crop loses grandstand
+     at the top, never the name or the car. --hero-foot-top is the foot's measured top (ui.js);
+     the fallback is the desktop foot (32 + 48 + 24 + 2 × 32). Clamped so the photo always
+     still covers the hero's bottom edge. */
+  --foot-top: var(--hero-foot-top, calc(var(--hh) - 168px));
+  --hero-gap: var(--s7);   /* name baseline → first lead line, never less (brief floor 32) */
+  --lift: max(calc(var(--hh) - var(--sh)), min(0px, calc(var(--foot-top) - var(--hero-gap) - var(--cap-top) - var(--cap-h))));
+  --base: calc(var(--cap-top) + var(--cap-h) + var(--lift));   /* the name's baseline, in the hero */
   position: relative; height: var(--hh); overflow: hidden; isolation: isolate;
   background: #2a2c2b;
 }
@@ -202,11 +217,14 @@ ol { list-style: none; }
     --hh: max(100svh, 640px);
     --k: 5.489;            /* MANCUSO at wdth 100 */
     --fs: calc(var(--m) / var(--k));
+    --lap: 0.2;            /* phone: the white roof would merge with the letters' feet at 0.25 */
+    --veil: 0.35;          /* the ceiling (≤ 0.35), feathered, name band only: S 3.02:1 p5 at 375 */
+    --foot-top: var(--hero-foot-top, calc(var(--hh) - 260px));
   }
 }
-.hero__group { position: absolute; inset: 0; transform-origin: 70.4% 62%; }
+.hero__group { position: absolute; inset: 0; transform-origin: 70.4% calc(62% + var(--lift)); }   /* the car's centre, lifted with it */
 .hero__stage {
-  position: absolute; top: 0;
+  position: absolute; top: var(--lift);
   left: calc((100 * var(--vw) - var(--sw)) * var(--px));
   width: var(--sw); height: var(--sh);
 }
@@ -216,7 +234,14 @@ ol { list-style: none; }
   position: absolute; left: var(--g); z-index: 1;
   font-size: var(--fs);
   /* cap-top so that the roof enters the bottom --lap of the cap */
-  top: calc(var(--sh) * var(--roof) - (1 - var(--lap)) * var(--cap) * var(--fs));
+  top: calc(var(--cap-top) + var(--lift));
+}
+/* the veil: a feathered ground band behind the name zone only (under the name, under the car layer) */
+.hero__veil {
+  position: absolute; left: 0; right: 0; z-index: 1; pointer-events: none;
+  top: calc(var(--cap-top) + var(--lift) - 0.5 * var(--cap-h)); height: calc(2 * var(--cap-h));
+  background: linear-gradient(to bottom,
+    rgba(15,17,18,0) 0, rgba(15,17,18,var(--veil)) 25%, rgba(15,17,18,var(--veil)) 75%, rgba(15,17,18,0) 100%);
 }
 .hero__car {
   z-index: 2;
@@ -235,7 +260,18 @@ ol { list-style: none; }
   position: absolute; inset: 0; z-index: 3; pointer-events: none;
   background:
     linear-gradient(to bottom, rgba(15,17,18,.55) 0, rgba(15,17,18,0) 120px),
-    linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 62%, rgba(15,17,18,.62) 82%, rgba(15,17,18,.9) 100%);
+    linear-gradient(to bottom,
+      rgba(15,17,18,0) 0, rgba(15,17,18,0) var(--base),
+      rgba(15,17,18,.03) calc(var(--base) + 0.25 * var(--rr)),
+      rgba(15,17,18,.11) calc(var(--base) + 0.5 * var(--rr)),
+      rgba(15,17,18,.23) calc(var(--base) + 0.75 * var(--rr)),
+      rgba(15,17,18,.36) var(--foot-top),
+      rgba(15,17,18,.62) calc(var(--foot-top) + 0.4 * (100% - var(--foot-top))),
+      rgba(15,17,18,.9) 100%);
+  /* fix2: the ramp starts AT the name's baseline with zero slope and eases in (no stop that
+     jumps, so no horizontal edge across the letters or the car); it reaches .36 at the lead's
+     top (the lines carry their own feathered ground) and .9 at the hero's foot. --rr = baseline → lead top, ≥ --hero-gap by construction. */
+  --rr: calc(var(--foot-top) - var(--base));
 }
 @media (max-width: 999px) {
   .hero__ramp {
@@ -247,6 +283,14 @@ ol { list-style: none; }
 .hero__foot {
   position: absolute; z-index: 4; left: var(--g); right: var(--g); bottom: var(--s6);
   display: flex; flex-direction: column; gap: var(--s5);
+}
+/* a local, feathered ground behind the two lines only (short viewports put them on the white
+   curve line, above the bottom ramp's dense part): measured, not mood */
+.hero__lines { position: relative; }
+.hero__lines::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: -24px -48px -16px -48px;
+  background: radial-gradient(closest-side, rgba(15,17,18,.55), rgba(15,17,18,.4) 60%, rgba(15,17,18,0));
 }
 .hero__lines { max-width: 34em; }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: var(--s3); }
@@ -260,7 +304,7 @@ ol { list-style: none; }
 
 /* ======================================================================== HISTORY */
 .history { position: relative; }
-.ch { position: relative; padding: var(--s10) var(--g) 0; }
+.ch { position: relative; padding: var(--sec) var(--g) 0; }
 .ch + .ch, .s1s2 + .ch { padding-top: var(--sec); }
 
 /* mobile prints: masters bleed to the right edge (full bleed on phones), capped by their ceiling */
@@ -274,8 +318,10 @@ ol { list-style: none; }
   .ch .print[data-print] figcaption { padding-right: var(--g); padding-left: var(--g); }
 }
 
-/* --- S1 · 1923: the names it sold (a quiet texture under the statement) */
-.ch--1923 { padding-top: var(--s10); }
+/* --- S1 · 1923: the names it sold. Desktop: the declared frame (d-history-1923) — statement
+   top-left, the makes wall as livery fitted across the full measure, the caption at the foot.
+   The wall stays dim (only CHEVROLET lit) and below the hero's MANCUSO (78 vs 196 at 1440). */
+.ch--1923 { padding-top: var(--sec); }
 .makes {
   margin: var(--s7) 0 0; color: var(--dim);
   font-weight: 700; font-stretch: 100%; text-transform: uppercase; letter-spacing: 0;
@@ -285,19 +331,35 @@ ol { list-style: none; }
 .makes .is-lit { color: var(--ink); }
 .makes span { display: inline-block; }
 .ch1923__cap { margin-top: var(--s5); max-width: 32em; }
-@media (min-width: 700px) { .makes { font-size: 40px; } }
-@media (min-width: 1000px) {
-  .ch--1923 {
-    display: grid; grid-template-columns: calc(600 * var(--u)) 1fr; column-gap: calc(120 * var(--u));
-    align-items: start; padding-top: var(--sec);
+/* fix2 (critic2 NEW-4): phones / tablet set the wall as livery (800, wdth 100, the cap box),
+   fitted to the measure — no longer a grey paragraph beside the 24 px statement.
+   < 700: the longest make, ASTON MARTIN (8.063 em), spans the measure; makes pair where they
+   fit (HONDA SAAB) and stand alone where they do not — at wdth 100 no pair wider than
+   8.06 em exists in the sold order, so 2–3 per line would need < 30 px.
+   700–999: STUDEBAKER OLDSMOBILE (14.59 em incl. the word space) spans the measure; 2–3 per line. */
+@media (max-width: 999px) {
+  .makes {
+    font-weight: 800; font-stretch: 100%; word-spacing: 0.08em;
+    font-size: calc(var(--m) / 8.2); line-height: var(--pitch);
+    text-box: trim-both cap alphabetic; text-wrap: wrap;
   }
-  .ch1923__statement { max-width: 600px; }
-  .makes { margin-top: 0; font-stretch: 125%; font-size: calc(46 * var(--u)); line-height: 0.9; word-spacing: 0.12em; }
-  .ch1923__wall { padding-top: 6px; }
+}
+@media (min-width: 700px) and (max-width: 999px) { .makes { font-size: calc(var(--m) / 14.65); } }
+@media (min-width: 1000px) {
+  .ch--1923 { padding-top: calc(104 * var(--u)); padding-bottom: var(--s7); }
+  .ch1923__statement { max-width: 640px; }
+  .makes {
+    margin-top: min(calc(128 * var(--u)), 13vh);
+    font-weight: 800; font-stretch: 125%;
+    font-size: calc(78 * var(--u));               /* 5.42vw: 78 px at 1440, cap 54 */
+    line-height: calc(76 / 78); word-spacing: 0.12em;
+    text-box: trim-both cap alphabetic;
+  }
+  .ch1923__cap { margin-top: var(--s7); }
 }
 
 /* --- S2 · 1953: the name above the maker's */
-.ch--1953 { --k: 6.522; padding-top: var(--s10); }
+.ch--1953 { --k: 6.522; padding-top: var(--sec); }
 .ch1953__livery { position: relative; z-index: 0; }
 .ch1953__sign { position: relative; z-index: 1; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--m) / var(--k)); }
 .ch1953__text { margin-top: var(--s7); }
@@ -310,8 +372,16 @@ ol { list-style: none; }
 .kerb > .print { display: grid; grid-row: span 2; grid-template-rows: subgrid; width: min(100%, var(--ceil)); }
 .kerb > .print img { align-self: end; }
 .kerb > .print figcaption { align-self: start; }
-.ch1953__kerb { margin-top: var(--s8); }
-.ch1953__kerb { grid-template-columns: 1fr 1fr; }
+/* phones: the letterhead and the Deuce ad stacked at 0.78 of the measure (280 px at 390, both
+   under their ceilings), staggered left / right */
+.ch1953__kerb { margin-top: var(--s8); grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); }
+.ch1953__kerb > .print { width: min(78%, var(--ceil)); }
+.ch1953__kerb > .print--deuce { justify-self: end; margin-top: var(--s7); }
+@media (min-width: 700px) and (max-width: 999px) {
+  .ch1953__kerb { grid-auto-flow: column; grid-template-rows: auto auto; grid-template-columns: 1fr 1fr; }
+  .ch1953__kerb > .print { width: min(100%, var(--ceil)); }
+  .ch1953__kerb > .print--deuce { justify-self: start; margin-top: 0; }
+}
 @media (min-width: 1000px) {
   .ch--1953 {
     --k: 8.108;
@@ -325,8 +395,11 @@ ol { list-style: none; }
   .ch1953__text { grid-area: text; max-width: 600px; margin-top: calc(72 * var(--u)); }
   .ch1953__kerb {
     grid-area: kerb; margin-top: var(--s9); align-self: start; column-gap: calc(48 * var(--u));
+    grid-auto-flow: column; grid-template-rows: auto auto;
     grid-template-columns: min(calc(320 * var(--u)), 372px) min(calc(292 * var(--u)), 340px); justify-content: start;
   }
+  .ch1953__kerb > .print { width: min(100%, var(--ceil)); }
+  .ch1953__kerb > .print--deuce { justify-self: start; margin-top: 0; }
 }
 
 /* --- S3 · the #76: the number from the door */
@@ -337,8 +410,18 @@ ol { list-style: none; }
 .ch76__text .body, .ch76__text .caption { margin-top: var(--s4); }
 .ch76__kerb { margin-top: var(--s8); position: relative; z-index: 1; }
 @media (max-width: 999px) {
-  .ch76__kerb { grid-auto-flow: row; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); }
-  .ch76__kerb .print--truck { grid-column: 1 / -1; grid-row: 1 / span 2; max-width: 400px; margin-bottom: var(--s5); }
+  /* phones: the kerb stacks full-bleed (truck 390 ≤ 400 ceiling; glass / crew 390 ≤ 440) */
+  .ch76__kerb { grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(6, auto); row-gap: 0; }
+  .ch76__kerb > .print { width: min(calc(100% + 2 * var(--g)), var(--ceil)); margin-left: calc(-1 * var(--g)); }
+  .ch76__kerb > .print + .print { margin-top: var(--s6); }
+  .ch76__kerb figcaption { padding: 0 var(--g); }
+}
+@media (min-width: 700px) and (max-width: 999px) {
+  .ch76__kerb { grid-auto-flow: row; grid-template-columns: 1fr 1fr; grid-template-rows: repeat(4, auto); column-gap: var(--s4); }
+  .ch76__kerb > .print { width: min(100%, var(--ceil)); margin-left: 0; }
+  .ch76__kerb > .print + .print { margin-top: 0; }
+  .ch76__kerb figcaption { padding: 0; }
+  .ch76__kerb .print--truck { grid-column: 1 / -1; grid-row: 1 / span 2; margin-bottom: var(--s5); }
   .ch76__kerb .print--glass { grid-column: 1; grid-row: 3 / span 2; }
   .ch76__kerb .print--crew { grid-column: 2; grid-row: 3 / span 2; }
 }
@@ -358,33 +441,43 @@ ol { list-style: none; }
   }
 }
 
-/* --- S4 · Le Mans, June 1976 (compact): the word from the hood, the one number */
-.ch--lemans { --k: 4.655; }
+/* --- S4 · Le Mans, June 1976 (compact): the word from the hood. The nose and the newspaper
+   stand on one kerb (one bottom line), the nose parked on the word's lower third; the text
+   follows at the newspaper's left edge — a descending diagonal, not a floating print. */
+.ch--lemans { --k: 4.655; --fs-lm: calc(var(--m) / var(--k)); }
 .ch-lm__livery { position: relative; z-index: 0; }
-.ch-lm__nose { position: relative; z-index: 1; margin-top: calc(-1 * var(--lap) * var(--cap) * var(--fs-lm, calc(var(--m) / var(--k)))); }
+.ch-lm__kerb {
+  position: relative; z-index: 1;
+  margin-top: calc(-1 * var(--lap) * var(--cap) * var(--fs-lm));
+  grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto);
+}
+.ch-lm__kerb > .ch-lm__paper { width: min(72%, var(--ceil)); justify-self: end; margin-top: var(--s7); }
 .ch-lm__text { margin-top: var(--s7); }
 .ch-lm__text .body, .ch-lm__text .caption { margin-top: var(--s4); }
-.ch-lm__paper { margin-top: var(--s7); width: min(72%, var(--ceil)); }
 @media (min-width: 1000px) {
-  .ch--lemans {
-    --fs-lm: calc(168 * var(--u));
-    display: grid;
-    grid-template-columns: min(calc(600 * var(--u)), 640px) 1fr;
-    column-gap: calc(80 * var(--u));
-    grid-template-areas: "liv liv" "nose text" "paper text";
+  .ch--lemans { --fs-lm: calc(168 * var(--u)); --lm-nose: min(calc(600 * var(--u)), 640px); --lm-gap: calc(32 * var(--u)); }
+  .ch-lm__livery { font-size: var(--fs-lm); text-align: right; }
+  .ch-lm__kerb {
+    grid-auto-flow: column; grid-template-rows: auto auto; justify-content: start;
+    grid-template-columns: var(--lm-nose) min(calc(320 * var(--u)), 320px); column-gap: var(--lm-gap);
   }
-  .ch-lm__livery { grid-area: liv; justify-self: end; font-size: var(--fs-lm); }
-  .ch-lm__nose { grid-area: nose; align-self: start; }
-  .ch-lm__text { grid-area: text; max-width: 600px; margin-top: calc(56 * var(--u)); }
-  .ch-lm__text { grid-row: 2 / span 2; align-self: start; }
-  .ch-lm__paper { grid-area: paper; width: min(calc(320 * var(--u)), 320px); margin-top: var(--s8); justify-self: end; }
+  .ch-lm__kerb > .ch-lm__nose { width: 100%; }
+  .ch-lm__kerb > .ch-lm__paper { width: 100%; justify-self: start; margin-top: 0; }
+  .ch-lm__text { margin: var(--s8) 0 0 calc(var(--lm-nose) + var(--lm-gap)); max-width: 600px; }
 }
 
-/* --- S5 · Lake Forest Sports Cars (history): the name painted inside the photograph */
+/* --- S5 · Lake Forest Sports Cars (history): the number on the master's own door, 009.
+   The Aston parks on its lower third; the Ferrari stands on the same kerb. */
+.ch--lfsc { --k: 1.875; --fs-lf: calc(var(--m) / var(--k)); }
 .ch-lfsc__copy { margin-top: var(--s5); }
 .ch-lfsc__copy > * + * { margin-top: var(--s4); }
 .ch-lfsc__sold { color: var(--ink); font-weight: 500; }
-.ch-lfsc__kerb { margin-top: var(--s7); grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); }
+.ch-lfsc__num { position: relative; z-index: 0; margin-top: var(--s8); font-size: var(--fs-lf); }
+.ch-lfsc__kerb {
+  position: relative; z-index: 1;
+  margin-top: calc(-1 * var(--lap) * var(--cap) * var(--fs-lf));
+  grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto);
+}
 .ch-lfsc__kerb .ch-lfsc__ferrari { margin-top: var(--s6); }
 .ch-lfsc__kerb > .ch-lfsc__master { width: calc(100% + 2 * var(--g)); max-width: var(--ceil); margin-left: calc(-1 * var(--g)); }
 .ch-lfsc__master figcaption { padding-left: var(--g); }
@@ -394,10 +487,12 @@ ol { list-style: none; }
   .ch-lfsc__master figcaption { padding-left: 0; }
 }
 @media (min-width: 1000px) {
+  .ch--lfsc { --fs-lf: calc(400 * var(--u)); }        /* cap 274 at 1440; right-aligned, x 446–1392 */
   .ch-lfsc__head { display: grid; grid-template-columns: calc(600 * var(--u)) 1fr; column-gap: calc(120 * var(--u)); align-items: start; }
   .ch-lfsc__copy { margin-top: 6px; }
+  .ch-lfsc__num { text-align: right; margin-top: var(--s8); }
   .ch-lfsc__kerb {
-    grid-auto-flow: column; grid-template-rows: auto auto; margin-top: var(--s9);
+    grid-auto-flow: column; grid-template-rows: auto auto;
     grid-template-columns: min(calc(912 * var(--u)), 1040px) min(calc(400 * var(--u)), 440px);
     justify-content: space-between; column-gap: calc(32 * var(--u));
   }
@@ -406,30 +501,49 @@ ol { list-style: none; }
   .ch-lfsc__kerb > .ch-lfsc__ferrari { width: 100%; margin-top: 0; }
 }
 
-/* --- S6 · Father and son */
+/* --- S6 · Father and son. Declared yield (doc §2.1a): no painted line — one master at its
+   sharpness ceiling, the crest and the #61 on one kerb under it. The run-down into the silence. */
+.ch-lola__text .body, .ch-lola__text .caption { margin-top: var(--s4); }
 .ch-lola__tents { margin-top: var(--s7); }
-.ch-lola__kerb { margin-top: var(--s7); }
-.ch-lola__kerb { grid-template-columns: 38fr 62fr; }
+.ch-lola__kerb { margin-top: var(--s7); grid-auto-flow: row; grid-template-columns: 1fr; grid-template-rows: repeat(4, auto); }
+.ch-lola__kerb > .ch-lola__crest { width: min(80%, 300px); }          /* 274 at 375, 286 at 390 (≥ 260) */
+.ch-lola__kerb > .ch-lola__track { width: min(calc(100% + 2 * var(--g)), var(--ceil)); margin: var(--s6) 0 0 calc(-1 * var(--g)); }
+.ch-lola__track figcaption { padding: 0 var(--g); }
 @media (max-width: 999px) {
-
   .ch-lola__tents figcaption { padding-right: var(--g); }
+}
+@media (min-width: 700px) and (max-width: 999px) {
+  .ch-lola__kerb { grid-auto-flow: column; grid-template-rows: auto auto; grid-template-columns: 300px 1fr; column-gap: var(--s4); }
+  .ch-lola__kerb > .ch-lola__crest { width: 100%; }
+  .ch-lola__kerb > .ch-lola__track { width: min(100%, var(--ceil)); margin: 0; }
+  .ch-lola__track figcaption { padding: 0; }
 }
 @media (min-width: 1000px) {
   .ch--lola {
     display: grid; grid-template-columns: 1fr min(calc(816 * var(--u)), 960px); column-gap: calc(64 * var(--u));
-    grid-template-areas: "text tents" "kerb tents";
-    grid-template-rows: auto 1fr;
+    grid-template-areas: "text tents" "kerb kerb";
   }
-  .ch-lola__text { grid-area: text; }
+  .ch-lola__text { grid-area: text; max-width: 520px; }
   .ch-lola__tents { grid-area: tents; margin-top: 0; width: 100%; }
-  .ch-lola__kerb { grid-area: kerb; align-self: end; margin-top: var(--s8); column-gap: calc(24 * var(--u)); grid-template-columns: 42fr 58fr; }
+  .ch-lola__kerb {
+    grid-area: kerb; margin-top: var(--s8); justify-content: start;
+    grid-auto-flow: column; grid-template-rows: auto auto;
+    grid-template-columns: clamp(320px, calc(340 * var(--u)), 416px) min(calc(520 * var(--u)), 640px); column-gap: calc(32 * var(--u));
+  }
+  .ch-lola__kerb > .ch-lola__crest { width: 100%; }
+  .ch-lola__kerb > .ch-lola__track { width: 100%; margin: 0; }
+  .ch-lola__track figcaption { padding: 0; }
 }
-.ch-lola__text .body, .ch-lola__text .caption { margin-top: var(--s4); }
 
 /* ======================================================================== SILENCE + TRANSITION */
 .silence { height: 30vh; }
-.transition { position: relative; }
-.tr { position: relative; --k: 5.489; }
+.transition {
+  position: relative;
+  /* the print's left edge in T-B / T-C (photo × --m-print, right-aligned to the gutter): the GT
+     bay stands on this line in the static page, so the hand-over in T-C is vertical only */
+  --tr-print-x: calc((1 - var(--m-print, 0.6)) * 100 * var(--vw) - var(--g));
+}
+.tr { position: relative; --k: 5.489; --fs-tr: calc(var(--m) / var(--k)); }
 .tr__photo { position: relative; z-index: 0; margin: 0; }
 .tr__frame { position: relative; overflow: hidden; }
 .tr__frame img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0; }
@@ -438,26 +552,38 @@ ol { list-style: none; }
   position: absolute; border: 1px solid var(--ink);
   left: 40.2%; width: 6.3%; top: 39.3%; height: 4.6%;
 }
+/* the ramp lives only between BY's baseline and the photo's bottom edge — behind MANCUSO's
+   upper third; BY stands on the photograph at its natural brightness (measured ≥ 3:1) */
 .tr__ramp {
+  --ramp-h: calc((var(--pitch) - var(--cap) + var(--lap) * var(--cap)) * var(--fs-tr));
   position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 62%, rgba(15,17,18,.72) 84%, rgba(15,17,18,.94) 100%);
+  background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) calc(100% - var(--ramp-h)), rgba(15,17,18,.8) calc(100% - 0.4 * var(--ramp-h)), rgba(15,17,18,.94) 100%);
 }
 .tr__livery {
-  position: relative; z-index: 1; padding: 0 var(--g);
+  position: relative; z-index: 1; padding: 0 var(--g); font-size: var(--fs-tr);
   /* MANCUSO overlaps the photo's bottom edge by --lap of its cap; BY stands on the photo */
-  margin-top: calc(-1 * (var(--cap) + (var(--pitch) - var(--cap)) + var(--lap) * var(--cap)) * var(--m) / var(--k));
+  margin-top: calc(-1 * (var(--cap) + (var(--pitch) - var(--cap)) + var(--lap) * var(--cap)) * var(--fs-tr));
 }
 .tr__statement { padding: var(--s5) var(--g) 0; }
-.tr__after { padding: 0 var(--g); }
 .tr__note { display: flex; flex-direction: column; gap: var(--s2); padding: var(--s5) var(--g) 0; max-width: calc(36em + 2 * var(--g)); }
 @media (min-width: 700px) {
   .tr__frame { aspect-ratio: 2400 / 1404; }   /* landscape master; cuts the plastic chairs (rows 0–88%) */
+  /* landscape: BY lands on the trailer's white skirt, so the ramp starts half a cap above BY
+     (measured: BY 1.6:1 on the bare photo) and still ends at the photo's bottom edge */
+  .tr__ramp {
+    background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) calc(100% - 1.55 * var(--fs-tr)),
+      rgba(15,17,18,.74) calc(100% - 1.05 * var(--fs-tr)), rgba(15,17,18,.86) calc(100% - 0.4 * var(--fs-tr)), rgba(15,17,18,.94) 100%);
+  }
   .tr__box { top: 45.2%; height: 4.6%; }
+}
+/* desk with motion: BY rises beside the print, not over it — the ramp returns to the print's own
+   bottom (T-B: ~90 px of the print, 0 → .72), as motion-designer tuned it */
+html.motion-desk .tr__ramp {
+  background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 62%, rgba(15,17,18,.72) 84%, rgba(15,17,18,.94) 100%);
 }
 @media (max-width: 699px) {
   .tr__frame { aspect-ratio: 902 / 1460; }
   .tr__box { left: 49.6%; width: 21%; top: 46.2%; height: 6.2%; }
-  .tr__ramp { background: linear-gradient(to bottom, rgba(15,17,18,0) 0, rgba(15,17,18,0) 58%, rgba(15,17,18,.62) 76%, rgba(15,17,18,.94) 100%); }
 }
 @media (min-width: 1000px) {
   .tr { --k: 6.859; display: grid; grid-template-columns: calc(720 * var(--u) + var(--g)) 1fr; grid-template-areas: "photo photo" "liv liv" "stmt note"; }
@@ -467,12 +593,14 @@ ol { list-style: none; }
   .tr__note { grid-area: note; padding: calc(var(--s7) + 6px) var(--g) 0 0; }
 }
 
-/* ======================================================================== THE GT */
-.gt { padding: var(--s10) var(--g) 0; }
+/* ======================================================================== THE GT
+   [data-gt-bay] (title, status, lead, CTAs) is what takes the print's place in T-C; it stands at
+   the print's left edge (--tr-print-x) and in front of the photograph (z 2). The record row
+   [data-gt-record] stays in flow. Static: one section beat after the statement, no more. */
+.gt { position: relative; z-index: 2; padding: var(--s9) var(--g) 0; }
 .gt__title { font-size: 48px; line-height: 1; font-weight: 600; letter-spacing: -0.015em; }
 .gt__status { color: var(--red); margin-top: var(--s4); }
-.gt__body { margin-top: var(--s6); }
-.gt__lead { max-width: 30em; font-size: 18px; line-height: 27px; font-weight: 500; }
+.gt__lead { margin-top: var(--s6); max-width: 30em; font-size: 18px; line-height: 27px; font-weight: 500; }
 .gt__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s6); margin-top: var(--s6); }
 .gt__film {
   display: inline-flex; align-items: center; gap: var(--s3); min-height: 48px;
@@ -485,25 +613,26 @@ ol { list-style: none; }
 .record dd { font-size: 16px; line-height: 24px; font-weight: 500; margin-top: 2px; }
 @media (min-width: 700px) { .record { grid-template-columns: repeat(auto-fit, minmax(150px, max-content)); justify-content: start; column-gap: var(--s8); } }
 @media (min-width: 1000px) {
-  .gt {
-    display: grid; grid-template-columns: calc(720 * var(--u)) minmax(0, 640px);
-    padding-top: var(--s10);
-  }
-  .gt__head { grid-column: 1; }
+  .gt { padding: var(--s9) var(--g) 0 var(--tr-print-x); }
+  .gt__bay { max-width: 600px; }
   .gt__title { font-size: 72px; line-height: 1; }
-  .gt__body { grid-column: 2; margin-top: 4px; }
   .gt__lead { font-size: 21px; line-height: 31px; max-width: 600px; }
+  .gt__record { max-width: 864px; }
 }
 
-/* ======================================================================== RPM CLUB + INSTAGRAM */
-.rpm { padding: var(--s10) var(--g) 0; display: grid; gap: var(--s8); }
-@media (min-width: 1000px) { .rpm { padding-top: var(--sec); } }
-.rpm__station { color: var(--ink-2); margin-bottom: var(--s4); }
+/* ======================================================================== RPM CLUB + INSTAGRAM
+   One painted line, RPM CLUB, fitted to the measure. fix2 (critic2 NEW-2 / NEW-3): desktop
+   opens on its reading text one larger step after the GT record, and the line arrives AFTER it,
+   so RPM CLUB never shares a viewport with BY / MANCUSO once the peak's pin releases. The plate
+   is dropped: CLUB stands whole; the episodes stand one beat under CLUB, in its column, the
+   Instagram note under RPM. ([data-rpm-plate] stays: motion parks the episodes under the line.) */
+.rpm { --k: 5.419; --fs-rpm: calc(var(--m) / var(--k)); padding: var(--sec) var(--g) 0; display: grid; gap: var(--s7); }
+.rpm__livery { font-size: var(--fs-rpm); }
+.rpm__station { margin-top: var(--s3); }
 .rpm__intro .body { margin-top: var(--s4); }
 .rpm__links { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s6); margin-top: var(--s5); }
 .rpm__links .link { min-height: 44px; display: inline-flex; align-items: center; }
-.ig { margin-top: var(--s4); padding-top: var(--s5); border-top: 1px solid var(--rule); max-width: 30em; }
-@media (min-width: 1000px) { .ig { margin-top: var(--s8); } }
+.ig { padding-top: var(--s5); border-top: 1px solid var(--rule); max-width: 30em; }
 .ig__title { font-size: 16px; line-height: 24px; font-weight: 600; }
 .ig__text { font-size: 16px; line-height: 25px; color: var(--ink-2); margin-top: var(--s2); }
 .pending { color: var(--ink); }
@@ -511,7 +640,7 @@ ol { list-style: none; }
 .ep-latest { padding-bottom: var(--s2); }
 .ep-latest__title { font-size: 24px; line-height: 30px; font-weight: 600; margin-top: var(--s3); text-wrap: balance; max-width: 18em; }
 .ep-latest__act { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s4) var(--s5); margin-top: var(--s5); }
-.ep-list__title { margin-top: var(--s8); }
+.ep-list__title { margin-top: var(--s7); }
 .ep-list { margin-top: var(--s3); border-top: 1px solid var(--rule); }
 .ep-list li { border-bottom: 1px solid var(--rule); }
 .ep-list a {
@@ -522,17 +651,36 @@ ol { list-style: none; }
 .ep-list__name { font-size: 17px; line-height: 25px; font-weight: 500; }
 .ep-list a:hover .ep-list__name { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
 .rpm__note { margin-top: var(--s4); }
+/* tablet: the same order as desktop (reading text, then the line) — at 768 the line otherwise
+   shares a viewport with BY / MANCUSO; phones keep the line first (≥ 961 px clear of it) */
+@media (min-width: 700px) and (max-width: 999px) {
+  .rpm__intro { order: -1; }
+  .rpm__livery { margin-top: var(--s8); }
+}
 @media (min-width: 1000px) {
-  .rpm { grid-template-columns: calc(600 * var(--u)) minmax(0, 1fr); grid-template-rows: auto 1fr; column-gap: calc(120 * var(--u)); row-gap: 0; }
-  .rpm__intro { grid-column: 1; grid-row: 1; }
-  .rpm__episodes { grid-column: 2; grid-row: 1 / span 2; }
-  .ig { grid-column: 1; grid-row: 2; align-self: start; }
-  .rpm__intro { max-width: 560px; }
+  .rpm {
+    --fs-rpm: calc(150 * var(--u));      /* cap 103 at 1440: below BY / MANCUSO (196), the peak keeps its scale */
+    grid-template-columns: calc(2.941 * var(--fs-rpm)) minmax(0, 1fr);   /* col 1 = RPM's advance */
+    column-gap: calc(0.304 * var(--fs-rpm));                               /* = the word space */
+    grid-template-areas: "intro ." "liv liv" "ig plate";
+    grid-template-rows: auto auto auto; row-gap: 0;
+    /* one larger step than --sec (192 @1440), never a second pause: ≤ 22vh, the 30vh silence
+       stays the page's only one */
+    padding-top: max(var(--sec), min(calc(192 * var(--u)), 22vh, 192px));
+  }
+  .rpm__livery { grid-area: liv; display: grid; grid-template-columns: subgrid; }
+  .rpm__w1 { grid-column: 1; }
+  .rpm__w2 { grid-column: 2; }
+  .rpm__livery { margin-top: var(--sec); }      /* one section beat after the reading text */
+  .rpm__intro { grid-area: intro; max-width: 560px; }
+  .ig { grid-area: ig; align-self: start; margin-top: var(--s7); }
+  .rpm__episodes { grid-area: plate; position: relative; z-index: 1; max-width: 720px; margin-top: var(--s7); }
   .ep-latest__title { font-size: 34px; line-height: 41px; }
 }
 
-/* ======================================================================== CONTACT */
-.contact { padding: var(--s10) var(--g) var(--s10); display: grid; gap: var(--s8); }
+/* ======================================================================== CONTACT
+   Desktop: name / email / phone in one row; the message beside the topic and the send row. */
+.contact { padding: var(--sec) var(--g) var(--s10); display: grid; gap: var(--s8); }
 .contact__head .body { margin-top: var(--s4); }
 .record--stack { grid-template-columns: 1fr !important; margin-top: var(--s7); max-width: 360px; }
 .record--stack > div { display: grid; grid-template-columns: 96px 1fr; align-items: baseline; }
@@ -567,31 +715,49 @@ ol { list-style: none; }
 @media (min-width: 700px) { .enquiry { grid-template-columns: 1fr 1fr; } .field--wide { grid-column: 1 / -1; } }
 @media (min-width: 1000px) {
   .contact { grid-template-columns: calc(600 * var(--u)) minmax(0, 1fr); column-gap: calc(120 * var(--u)); }
+  .enquiry {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: var(--s4);
+    grid-template-areas: "name email phone" "about msg msg" "actions msg msg";
+  }
+  .field--name { grid-area: name; }
+  .field--email { grid-area: email; }
+  .enquiry .field--phone { grid-area: phone; }
+  .enquiry .field--about { grid-area: about; }
+  .enquiry .field--msg { grid-area: msg; }
+  .enquiry .field--actions { grid-area: actions; align-self: end; margin-top: 0; }
+  .field--msg textarea { min-height: calc(3 * 27px + 16px); }
 }
 
-/* ======================================================================== FOOTER: the page lands */
+/* ======================================================================== FOOTER: the page lands
+   The page closes on type: the family's line at painted scale, fitted to the measure, as the
+   last mass (Oilstain HF/11's ending). Chrome above it, quiet. */
 .foot {
+  --k: 5.955; --fs-ft: calc(var(--m) / var(--k));
   border-top: 1px solid var(--rule);
-  padding: var(--s8) var(--g) var(--s7);
-  display: grid; gap: var(--s6);
+  padding: var(--s7) var(--g) var(--s7);
+  display: grid; gap: var(--s5);
+  grid-template-areas: "nav" "credits" "top" "sign";
 }
-.foot__sign .nav__mark { padding: 0; font-size: 16px; }
-.foot__line { margin-top: var(--s2); font-size: 16px; line-height: 24px; color: var(--ink-2); }
-.foot__nav { display: flex; flex-wrap: wrap; gap: 0 var(--s5); }
+.foot__nav { grid-area: nav; display: flex; flex-wrap: wrap; gap: 0 var(--s5); }
 .foot__nav a { font-size: 14px; line-height: 20px; font-weight: 500; text-decoration: none; padding: var(--s3) 0; }
 .foot__nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
-.foot__top { text-decoration: none; align-self: end; }
+.foot__credits { grid-area: credits; }
+.foot__top { grid-area: top; display: inline-flex; align-items: center; min-height: 44px; justify-self: start; text-decoration: none; }
 .foot__top:hover { color: var(--ink); }
+.foot__sign { grid-area: sign; margin-top: var(--s9); }
+.foot__mark {
+  display: block; font-weight: 700; font-stretch: 125%; font-size: 14px; line-height: 20px;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2);
+}
+.foot__livery { display: block; margin-top: var(--s4); font-size: var(--fs-ft); }
 @media (min-width: 1000px) {
   .foot {
+    --k: 7.404;
     grid-template-columns: calc(720 * var(--u)) 1fr auto;
-    grid-template-areas: "sign nav top" "credits credits credits";
-    align-items: start; row-gap: var(--s8);
+    grid-template-areas: "nav credits top" "sign sign sign";
+    align-items: center; row-gap: 0;
   }
-  .foot__sign { grid-area: sign; }
-  .foot__nav { grid-area: nav; padding-top: 0; margin-top: -12px; }
-  .foot__top { grid-area: top; align-self: start; }
-  .foot__credits { grid-area: credits; }
+  .foot__sign { margin-top: var(--s10); }
 }
 
 /* ======================================================================== Lenis */
@@ -621,12 +787,16 @@ html:not(.js) .nav__mark { opacity: 0; }
   --m-lift: 24;                 /* px — a statement lifts as it leaves */
   --m-park-sign: 110;           /* px @1440 — the 1953 sign parks */
   --m-park-76: 80;              /* px @1440 — the #76 parks (capped by the kerb gap) */
-  --m-peak-pin: 1.4;            /* viewport heights held at the peak */
+  --m-peak-pin: 2.1;            /* viewport heights held at the peak: T-A · T-B · T-C */
+  --m-park-009: 72;             /* px @1440 — the #009 master parks on 009 (capped by room) */
+  --m-park-plate: 40;           /* px @1440 — the RPM plate parks on CLUB (capped by room) */
+  --m-tc-gap: 96;               /* px @1440 — the record row follows the statement by one beat */
   --m-print: 0.6;               /* the trailer photo contracts to 0.6 (864 px at 1440) */
   --m-ease-travel: power2.inOut;   /* CHEVROLET's drop into its painted line (weight) */
   --m-ease-park: power2.out;       /* an object arriving and stopping */
   --m-ease-contract: power1.inOut; /* the photograph becoming a print */
   --m-ease-rise: power2.out;       /* the name rising into place */
+  --m-ease-exit: power2.in;        /* the archive leaving: it accelerates away */
 }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
@@ -655,4 +825,12 @@ html:not(.js) .nav__mark { opacity: 0; }
 @keyframes d3-paint { from { clip-path: inset(-25% 100% -25% -3%); } to { clip-path: inset(-25% 0 -25% -3%); } }
 /* desk: the evidence box is drawn at the print's scale — 1 px once contracted */
 html.motion-desk .tr__box { border-width: calc(1px / var(--m-print)); }
+/* desk T-C: the GT bay is out of flow and parked at its T-C place by motion.js (inside the
+   pinned wrapper); the record row is pulled up by --m-tc-pull (set before the pin is measured)
+   so that after the release it follows the statement by one beat. */
+html.motion-desk.motion-tc .gt { margin-top: calc(-1 * var(--m-tc-pull, 0px)); }
+html.motion-desk.motion-tc .gt__bay {
+  position: absolute; top: 0; left: var(--tr-print-x);
+  width: min(600px, calc(100% - var(--tr-print-x) - var(--g)));
+}
 /* ======================================================================== /MOTION BLOCK */

@@ -20,6 +20,33 @@
         ],
         "createdAt": "2026-10-16T20:26:26.496Z",
         "reason": "Claude: html/body use overflow-x: clip only, to stop full-bleed scenes from causing horizontal page scroll; the positioned children (fixed nav, pinned scenes) are not tooltips or menus and are not clipped vertically"
+      },
+      {
+        "rule": "text-overflow",
+        "value": "*",
+        "files": [
+          "sketches/d3/index.html"
+        ],
+        "createdAt": "2026-10-17T01:49:38.429Z",
+        "reason": "Claude: the 48px is the ::before legibility shade (inset -48px) behind the hero lead; the text itself fits its box at every width (measured 1440-375)"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "sketches/d3/index.html"
+        ],
+        "createdAt": "2026-10-17T01:49:38.444Z",
+        "reason": "Claude: detector samples the raw photo under the hero (canvas-img-underlay) and ignores the veil/ramp/shade; composited render measured by design-critic and designer: hero lead p95 5.07-7.87:1, name p5 >=5.18:1, 'Le Mans, June 1976.' >=7.7:1"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "sketches/d3/index.html"
+        ],
+        "createdAt": "2026-10-17T01:49:38.455Z",
+        "reason": "Claude: section.hero clips the cover photo stage by design; its positioned children are photo/name/car layers, not menus or tooltips"
       }
     ]
   }
