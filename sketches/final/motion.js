@@ -1,9 +1,9 @@
 /* =====================================================================
    Mancuso — final sketch · motion
    Lenis on gsap.ticker (autoRaf off), not constructed under reduced motion.
-   Desktop (>=1000px): hero pin (hold → trail → documents → push-in → hold → name wipe),
+   Desktop (>=1000px): hero push on exit, the Spirit drives in at Le Mans,
    peak pin on the #76, spine fill, chapter reveals.
-   Phones: hero intro + trail on load, reveals only, no pins.
+   Phones: hero intro, reveals only, no pins.
    Static path: everything is laid out complete in CSS; motion only adds states.
    ===================================================================== */
 (() => {
@@ -48,47 +48,28 @@
   const q = (s, r = document) => r.querySelector(s);
   const qa = (s, r = document) => [...r.querySelectorAll(s)];
 
-  const bg = q('[data-hero-bg]'), name = q('[data-hero-name]'), since = q('[data-hero-since]');
-  const car = q('[data-hero-car]'), trail = q('[data-hero-trail] path'), wipe = q('[data-hero-wipe]');
-  const foot = q('[data-hero-foot]'), lines = qa('.callout__line'), labels = qa('.callout__label'), docs = qa('[data-doc]');
+  const photo = q('[data-hero-photo] img'), copy = q('[data-hero-copy]');
 
-  /* ---------------- hero intro (every width): the colour car resolves out of the smoke */
-  gsap.set(trail, { strokeDashoffset: 1 });
-  const intro = gsap.timeline({ defaults: { ease: 'expo.out' } });
-  intro
-    .from(bg, { autoAlpha: 0, scale: 1.05, duration: 1.6, ease: 'power2.out' }, 0)
-    .from(since, { autoAlpha: 0, y: 12, duration: 0.8 }, 0.35)
-    .from(name, { autoAlpha: 0, y: 40, duration: 1.2 }, 0.4)
-    .from(car, { autoAlpha: 0, y: 30, filter: 'grayscale(1) brightness(.6)', duration: 1.4, ease: 'power3.out' }, 0.7)
-    .from(lines, { scaleY: 0, duration: 0.9, stagger: 0.12, ease: 'power3.inOut' }, 1.1)
-    .from(labels, { autoAlpha: 0, y: 6, duration: 0.6, stagger: 0.12 }, 1.6)
-    .from(foot, { autoAlpha: 0, y: 16, duration: 0.8 }, 1.4);
+  /* ---------------- hero intro: the photograph settles, the copy arrives line by line */
+  gsap.timeline({ defaults: { ease: 'expo.out' } })
+    .from(photo, { scale: 1.06, autoAlpha: 0, duration: 2.2, ease: 'power2.out' }, 0)
+    .from(copy.children, { autoAlpha: 0, y: 24, duration: 1.1, stagger: 0.12 }, 0.5);
 
   const mm = gsap.matchMedia();
 
   /* ================================================================ DESKTOP */
   mm.add('(min-width: 1000px)', () => {
-    /* hero pin — the v2 grammar: hold → one accent → objects staggered → push → hold → release */
-    gsap.set(docs, { autoAlpha: 0, y: 70 });
-    const tl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { trigger: hero, start: 'top top', end: '+=170%', pin: true, scrub: 0.7, anticipatePin: 1 },
+    /* hero exit: the camera keeps rolling toward the car while the copy lifts away */
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: q('[data-hero]'), start: 'top top', end: 'bottom top', scrub: 0.6 } })
+      .to(photo, { scale: 1.08, transformOrigin: '70% 62%' }, 0)
+      .to(copy, { y: -80, autoAlpha: 0 }, 0);
+
+    /* the Spirit drives in, head-on, up to (never past) its native size */
+    gsap.fromTo('[data-arrive] img', { scale: 0.55, yPercent: 30, autoAlpha: 0 }, {
+      scale: 1, yPercent: 0, autoAlpha: 1, ease: 'power2.out',
+      scrollTrigger: { trigger: '[data-arrive]', start: 'top 95%', end: 'center 55%', scrub: 0.6 },
     });
-    tl.to({}, { duration: 0.10 })                                                    // hold
-      .to(trail, { strokeDashoffset: 0, duration: 0.20, ease: 'power2.inOut' })       // the accent
-      .to(name, { opacity: 0.32, duration: 0.08 }, 0.30)
-      .to(docs, { autoAlpha: 1, y: 0, duration: 0.10, stagger: 0.06, ease: 'power3.out' }, 0.30) // documents
-      .to(foot, { autoAlpha: 0, y: 20, duration: 0.08 }, 0.32)
-      .to(car, { scale: 1.08, transformOrigin: '50% 100%', duration: 0.20, ease: 'power2.inOut' }, 0.55) // push-in
-      .to(bg, { scale: 1.05, duration: 0.20, ease: 'power2.inOut' }, 0.55)
-      .to(trail, { opacity: 0, duration: 0.10 }, 0.58)
-      .to(name, { opacity: 1, duration: 0.10 }, 0.62)
-      .to({}, { duration: 0.10 }, 0.75)                                               // hold
-      .to(docs, { autoAlpha: 0, y: -50, duration: 0.08, stagger: 0.02 }, 0.85)        // release
-      .to([lines, labels], { autoAlpha: 0, duration: 0.06 }, 0.85)
-      .fromTo(wipe, { x: 0, autoAlpha: 1 }, { x: () => name.offsetWidth, duration: 0.15, ease: 'power2.in', immediateRender: false }, 0.85)
-      .fromTo(name, { clipPath: 'inset(-10% -10% -10% 0%)' }, { clipPath: 'inset(-10% -10% -10% 100%)', duration: 0.15, ease: 'power2.in', immediateRender: false }, 0.85)
-      .to(wipe, { autoAlpha: 0, duration: 0.02 }, 0.99);
 
     /* the peak: the #76 arrives over its number; notes draw; hold */
     const peak = q('[data-peak-stage]');
@@ -97,26 +78,18 @@
       scrollTrigger: { trigger: peak, start: 'top top', end: '+=130%', pin: true, scrub: 0.7, anticipatePin: 1 },
     });
     ptl.from(q('[data-peak-num]'), { scale: 0.86, opacity: 0, duration: 0.3, ease: 'power2.out' }, 0)
-       .from(q('[data-peak-car]'), { scale: 0.84, xPercent: 8, duration: 0.45, ease: 'power2.out' }, 0) // never above native size
+       .from(q('[data-peak-car]'), { scale: 0.84, xPercent: 8, duration: 0.45, ease: 'power2.out' }, 0)
        .from(qa('[data-peak-note]'), { autoAlpha: 0, y: 14, duration: 0.12, stagger: 0.08 }, 0.35)
        .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.15 }, 0.55)
        .to({}, { duration: 0.3 });
 
-    /* Le Mans: the B&W frame opens from a print to the full bleed */
     gsap.fromTo('[data-smoke]', { clipPath: 'inset(14% 10% 14% 10%)' }, {
       clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
       scrollTrigger: { trigger: '[data-smoke]', start: 'top 90%', end: 'top 15%', scrub: 0.6 },
     });
-
-    /* ghost years drift against the scroll */
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
     }));
-  });
-
-  /* ================================================================ PHONES */
-  mm.add('(max-width: 999px)', () => {
-    gsap.to(trail, { strokeDashoffset: 0, duration: 1.1, delay: 1.6, ease: 'power2.inOut' });
   });
 
   /* ================================================================ EVERY WIDTH */

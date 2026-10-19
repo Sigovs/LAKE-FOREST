@@ -83,6 +83,15 @@
         ],
         "createdAt": "2026-10-19T19:55:02.339Z",
         "reason": "Claude: user-approved ticker from the F1 reference (docs/final-package-references.md), one strip, aria-hidden, stopped under prefers-reduced-motion"
+      },
+      {
+        "rule": "overused-font",
+        "value": "instrument serif",
+        "files": [
+          "sketches/final/index.html"
+        ],
+        "createdAt": "2026-10-19T20:10:25.932Z",
+        "reason": "Claude: the serif matches the client-approved hero concept screenshot (2026-10-19); revisit when the brand's own type is chosen"
       }
     ]
   }
