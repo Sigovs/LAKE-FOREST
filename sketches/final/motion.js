@@ -109,10 +109,12 @@
       if (Math.abs(vid.currentTime - want) > 0.02 && !vid.seeking) vid.currentTime = want; }); }
 
     /* Le Mans: the lines climb out of the smoke one after another, the facts arrive at their tips */
-    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } });
+    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=140%', pin: true, scrub: 0.6, anticipatePin: 1 } });
     lm.from('.fact__line', { scaleY: 0, transformOrigin: 'bottom center', stagger: 0.12, ease: 'power2.out' }, 0)
       .from('.fact p', { autoAlpha: 0, y: 8, stagger: 0.12, ease: 'power2.out' }, 0.25)
-      .to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0);
+      .to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0)
+      /* as the camera closes in, the film softens and dims so the facts stay readable */
+      .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(7px) brightness(0.42)', ease: 'power1.in', duration: 0.7 }, 0.75);
 
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },

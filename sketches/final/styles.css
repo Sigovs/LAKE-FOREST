@@ -256,13 +256,13 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 /* ---------------------------------------------------------------- full-bleed photographs with text in their empty side */
 .bleed { position: relative; z-index: 2; height: 100vh; min-height: 560px; overflow: hidden; background: var(--ground); }
 .bleed img { width: 100%; height: 100%; object-fit: cover; }
-.bleed--center img { object-position: 50% 70%; }
+.bleed--center img { object-position: 50% 62%; }
 /* the blue of the #76 page runs on into the sky */
 .bleed--center::before { content: ""; position: absolute; inset: 0 0 auto; height: 55%; z-index: 1; pointer-events: none;
   background: linear-gradient(180deg, #a9d9ee 0%, rgba(169,217,238,.85) 22%, rgba(169,217,238,.35) 60%, rgba(169,217,238,0) 100%); }
 .bleed--left img { object-position: 70% 50%; }
 .bleed__text { position: absolute; z-index: 2; display: grid; gap: var(--s-3); color: #fff; text-shadow: 0 1px 24px rgba(0,0,0,.25); }
-.bleed--center .bleed__text { left: 0; right: 0; top: 12vh; text-align: center; color: var(--navy); text-shadow: none; }
+.bleed--center .bleed__text { left: 0; right: 0; top: 22vh; text-align: center; color: var(--navy); text-shadow: none; }
 .bleed--left .bleed__text { left: calc(var(--gutter) + var(--col) * .5); top: 16vh; }
 .bleed--left::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(11,12,13,.7) 0%, rgba(11,12,13,.25) 38%, rgba(11,12,13,0) 55%); }
 .bleed__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
@@ -296,7 +296,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .fact p { position: absolute; left: var(--s-3); top: 0; width: 200px; font-size: 15px; line-height: 1.45; color: var(--ink); text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 18px rgba(0,0,0,.8); }
 .fact b { display: block; margin-bottom: 2px; font-size: 16px; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
 
-.lm__text { padding: var(--s-8) calc(var(--gutter) + var(--col)) 0; display: grid; gap: var(--s-6); }
+.lm__text { position: relative; z-index: 3; margin-top: -24vh; padding: calc(24vh + var(--s-6)) calc(var(--gutter) + var(--col)) 0; display: grid; gap: var(--s-6);
+  background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,.85) 12vh, #050505 24vh); }
 .lm__eyebrow { color: var(--mute); }
 .lm__grid { display: grid; grid-template-columns: repeat(11, 1fr); column-gap: var(--s-5); align-items: start; }
 .lm__num { grid-column: 1 / span 1; font-family: var(--serif); font-size: clamp(64px, 6vw, 104px); line-height: .8; color: var(--ink); }
