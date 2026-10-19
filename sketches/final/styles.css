@@ -285,7 +285,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .lm__photo { position: absolute; inset: 0; }
 .lm__photo img, .lm__photo video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .lm__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.6) 46%, rgba(5,5,5,.12) 64%, rgba(5,5,5,0) 78%, rgba(5,5,5,.85) 100%); }
+  background: linear-gradient(180deg, #050505 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.6) 46%, rgba(5,5,5,.12) 64%, rgba(5,5,5,0) 78%, rgba(5,5,5,.85) 100%); }
 .lm__credit { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); color: rgba(237,235,230,.82); }
 .facts { position: absolute; inset: 0; z-index: 2; }
 .fact { position: absolute; left: var(--x); top: calc(var(--y) * 1%); width: 0; }
