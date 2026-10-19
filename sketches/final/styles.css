@@ -408,6 +408,13 @@ h2.bleed__title { font-weight: 400; }
   .gtp .ch-full__body { min-height: 0; box-shadow: none; }
 }
 
+.swap { position: relative; z-index: 2; }
+@media (min-width: 1000px) {
+  .swap { height: 100vh; overflow: hidden; }
+  .swap > .bleed { position: absolute; inset: 0; }
+  .swap__b { clip-path: inset(0 0 0 100%); }
+}
+
 /* ---------------------------------------------------------------- LFSC + Lola */
 .cutout--aston { grid-column: 8 / span 5; width: min(100%, 690px); justify-self: end; }
 .cutout--aston img { filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); }

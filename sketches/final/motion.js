@@ -112,6 +112,21 @@
       });
     }
 
+    /* the swap: the white Spirit holds; the red GTP wipes in from the right over it, the Spirit drifts left and dims */
+    const swap = q('[data-swap]');
+    if (swap) {
+      const A = q('[data-swap-a]', swap), B = q('[data-swap-b]', swap);
+      gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: swap, start: 'top top', end: '+=180%', pin: true, scrub: 0.6, anticipatePin: 1 } })
+        .to({}, { duration: 0.25 })
+        .to(q('.bleed__text', A), { x: -60, autoAlpha: 0, duration: 0.25, ease: 'power2.in' }, 0.25)
+        .fromTo(B, { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 0.6, ease: 'power2.inOut' }, 0.3)
+        .fromTo(q('img', B), { xPercent: 12 }, { xPercent: 0, duration: 0.6, ease: 'power2.out' }, 0.3)
+        .fromTo(q('img', A), { xPercent: 0, filter: 'brightness(1)' }, { xPercent: -10, filter: 'brightness(0.45)', duration: 0.6, ease: 'power2.inOut' }, 0.3)
+        .fromTo(q('.bleed__text', B), { x: 80, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, 0.75)
+        .to({}, { duration: 0.25 });
+    }
+
     /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
     const peak = q('[data-peak-stage]');
     gsap.timeline({ defaults: { ease: 'none' },

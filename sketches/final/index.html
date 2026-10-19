@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
-<link rel="stylesheet" href="styles.css?v=52">
+<link rel="stylesheet" href="styles.css?v=53">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -299,7 +299,9 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
     </div>
   </section>
 
-  <figure class="bleed bleed--left" data-bleed>
+  <!-- SWAP · the white car hands over to the red one: the GTP frame wipes in from the side over the Spirit frame -->
+  <div class="swap" data-swap>
+  <figure class="bleed bleed--left swap__a" data-swap-a>
     <img src="../../assets/img/final/spirit-today-rear.jpg" width="2218" height="1384" loading="lazy"
          alt="The Spirit of Le Mans 76 Corvette from behind, “Mancuso Chevrolet” on the tail, on an empty circuit.">
     <figcaption class="bleed__text">
@@ -308,10 +310,7 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
     </figcaption>
     <p class="caption bleed__cap">Date and place not recorded.</p>
   </figure>
-
-  <!-- THE RED CAR · GTP Corvette #4 (Lola T711). Family connection pending (client question #17). -->
-  <section class="ch-full gtp" id="ch-gtp" aria-labelledby="h-gtp" data-ch>
-    <figure class="bleed bleed--dusk" data-bleed data-pinstop>
+    <figure class="bleed bleed--dusk swap__b" data-swap-b>
       <img src="../../assets/img/final/gtp-sunset.jpg" width="1920" height="1080" loading="lazy"
            alt="The white and red GTP Corvette #4 at speed at dusk, the grandstand a blur behind it.">
       <figcaption class="bleed__text">
@@ -320,7 +319,11 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
       </figcaption>
       <p class="caption bleed__cap">GTP Corvette #4 at speed. Date and circuit not recorded.</p>
     </figure>
-    <div class="pin-gap" aria-hidden="true"></div>
+  </div>
+
+  <!-- THE RED CAR · GTP Corvette #4 (Lola T711). Family connection pending (client question #17). -->
+  <section class="ch-full gtp" id="ch-gtp" aria-labelledby="h-gtp" data-ch>
+
     <div class="gtp__pair">
       <figure class="frame"><img src="../../assets/img/final/gtp-doors.jpg" width="1987" height="1318" loading="lazy" alt="The GTP Corvette head-on, both doors raised, on a brick plaza."><figcaption class="caption">Doors up. Photographer not recorded.</figcaption></figure>
       <figure class="frame"><img src="../../assets/img/final/gtp-rear-daytona.jpg" width="1993" height="1330" loading="lazy" alt="The GTP Corvette from behind, engine and gearbox exposed, in front of the Daytona grandstands."><figcaption class="caption">From behind, at Daytona. Photographer not recorded.</figcaption></figure>
@@ -406,6 +409,6 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="motion.js?v=32"></script>
+<script src="motion.js?v=34"></script>
 </body>
 </html>
