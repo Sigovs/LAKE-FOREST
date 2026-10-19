@@ -89,11 +89,6 @@
       .to([q('[data-bleed-text]', bp), q('[data-bleed-cta]', bp)], { y: -40, autoAlpha: 0, duration: 0.15 }, 0.62)
       .to(q('[data-bleed-dark]', bp), { opacity: 1, duration: 0.3 }, 0.62);
 
-    /* full-bleed frames: the photograph settles as it arrives */
-    qa('[data-bleed] img').forEach((img) => gsap.fromTo(img, { scale: 1.08 }, {
-      scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'top top', scrub: true },
-    }));
-
     /* Le Mans: the film's push-in is driven by the scroll (all-intra encode, so seeking is smooth) */
     const vid = q('[data-lm-video]'); const lmScrub = { t: 0 };
     if (vid) {
@@ -115,12 +110,12 @@
       /* as the camera closes in, the film softens and dims so the facts stay readable */
       .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(6px) brightness(0.6)', ease: 'power1.in', duration: 0.7 }, 0.75);
 
-    /* the exit, in steps: as the next block rides over, the facts leave one by one, the frame sinks back */
-    gsap.timeline({ defaults: { ease: 'power2.in' },
-      scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 15%', scrub: 0.6 } })
-      .to(qa('.fact').reverse(), { y: -60, autoAlpha: 0, stagger: 0.12, duration: 0.4 }, 0)
-      .to('.lm__title', { autoAlpha: 0, duration: 0.3 }, 0)
-      .to('.lm__photo', { scale: 0.92, filter: 'brightness(0.7)', transformOrigin: '50% 30%', ease: 'none', duration: 1.2 }, 0);
+    /* the exit: the chapter text rides over the still frame; facts and title fade softly, the frame only dims */
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 20%', scrub: 1 } })
+      .to(qa('.fact').reverse(), { autoAlpha: 0, stagger: 0.08, duration: 0.5 }, 0)
+      .to('.lm__title', { autoAlpha: 0, duration: 0.5 }, 0)
+      .to('.lm__photo', { opacity: 0.35, duration: 1 }, 0);
 
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
