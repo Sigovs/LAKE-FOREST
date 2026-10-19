@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
-<link rel="stylesheet" href="styles.css?v=36">
+<link rel="stylesheet" href="styles.css?v=38">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -250,34 +250,29 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
       </div>
     </div>
 
-    <div class="lm__strip">
-      <figure class="frame" data-frame>
-        <img src="../../assets/img/final/bw2.jpg" width="1672" height="941" loading="lazy" alt="The Corvette pulls away from the camera at Le Mans, a trail of tyre smoke across the track.">
-        <figcaption class="caption">Leaving in smoke. Photo courtesy of Albert Lamberts.</figcaption>
-      </figure>
-      <figure class="frame" data-frame>
-        <img src="../../assets/img/final/bw3.jpg" width="1672" height="941" loading="lazy" alt="The Spirit of Le Mans 76 Corvette in the pit lane at Le Mans, photographers and crew around it.">
-        <figcaption class="caption">In the pit lane. Photo courtesy of Albert Lamberts.</figcaption>
-      </figure>
-      <figure class="frame frame--paper" data-frame>
+    <!-- the race, in order: the paper of the day stays put on the left, the race log runs on the right -->
+    <div class="lm__story">
+      <figure class="lm__paper">
         <img src="../../assets/img/final/le-maine-1976.jpg" width="1400" height="892" loading="lazy" alt="Le Maine Libre, Saturday 12 – Sunday 13 June 1976: the Corvette on the front page under the 24-hour headline.">
-        <figcaption class="caption">Le Maine Libre, 12–13 June 1976.</figcaption>
+        <figcaption class="caption">The local paper on race weekend: Le Maine Libre, 12–13 June 1976.</figcaption>
       </figure>
-    </div>
-    <div class="lm__strip lm__strip--end" aria-labelledby="h-hour8">
-      <p class="lm__strip-head"><span class="eyebrow">Hour 8</span><span id="h-hour8" class="lm__strip-title">A fuel malfunction ends its race.</span></p>
-      <figure class="frame" data-frame>
-        <img src="../../assets/img/final/lemans-hour8-1.jpg" width="648" height="414" loading="lazy" alt="The Spirit of Le Mans Corvette stopped, a crew member crouched at the front wheel, spectators behind the fence.">
-        <figcaption class="caption">Photo courtesy of Jean-Louis Pene.</figcaption>
-      </figure>
-      <figure class="frame" data-frame>
-        <img src="../../assets/img/final/lemans-hour8-2.jpg" width="648" height="414" loading="lazy" alt="Gendarmes and officials stand around the stopped Corvette.">
-        <figcaption class="caption">Photo courtesy of Jean-Louis Pene.</figcaption>
-      </figure>
-      <figure class="frame" data-frame>
-        <img src="../../assets/img/final/lemans-hour8-3.jpg" width="648" height="414" loading="lazy" alt="The stopped Corvette from the front left, officials beside it.">
-        <figcaption class="caption">Photo courtesy of Jean-Louis Pene.</figcaption>
-      </figure>
+      <ol class="lm__log">
+        <li class="log" data-frame>
+          <p class="log__time"><span>Saturday</span>On track</p>
+          <img src="../../assets/img/final/bw2.jpg" width="1672" height="941" loading="lazy" alt="The Corvette pulls away from the camera at Le Mans, a trail of tyre smoke across the track.">
+          <p class="caption">Leaving in smoke. Photo courtesy of Albert Lamberts.</p>
+        </li>
+        <li class="log" data-frame>
+          <p class="log__time"><span>Saturday</span>In the pit lane</p>
+          <img src="../../assets/img/final/bw3.jpg" width="1672" height="941" loading="lazy" alt="The Spirit of Le Mans 76 Corvette in the pit lane, photographers and crew around it.">
+          <p class="caption">Photo courtesy of Albert Lamberts.</p>
+        </li>
+        <li class="log log--end" data-frame>
+          <p class="log__time"><span>Hour 8</span>Out of the race</p>
+          <img src="../../assets/img/final/lemans-hour8-2.jpg" width="648" height="414" loading="lazy" alt="Gendarmes and officials stand around the stopped Corvette.">
+          <p class="caption">A fuel malfunction ends its race. Photo courtesy of Jean-Louis Pene.</p>
+        </li>
+      </ol>
     </div>
   </section>
 
@@ -360,6 +355,6 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="motion.js?v=18"></script>
+<script src="motion.js?v=20"></script>
 </body>
 </html>
