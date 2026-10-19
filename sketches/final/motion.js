@@ -79,26 +79,34 @@
         .to({}, { duration: 0.4 });
     });
 
-    /* the family: one pinned screen; each panel rides up over the last, with a stop on every panel */
+    /* the family: one pinned screen. No block slides over another: on each step the current panel's
+       elements leave upward one by one, then the next panel's elements arrive one by one. After the last
+       panel its elements leave the same way, and the screen releases. A stop on every panel. */
     const dyn = q('[data-dyn-stage]');
     if (dyn) {
       const panels = qa('[data-dyn-panel]', dyn), steps = qa('[data-dyn-step]', dyn), n = panels.length;
+      const items = (p) => qa('.dyn__head > *, .gen, :scope > .caption, .dyn__doc', p);
       const mark = (i) => steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
-      gsap.set(panels.slice(1), { yPercent: 100 });
-      const dtl = gsap.timeline({ defaults: { ease: 'none' },
-        scrollTrigger: { trigger: dyn, start: 'top top', end: '+=' + (n - 1) * 100 + '%', pin: true, scrub: 0.6, anticipatePin: 1,
-          onUpdate: (st) => mark(Math.round(st.progress * (n - 1))) } });
-      panels.slice(1).forEach((p, k) => {
-        dtl.to(p, { yPercent: 0, duration: 1, ease: 'power2.inOut' }, k)
-           .to(panels[k], { yPercent: -12, autoAlpha: 0.15, duration: 1, ease: 'power2.inOut' }, k);
-      });
+      panels.slice(1).forEach((p) => gsap.set(items(p), { y: 60, autoAlpha: 0 }));
+      gsap.set(panels, { autoAlpha: 1 });
+      const units = n;                       // n-1 changes + 1 exit
+      const dtl = gsap.timeline({ defaults: { ease: 'power2.inOut' },
+        scrollTrigger: { trigger: dyn, start: 'top top', end: '+=' + units * 100 + '%', pin: true, scrub: 0.6, anticipatePin: 1,
+          onUpdate: (st) => mark(Math.min(n - 1, Math.round(st.progress * units))) } });
+      for (let k = 0; k < n; k++) {
+        const out = items(panels[k]);
+        dtl.to(out, { y: -60, autoAlpha: 0, duration: 0.3, stagger: 0.05 }, k + 0.15);
+        if (k < n - 1) dtl.to(items(panels[k + 1]), { y: 0, autoAlpha: 1, duration: 0.3, stagger: 0.05 }, k + 0.5);
+      }
+      dtl.to(steps, { y: -40, autoAlpha: 0, duration: 0.25, stagger: 0.05 }, n - 1 + 0.45);
       const dST = dtl.scrollTrigger; let dSettle = 0;
-      lenis.on('scroll', ({ scroll }) => {
+      lenis.on('scroll', () => {
         clearTimeout(dSettle);
-        if (scroll <= dST.start || scroll >= dST.end) return;
+        const span = dST.end - dST.start, u = (lenis.scroll - dST.start) / span * units;
+        if (u <= 0 || u >= n - 0.5) return;
         dSettle = setTimeout(() => {
-          const i = Math.round(((lenis.scroll - dST.start) / (dST.end - dST.start)) * (n - 1));
-          const target = dST.start + (dST.end - dST.start) * i / (n - 1);
+          const i = Math.max(0, Math.min(n - 1, Math.round(u)));
+          const target = dST.start + span * i / units;
           if (Math.abs(target - lenis.scroll) > 4) lenis.scrollTo(target, { duration: 0.8, easing: (t) => 1 - Math.pow(1 - t, 3) });
         }, 160);
       });
