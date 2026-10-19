@@ -2,7 +2,7 @@
    Mancuso — final sketch · motion
    Lenis on gsap.ticker (autoRaf off), not constructed under reduced motion.
    Desktop (>=1000px): hero push on exit, the Spirit drives in at Le Mans,
-   peak pin on the #76, spine fill, chapter reveals.
+   peak pin on the #76, chapter reveals.
    Phones: hero intro, reveals only, no pins.
    Static path: everything is laid out complete in CSS; motion only adds states.
    ===================================================================== */
@@ -108,8 +108,8 @@
     const setFact = (p) => { const i = Math.min(facts.length - 1, Math.floor(p * facts.length));
       facts.forEach((f, k) => f.classList.toggle('is-on', k === i)); board.style.setProperty('--p', i); };
     setFact(0);
-    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=140%', scrub: 0.6,
-      onUpdate: (st) => setFact(Math.min(.999, st.progress / 0.85)) } });
+    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=320%', scrub: 0.6,
+      onUpdate: (st) => setFact(Math.min(.999, st.progress / 0.9)) } });
     lm.to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0)
       /* as the camera closes in, the film softens and dims so the facts stay readable */
       .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(6px) brightness(0.6)', ease: 'power1.in', duration: 0.7 }, 0.75);
@@ -117,7 +117,8 @@
     /* the exit: the chapter text rides over the still frame; facts and title fade softly, the frame only dims */
     gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 20%', scrub: 1 } })
-      .to(qa('.fact').reverse(), { autoAlpha: 0, stagger: 0.08, duration: 0.5 }, 0)
+      .to(qa('.fact'), { y: -90, autoAlpha: 0, stagger: 0.1, duration: 0.35, ease: 'power2.in' }, 0)
+      .to('.facts', { '--rule': 0, duration: 0.3 }, 0.5)
       .to('.lm__title', { autoAlpha: 0, duration: 0.5 }, 0)
       .to('.lm__photo', { opacity: 0.35, duration: 1 }, 0);
 
@@ -127,48 +128,6 @@
   });
 
   /* ================================================================ EVERY WIDTH */
-  /* the spine: on desktop a winding racing line drawn down the history — straights, sweepers,
-     a chicane — and the reading fills it; on phones the straight dashed line stays */
-  const spine = q('.spine'), history = q('[data-history]');
-  let trackSvg = null;
-  const buildTrack = () => {
-    if (!spine || !history) return;
-    if (trackSvg) { trackSvg.remove(); trackSvg = null; }
-    if (!matchMedia('(min-width: 1000px)').matches) { spine.classList.remove('spine--track'); qa('.history .tick').forEach((t) => { t.style.left = ''; }); return; }
-    const H = history.offsetHeight, x0 = spine.offsetLeft + 1, A = 34;
-    // a fixed lap: [kind, length in px, lateral shift]
-    const lap = [['straight', 380, 0], ['sweep', 520, A], ['straight', 260, 0], ['chicane', 220, -A * .45], ['sweep', 600, -A * .9],
-                 ['straight', 420, 0], ['hairpin', 360, A * 1.1], ['chicane', 200, -A * .4], ['sweep', 560, -A * .5], ['straight', 300, 0]];
-    let y = 0, x = x0, i = 0, d = `M ${x0} 0`;
-    while (y < H) {
-      const [kind, len, dx] = lap[i++ % lap.length]; const y1 = Math.min(H, y + len); const x1 = Math.max(x0 - A, Math.min(x0 + A, x + dx));
-      if (kind === 'straight') d += ` L ${x} ${y1}`;
-      else if (kind === 'chicane') { const m = (y + y1) / 2; d += ` C ${x} ${y + 40}, ${x1} ${m - 40}, ${x1} ${m} S ${x} ${y1 - 30}, ${x} ${y1}`; }
-      else d += ` C ${x} ${y + len * .45}, ${x1} ${y1 - len * .45}, ${x1} ${y1}`, x = x1;
-      y = y1;
-    }
-    const ns = 'http://www.w3.org/2000/svg';
-    trackSvg = document.createElementNS(ns, 'svg'); trackSvg.setAttribute('class', 'spine__track'); trackSvg.setAttribute('aria-hidden', 'true');
-    trackSvg.setAttribute('width', x0 + A * 2 + 20); trackSvg.setAttribute('height', H);
-    trackSvg.innerHTML = `<path class="spine__base" d="${d}"/><path class="spine__run" d="${d}"/>`;
-    history.prepend(trackSvg); spine.classList.add('spine--track');
-    const run = trackSvg.querySelector('.spine__run'), L = run.getTotalLength();
-    run.style.strokeDasharray = L; run.style.strokeDashoffset = L; run.dataset.len = L;
-    // year markers sit on the line
-    const hb = history.getBoundingClientRect();
-    qa('.history .tick').forEach((t) => {
-      const ty = t.getBoundingClientRect().top + t.offsetHeight / 2 - hb.top; let best = 0, bd = 1e9;
-      for (let s = 0; s <= L; s += 8) { const p = run.getPointAtLength(s); const dd = Math.abs(p.y - ty); if (dd < bd) { bd = dd; best = p.x; } }
-      t.style.left = (best - 7.5) + 'px';
-    });
-  };
-  ScrollTrigger.addEventListener('refresh', buildTrack);
-  ScrollTrigger.create({ trigger: '[data-history]', start: 'top 55%', end: 'bottom 55%', onUpdate: (st) => {
-    const run = trackSvg && trackSvg.querySelector('.spine__run'); if (run) run.style.strokeDashoffset = run.dataset.len * (1 - st.progress);
-  } });
-  gsap.fromTo('[data-spine-fill]', { scaleY: 0 }, { scaleY: 1, ease: 'none',
-    scrollTrigger: { trigger: '[data-history]', start: 'top 55%', end: 'bottom 55%', scrub: true } });
-
   /* chapter reveals: head, body, documents and frames arrive once */
   qa('[data-ch]').forEach((ch) => {
     const items = qa('.ch__head, .ch__body:not([data-peak-body]), .lm__text', ch);
