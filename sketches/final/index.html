@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
-<link rel="stylesheet" href="styles.css?v=53">
+<link rel="stylesheet" href="styles.css?v=54">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -24,6 +24,7 @@
     <a href="#family">Family</a>
     <a href="#history">History</a>
     <a href="#gt">The GT</a>
+    <a href="#rpm-club">RPM Club</a>
     <a href="#contact">Contact</a>
   </nav>
 </header>
@@ -399,9 +400,78 @@ The car stays under its cover: no photograph of the GT has been released. -->
   </div>
 </section>
 
-<footer class="foot" id="contact" tabindex="-1">
-  <p class="foot__word" aria-hidden="true">Next chapter</p>
-  <p class="caption foot__note">Sketch, 19 October 2026. RPM Club, Instagram, the enquiry form and the closing character follow in the next pass. Contact details are not connected yet.</p>
+<!-- ================================================================ RPM CLUB · the family on the radio -->
+<section class="rpm" id="rpm-club" aria-labelledby="h-rpm" tabindex="-1" data-reveal>
+  <div class="rpm__head">
+    <p class="eyebrow">On air · AM 560 The Answer, Chicago</p>
+    <h2 id="h-rpm" class="rpm__title">RPM Club.<span>A weekly radio show with Rick and Rob&nbsp;Mancuso.</span></h2>
+    <p class="body">The love of cars and the joy of driving: the business and the pleasure of all things automotive, with industry guests and callers.</p>
+    <p class="pills">
+      <a class="pill pill--line" href="https://560theanswer.com/radioshow/rpm-club">The show on AM 560</a>
+      <a class="pill pill--line" href="https://omny.fm/shows/rpm-club">All episodes</a>
+    </p>
+  </div>
+  <div class="rpm__eps">
+    <a class="ep ep--latest" href="https://omny.fm/shows/rpm-club/coach-tony-and-driving-tips-and-shift-point">
+      <span class="ep__meta"><span>Latest episode</span><time datetime="2026-10-12">12 October 2026</time></span>
+      <span class="ep__title">Coach Tony and driving tips, and “Shift Point”</span>
+      <span class="ep__play"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 4.5v15L19.5 12z"/></svg>Listen · 40 min</span>
+    </a>
+    <ol class="ep-list">
+      <li><a href="https://omny.fm/shows/rpm-club/new-carmax-management-update-and-more"><time datetime="2026-10-05">5 Oct</time><span>New CarMax management update, and more</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/inside-track-auto-shows-then-now"><time datetime="2026-09-28">28 Sep</time><span>Inside Track: auto shows, “Then &amp; Now!”</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/honoring-roger-penske"><time datetime="2026-09-14">14 Sep</time><span>Honoring Roger Penske</span><span aria-hidden="true">→</span></a></li>
+    </ol>
+    <p class="caption">From the show's public feed, 16 October 2026. The live site will update from the feed; show artwork awaits permission.</p>
+  </div>
+</section>
+
+<!-- ================================================================ INSTAGRAM · no invented posts -->
+<section class="ig" id="instagram" aria-labelledby="h-ig" data-reveal>
+  <div class="ig__head">
+    <p class="eyebrow">Follow</p>
+    <h2 id="h-ig" class="ig__title">Instagram</h2>
+    <p class="caption">Handle to be confirmed. The family's own posts will appear here once the account is connected.</p>
+  </div>
+  <ul class="ig__grid" aria-hidden="true">
+    <li class="ig__tile"><span class="need"><b>Need</b>Instagram feed</span></li>
+    <li class="ig__tile"><span class="need"><b>Need</b>Instagram feed</span></li>
+    <li class="ig__tile"><span class="need"><b>Need</b>Instagram feed</span></li>
+    <li class="ig__tile"><span class="need"><b>Need</b>Instagram feed</span></li>
+  </ul>
+</section>
+
+<!-- ================================================================ CONTACT -->
+<section class="contact" id="contact" aria-labelledby="h-contact" tabindex="-1" data-reveal>
+  <div class="contact__head">
+    <p class="eyebrow">Contact</p>
+    <h2 id="h-contact" class="contact__title">Get in touch.</h2>
+    <p class="body">About the GT, the family's cars, or anything else.</p>
+    <dl class="contact__record">
+      <div><dt>Address</dt><dd>To be confirmed</dd></div>
+      <div><dt>Phone</dt><dd>To be confirmed</dd></div>
+      <div><dt>Email</dt><dd>To be confirmed</dd></div>
+    </dl>
+  </div>
+  <form class="enquiry" novalidate>
+    <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
+    <div class="field field--wide"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <fieldset class="field field--wide choices"><legend>About</legend>
+      <label class="choice"><input type="radio" name="topic" value="gt" checked><span>The GT</span></label>
+      <label class="choice"><input type="radio" name="topic" value="other"><span>Something else</span></label>
+    </fieldset>
+    <div class="field field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
+    <div class="field--wide enquiry__actions"><button class="pill pill--fill" type="submit">Send enquiry</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
+  </form>
+</section>
+
+<footer class="foot">
+  <nav class="foot__nav" aria-label="Footer">
+    <a href="#family">Family</a><a href="#history">History</a><a href="#gt">The GT</a><a href="#rpm-club">RPM Club</a><a href="#contact">Contact</a>
+  </nav>
+  <p class="foot__word" aria-hidden="true">Mancuso · Since 1923</p>
+  <p class="caption foot__note">Archive photographs keep their printed credits. Prototype, 19 October 2026: the form is not connected, contact details and the Instagram handle are to be confirmed.</p>
 </footer>
 
 </main>
@@ -409,6 +479,7 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="motion.js?v=34"></script>
+<script src="form.js?v=1"></script>
+<script src="motion.js?v=35"></script>
 </body>
 </html>
