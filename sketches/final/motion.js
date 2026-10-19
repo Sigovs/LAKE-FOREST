@@ -74,9 +74,9 @@
        then the chapter text rides over it as one solid layer */
     qa('[data-pinstop]').forEach((fig) => {
       const text = q('.bleed__text', fig);
-      gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top top', end: '+=55%', scrub: 0.6, refreshPriority: -1 } })
-        .fromTo(text, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: 'power2.out', duration: 0.6 })
-        .to({}, { duration: 0.4 });
+      gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top top', end: '+=60%', scrub: 0.6, refreshPriority: -1 } })
+        .fromTo(text, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: 'power2.out', duration: 0.35 }, 0)
+        .to(text.children, { y: -70, autoAlpha: 0, ease: 'power2.in', duration: 0.3, stagger: 0.06 }, 0.55);   /* leaves upward, line by line */
     });
 
     /* the family: one pinned screen. No block slides over another: on each step the current panel's
@@ -123,15 +123,18 @@
     const swap = q('[data-swap]');
     if (swap) {
       const A = q('[data-swap-a]', swap), B = q('[data-swap-b]', swap);
+      /* one rule for both titles: each arrives from the right on its own frame, holds, then the frame changes */
+      const tIn = { x: 0, autoAlpha: 1, duration: 0.2, ease: 'power2.out' };
       gsap.timeline({ defaults: { ease: 'none' },
-        scrollTrigger: { trigger: swap, start: 'top top', end: '+=180%', pin: true, scrub: 0.6, anticipatePin: 1 } })
-        .to({}, { duration: 0.25 })
-        .to(q('.bleed__text', A), { x: -60, autoAlpha: 0, duration: 0.25, ease: 'power2.in' }, 0.25)
-        .fromTo(B, { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 0.6, ease: 'power2.inOut' }, 0.3)
-        .fromTo(q('img', B), { xPercent: 12 }, { xPercent: 0, duration: 0.6, ease: 'power2.out' }, 0.3)
-        .fromTo(q('img', A), { xPercent: 0, filter: 'brightness(1)' }, { xPercent: -10, filter: 'brightness(0.45)', duration: 0.6, ease: 'power2.inOut' }, 0.3)
-        .fromTo(q('.bleed__text', B), { x: 80, autoAlpha: 0 }, { x: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, 0.75)
-        .to({}, { duration: 0.25 });
+        scrollTrigger: { trigger: swap, start: 'top top', end: '+=200%', pin: true, scrub: 0.6, anticipatePin: 1 } })
+        .fromTo(q('.bleed__text', A), { x: 80, autoAlpha: 0 }, tIn, 0)
+        .to({}, { duration: 0.2 }, 0.2)
+        .to(q('.bleed__text', A), { x: -60, autoAlpha: 0, duration: 0.2, ease: 'power2.in' }, 0.4)
+        .fromTo(B, { clipPath: 'inset(0 0 0 100%)' }, { clipPath: 'inset(0 0 0 0%)', duration: 0.6, ease: 'power2.inOut' }, 0.45)
+        .fromTo(q('img', B), { xPercent: 12 }, { xPercent: 0, duration: 0.6, ease: 'power2.out' }, 0.45)
+        .fromTo(q('img', A), { xPercent: 0, filter: 'brightness(1)' }, { xPercent: -10, filter: 'brightness(0.45)', duration: 0.6, ease: 'power2.inOut' }, 0.45)
+        .fromTo(q('.bleed__text', B), { x: 80, autoAlpha: 0 }, tIn, 0.95)
+        .to({}, { duration: 0.25 }, 1.15);
     }
 
     /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
