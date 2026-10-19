@@ -112,6 +112,13 @@
       });
     }
 
+    /* Skokie: the sign stops; the line appears in place and holds, then the page moves on */
+    const sk = q('[data-skokie]');
+    if (sk) gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: sk, start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } })
+      .fromTo(q('.bleed__text', sk).children, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, stagger: 0.1, ease: 'power1.out' }, 0.05)
+      .to({}, { duration: 0.5 });
+
     /* the swap: the white Spirit holds; the red GTP wipes in from the right over it, the Spirit drifts left and dims */
     const swap = q('[data-swap]');
     if (swap) {
@@ -144,7 +151,9 @@
       .fromTo(q('[data-bleed-cta]', bp), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2, ease: 'power1.out' }, 0.18)
       .to({}, { duration: 0.25 })
       .to([q('[data-bleed-text]', bp), q('[data-bleed-cta]', bp)], { autoAlpha: 0, duration: 0.15 }, 0.62)
-      .to(q('[data-bleed-dark]', bp), { opacity: 1, duration: 0.3 }, 0.62);
+      .to(q('[data-bleed-dark]', bp), { opacity: 1, duration: 0.25 }, 0.6)
+      /* the frame dissolves: the Le Mans film is already waiting underneath, in place */
+      .to(bp, { autoAlpha: 0, duration: 0.15 }, 0.85);
 
     /* Le Mans: the film's push-in is driven by the scroll (all-intra encode, so seeking is smooth) */
     const vid = q('[data-lm-video]'); const lmScrub = { t: 0 };

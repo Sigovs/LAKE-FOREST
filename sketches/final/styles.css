@@ -280,6 +280,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 
 /* ---------------------------------------------------------------- Le Mans: the mood-board composition */
 .lm { display: block; padding: 0 0 var(--s-9); background: #050505; }
+/* desktop: the film sits directly under the pinned 'Next' frame, so it appears in place instead of rising from below */
+@media (min-width: 1000px) { .lm { position: relative; z-index: 1; margin-top: -100vh; } [data-bleed-pin] { z-index: 3; } }
 .lm .tick { display: none; }
 .lm__title {
   position: absolute; z-index: 2; top: calc(50% - 150px); left: 0; right: 0;
@@ -344,8 +346,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .dyn__panels { grid-column: 3 / span 10; position: relative; }
 .dyn__panel { display: grid; gap: var(--s-6); align-content: center; padding: var(--s-9) 0; }
 .dyn__head { display: grid; gap: var(--s-4); align-content: start; }
-.dyn__panel--split { grid-template-columns: 6fr 4fr; column-gap: var(--s-8); align-items: center; }
-.dyn__doc { justify-self: center; width: min(100%, 360px); transform: rotate(1.5deg); }
+.dyn__panel--split { grid-template-columns: minmax(0, 600px) minmax(0, 340px); justify-content: start; column-gap: clamp(48px, 6vw, 112px); align-items: center; }
+.dyn__doc { justify-self: start; width: min(100%, 340px); transform: rotate(1.5deg); }
 .dyn__doc img { box-shadow: 0 2px 0 rgba(0,0,0,.4), 0 24px 50px rgba(0,0,0,.55); }
 .dyn__doc--letter { transform: rotate(-1.5deg); width: min(100%, 330px); }
 .dyn .heading { font-size: clamp(40px, 4.6vw, 76px); }
