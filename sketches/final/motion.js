@@ -70,11 +70,10 @@
       .fromTo('[data-cards-bar]', { scaleX: 1 / 6 }, { scaleX: 1 }, 0);
 
 
-    /* pin stops on the full-bleed chapters: the frame stops, its title drives up and holds,
-       then the next block rides over it */
+    /* pin stops on the full-bleed chapters: the frame is sticky (CSS), its title arrives and holds,
+       then the chapter text rides over it as one solid layer */
     qa('[data-pinstop]').forEach((fig) => {
       const text = q('.bleed__text', fig);
-      ScrollTrigger.create({ trigger: fig, start: 'top top', endTrigger: fig.nextElementSibling, end: 'bottom top', pin: true, pinSpacing: false, anticipatePin: 1, refreshPriority: -1 });
       gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top top', end: '+=55%', scrub: 0.6, refreshPriority: -1 } })
         .fromTo(text, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: 'power2.out', duration: 0.6 })
         .to({}, { duration: 0.4 });
