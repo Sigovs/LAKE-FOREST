@@ -147,7 +147,9 @@
   }));
   /* the stage lights come up, then the words */
   gsap.timeline({ scrollTrigger: { trigger: '[data-gt]', start: 'top 65%', once: true } })
-    .from('.gt__stage', { autoAlpha: 0, duration: 1.8, ease: 'power2.out' }, 0)
+    .from('.gt__stage img', { autoAlpha: 0, duration: 1.8, ease: 'power2.out' }, 0)
+    /* the spotlight switches on: two short flickers, then it holds */
+    .fromTo('[data-gt-light]', { opacity: 0 }, { keyframes: [{ opacity: .7, duration: .06 }, { opacity: .1, duration: .08 }, { opacity: .9, duration: .05 }, { opacity: .3, duration: .1 }, { opacity: 1, duration: .5 }], ease: 'none' }, 0.9)
     .from('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 24, duration: 1, ease: 'expo.out', stagger: 0.12 }, 0.5);
 
   /* fonts and images change heights: keep the triggers honest */
