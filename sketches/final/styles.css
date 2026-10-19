@@ -311,6 +311,26 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .frame { display: grid; gap: var(--s-3); align-content: start; }
 .frame img { width: 100%; aspect-ratio: 1672 / 941; object-fit: cover; }
 
+/* ---------------------------------------------------------------- full-bleed chapters (LFSC, Lola) */
+.ch-full { position: relative; z-index: 2; background: var(--ground); }
+.bleed__sub { display: block; margin-top: var(--s-3); font-size: .42em; line-height: 1.2; opacity: .8; }
+h2.bleed__title { font-weight: 400; }
+.bleed--showroom img { object-position: 50% 45%; }
+.bleed--wall .bleed__text { left: calc(var(--gutter) + var(--col)); top: 16vh; color: #121416; text-shadow: none; }
+.bleed--low img { object-position: 50% 55%; }
+.bleed--low::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(11,12,13,.85) 0%, rgba(11,12,13,.2) 40%, rgba(11,12,13,0) 60%); }
+.bleed--low .bleed__text { left: calc(var(--gutter) + var(--col)); bottom: 14vh; top: auto; }
+.ch-full__body { display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-5); padding: var(--s-8) var(--gutter) var(--s-10); }
+.ch-full__body > .body { grid-column: 2 / span 6; font-size: var(--t-lead); line-height: 1.5; max-width: 40ch; }
+.ch-full__aside { grid-column: 9 / span 4; display: grid; gap: var(--s-4); align-content: start; padding-top: var(--s-2); }
+.lm__strip--end { padding-top: var(--s-8) !important; }
+.lm__strip-head { grid-column: 1 / -1; display: grid; gap: var(--s-2); margin-bottom: var(--s-2); }
+.lm__strip-title { font-family: var(--serif); font-size: clamp(28px, 2.6vw, 40px); line-height: 1.1; }
+.peak__archive { padding: 0 calc(var(--gutter) + var(--col) * .5) var(--s-9); display: grid; gap: var(--s-5); }
+.peak__row { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-5); }
+.peak__row .caption { color: rgba(13,34,54,.78); }
+.peak__row img { width: 100%; aspect-ratio: 648 / 414; object-fit: cover; }
+
 /* ---------------------------------------------------------------- LFSC + Lola */
 .cutout--aston { grid-column: 8 / span 5; width: min(100%, 690px); justify-self: end; }
 .cutout--aston img { filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); }
@@ -360,6 +380,11 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   .fact p { position: static; width: auto; }
   .lm__text { padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
   .lm__grid { display: flex; flex-direction: column; gap: var(--s-5); }
+  .ch-full__body { display: grid; grid-template-columns: 1fr; gap: var(--s-5); padding: var(--s-7) var(--gutter) var(--s-9); }
+  .ch-full__body > .body, .ch-full__aside { grid-column: 1; }
+  .bleed--wall .bleed__text, .bleed--low .bleed__text { left: var(--gutter); right: var(--gutter); bottom: 16svh; }
+  .bleed--low .bleed__cap { bottom: var(--s-4); }
+  .peak__row { grid-template-columns: 1fr 1fr; }
   .lm__strip { grid-template-columns: 1fr; padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
   .cutout--aston, .ch--lola .frame--wide { width: 100%; }
   .gt { padding: var(--s-10) var(--gutter) var(--s-9); }
