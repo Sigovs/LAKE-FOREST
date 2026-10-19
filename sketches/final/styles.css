@@ -267,6 +267,9 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .bleed--left::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(11,12,13,.7) 0%, rgba(11,12,13,.25) 38%, rgba(11,12,13,0) 55%); }
 .bleed__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .bleed__title { font-family: var(--serif); font-size: clamp(44px, 5.6vw, 92px); line-height: .98; }
+.bleed__cta { position: absolute; z-index: 3; left: 0; right: 0; bottom: 9vh; display: flex; justify-content: center; }
+.bleed__cta .btn { gap: var(--s-2); }
+.bleed__dark { position: absolute; inset: 0; z-index: 4; background: #050505; opacity: 0; pointer-events: none; }
 .bleed__cap { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); text-align: right; color: rgba(255,255,255,.88); text-shadow: 0 1px 10px rgba(0,0,0,.5); }
 
 /* ---------------------------------------------------------------- Le Mans: the mood-board composition */

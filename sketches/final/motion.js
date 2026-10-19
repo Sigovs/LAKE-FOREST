@@ -83,6 +83,16 @@
       .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.2 }, 0.45)
       .to({}, { duration: 0.25 });
 
+    /* "Next — Le Mans": the frame stops, the line drives up, the CTA follows; on the way out it goes dark */
+    const bp = q('[data-bleed-pin]');
+    if (bp) gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: bp, start: 'top top', end: '+=120%', pin: true, scrub: 0.6, anticipatePin: 1 } })
+      .fromTo(q('[data-bleed-text]', bp), { y: 120, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, 0)
+      .fromTo(q('[data-bleed-cta]', bp), { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.2, ease: 'power2.out' }, 0.18)
+      .to({}, { duration: 0.25 })
+      .to([q('[data-bleed-text]', bp), q('[data-bleed-cta]', bp)], { y: -40, autoAlpha: 0, duration: 0.15 }, 0.62)
+      .to(q('[data-bleed-dark]', bp), { opacity: 1, duration: 0.3 }, 0.62);
+
     /* full-bleed frames: the photograph settles as it arrives */
     qa('[data-bleed] img').forEach((img) => gsap.fromTo(img, { scale: 1.08 }, {
       scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'top top', scrub: true },
