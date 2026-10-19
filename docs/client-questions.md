@@ -45,3 +45,4 @@ These are the open points from the first website prototype. Until each one is an
 19. **The two modern photographs of the Spirit of Le Mans 76** (`76 Greenwood Adam 1/2`): who took them, when and where? Is this the original 1976 car? May we publish them?
 20. **The cut-outs** in `alex_images/` (blue #76, Spirit front, Aston 009): who made them, and may we publish them?
 21. **Missing cut-outs** for the chapter cards: a Mancuso Chevrolet-era car, and the green Lola #61.
+22. **The red GTP Corvette #4 (Lola T711, chassis HU T711-02):** how is it connected to the family? Was it Mancuso-owned or raced? The final sketch shows it as "The red car · 1984" with the connection marked as unconfirmed.

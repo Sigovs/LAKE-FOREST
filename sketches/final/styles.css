@@ -377,6 +377,17 @@ h2.bleed__title { font-weight: 400; }
 .peak__row .caption { color: rgba(13,34,54,.78); }
 .peak__row img { width: 100%; aspect-ratio: 648 / 414; object-fit: cover; }
 
+.bleed--dusk img { object-position: 50% 60%; }
+.bleed--dusk::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(0deg, rgba(11,12,13,.8) 0%, rgba(11,12,13,.25) 32%, rgba(11,12,13,0) 50%); }
+.bleed--dusk .bleed__text { left: calc(var(--gutter) + var(--col)); top: auto; bottom: 12vh; }
+.bleed--dusk .bleed__cap { color: rgba(255,255,255,.88); }
+.gtp__pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); padding: var(--s-8) calc(var(--gutter) + var(--col)) 0; }
+.gtp__pair img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+
+.pin-gap { display: none; }
+@media (min-width: 1000px) { .pin-gap { display: block; height: 70vh; } }
+.ch-full__body, .gtp__pair { position: relative; z-index: 3; background: var(--ground); }
+
 /* ---------------------------------------------------------------- LFSC + Lola */
 .cutout--aston { grid-column: 8 / span 5; width: min(100%, 690px); justify-self: end; }
 .cutout--aston img { filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); }
@@ -436,6 +447,8 @@ h2.bleed__title { font-weight: 400; }
   .bleed--low .bleed__cap { bottom: var(--s-4); }
   .peak__row { grid-template-columns: 1fr 1fr; }
   .gens { grid-template-columns: 1fr 1fr; }
+  .gtp__pair { grid-template-columns: 1fr; padding: var(--s-7) var(--gutter) 0; }
+  .bleed--dusk .bleed__text { left: var(--gutter); right: var(--gutter); bottom: 12svh; }
   .family { padding: var(--s-9) var(--gutter); }
   .jim { grid-template-columns: 1fr; row-gap: var(--s-7); padding: var(--s-8) var(--gutter) var(--s-9); }
   .jim__head, .jim__quote, .jim__quote--sm, .jim__letter { grid-column: 1; grid-row: auto; }

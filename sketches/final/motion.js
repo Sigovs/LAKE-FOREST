@@ -70,6 +70,16 @@
       .fromTo('[data-cards-bar]', { scaleX: 1 / 6 }, { scaleX: 1 }, 0);
 
 
+    /* pin stops on the full-bleed chapters: the frame stops, its title drives up and holds,
+       then the next block rides over it */
+    qa('[data-pinstop]').forEach((fig) => {
+      const text = q('.bleed__text', fig);
+      ScrollTrigger.create({ trigger: fig, start: 'top top', endTrigger: fig.nextElementSibling, end: 'bottom top', pin: true, pinSpacing: false, anticipatePin: 1, refreshPriority: -1 });
+      gsap.timeline({ scrollTrigger: { trigger: fig, start: 'top top', end: '+=55%', scrub: 0.6, refreshPriority: -1 } })
+        .fromTo(text, { y: 80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, ease: 'power2.out', duration: 0.6 })
+        .to({}, { duration: 0.4 });
+    });
+
     /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
     const peak = q('[data-peak-stage]');
     gsap.timeline({ defaults: { ease: 'none' },
@@ -83,10 +93,10 @@
     const bp = q('[data-bleed-pin]');
     if (bp) gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: bp, start: 'top top', end: '+=120%', pin: true, scrub: 0.6, anticipatePin: 1 } })
-      .fromTo(q('[data-bleed-text]', bp), { y: 120, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.3, ease: 'power2.out' }, 0)
-      .fromTo(q('[data-bleed-cta]', bp), { y: 40, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.2, ease: 'power2.out' }, 0.18)
+      .fromTo(q('[data-bleed-text]', bp), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, ease: 'power1.out' }, 0)
+      .fromTo(q('[data-bleed-cta]', bp), { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.2, ease: 'power1.out' }, 0.18)
       .to({}, { duration: 0.25 })
-      .to([q('[data-bleed-text]', bp), q('[data-bleed-cta]', bp)], { y: -40, autoAlpha: 0, duration: 0.15 }, 0.62)
+      .to([q('[data-bleed-text]', bp), q('[data-bleed-cta]', bp)], { autoAlpha: 0, duration: 0.15 }, 0.62)
       .to(q('[data-bleed-dark]', bp), { opacity: 1, duration: 0.3 }, 0.62);
 
     /* Le Mans: the film's push-in is driven by the scroll (all-intra encode, so seeking is smooth) */
