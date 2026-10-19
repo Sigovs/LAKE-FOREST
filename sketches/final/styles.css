@@ -246,7 +246,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .peak__head { grid-column: 1 / span 6; grid-row: 1; position: relative; z-index: 2; display: grid; gap: var(--s-4); align-self: start; }
 .peak__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); }
 .peak__title { font-family: var(--serif); font-size: clamp(44px, 5.4vw, 88px); line-height: .98; font-weight: 400; letter-spacing: -.01em; }
-.peak__title span { display: block; margin-top: var(--s-3); font-size: .4em; line-height: 1.2; color: rgba(13,34,54,.72); max-width: 26ch; }
+.peak__title span { display: block; margin-top: var(--s-3); font-size: clamp(20px, 2.2vw, 34px); line-height: 1.2; color: rgba(13,34,54,.72); max-width: 26ch; }
 .peak__car { position: absolute; z-index: 2; left: 50%; bottom: 9vh; width: min(48vw, 688px); transform: translateX(-6%); }
 .peak__car img { width: 100%; filter: drop-shadow(0 40px 36px rgba(13,34,54,.35)); }
 .peak__body { grid-column: 1 / span 4; grid-row: 2; align-self: end; position: relative; z-index: 2; display: grid; gap: var(--s-3); font-size: 16px; line-height: 1.55; color: var(--navy); }
