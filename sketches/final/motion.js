@@ -46,19 +46,18 @@
 
   const photo = q('[data-hero-photo] img'), copy = q('[data-hero-copy]');
 
-  /* ---------------- hero intro: the photograph settles, the copy arrives line by line */
+  /* ---------------- hero intro: the photograph fades in at full size, the copy arrives line by line */
   gsap.timeline({ defaults: { ease: 'expo.out' } })
-    .from(photo, { scale: 1.06, autoAlpha: 0, duration: 2.2, ease: 'power2.out' }, 0)
+    .from(photo, { autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0)
     .from(copy.children, { autoAlpha: 0, y: 24, duration: 1.1, stagger: 0.12 }, 0.5);
 
   const mm = gsap.matchMedia();
 
   /* ================================================================ DESKTOP */
   mm.add('(min-width: 1000px)', () => {
-    /* hero exit: the camera keeps rolling toward the car while the copy lifts away */
+    /* hero exit: the photograph holds its size; only the copy lifts away */
     gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: q('[data-hero]'), start: 'top top', end: 'bottom top', scrub: 0.6 } })
-      .to(photo, { scale: 1.08, transformOrigin: '70% 62%' }, 0)
       .to(copy, { y: -80, autoAlpha: 0 }, 0);
 
     /* chapter cards: the page stops, the row travels sideways with the scroll */
