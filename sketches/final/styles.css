@@ -233,7 +233,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .paper { display: grid; gap: var(--s-3); }
 .paper img { box-shadow: 0 2px 0 rgba(0,0,0,.4), 0 24px 50px rgba(0,0,0,.55); }
 .paper--sign { grid-column: 2 / span 5; grid-row: 1; transform: rotate(1.5deg); }
-.paper--letter { grid-column: 1 / span 3; grid-row: 1; margin-top: 52%; transform: rotate(-2deg); z-index: 2; }
+.paper--letter { grid-column: 2 / span 4; grid-row: 1; margin-top: 0; transform: rotate(-2deg); z-index: 2; }
 .paper--letter figcaption { background: var(--ground); padding-top: var(--s-2); }
 
 /* ---------------------------------------------------------------- the peak: the page turns the colour of the car */
@@ -265,6 +265,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .bleed--center .bleed__text { left: 0; right: 0; top: 22vh; text-align: center; color: var(--navy); text-shadow: none; }
 .bleed--left .bleed__text { left: calc(var(--gutter) + var(--col) * .5); top: 16vh; }
 .bleed--left::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(11,12,13,.7) 0%, rgba(11,12,13,.25) 38%, rgba(11,12,13,0) 55%); }
+.bleed--sky img { object-position: 50% 60%; }
+.bleed--sky .bleed__text { right: calc(var(--gutter) + var(--col) * .5); top: 14vh; text-align: right; color: #111314; text-shadow: none; }
 .bleed__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
 .bleed__title { font-family: var(--serif); font-size: clamp(44px, 5.6vw, 92px); line-height: .98; }
 .bleed__cta { position: absolute; z-index: 3; left: 0; right: 0; bottom: 9vh; display: flex; justify-content: center; }
