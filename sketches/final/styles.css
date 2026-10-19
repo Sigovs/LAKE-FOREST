@@ -281,7 +281,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 /* ---------------------------------------------------------------- Le Mans: the mood-board composition */
 .lm { display: block; padding: 0 0 var(--s-9); background: #050505; }
 /* desktop: the film sits directly under the pinned 'Next' frame, so it appears in place instead of rising from below */
-@media (min-width: 1000px) { .lm { position: relative; z-index: 1; margin-top: -100vh; } [data-bleed-pin] { z-index: 3; } }
+/* off while the 'Next' frame is commented out: @media (min-width: 1000px) { .lm { position: relative; z-index: 1; margin-top: -100vh; } [data-bleed-pin] { z-index: 3; } } */
 .lm .tick { display: none; }
 .lm__title {
   position: absolute; z-index: 2; top: calc(50% - 150px); left: 0; right: 0;
