@@ -282,7 +282,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .lm { display: block; padding: 0 0 var(--s-9); background: #050505; }
 .lm .tick { display: none; }
 .lm__title {
-  position: absolute; z-index: 2; top: calc(80px + 15vh); left: 0; right: 0;
+  position: absolute; z-index: 2; top: calc(50% - 150px); left: 0; right: 0;
   text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 300; font-variation-settings: "wdth" 125;
   letter-spacing: .32em; margin-right: -.32em; text-transform: uppercase; color: var(--ink);
 }
@@ -290,18 +290,19 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .lm__photo { position: absolute; inset: 0; }
 .lm__photo img, .lm__photo video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .lm__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg, #050505 0%, rgba(5,5,5,.92) 44%, rgba(5,5,5,.6) 58%, rgba(5,5,5,.12) 64%, rgba(5,5,5,0) 78%, rgba(5,5,5,.85) 100%); }
+  background: linear-gradient(180deg, #050505 0%, rgba(5,5,5,.7) 22%, rgba(5,5,5,.86) 36%, rgba(5,5,5,.86) 66%, rgba(5,5,5,.3) 84%, rgba(5,5,5,.85) 100%); }
 .lm__credit { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); color: rgba(237,235,230,.82); }
 .facts {
   /* a timing board: six facts on one rule under the title; the marker runs along it with the film */
   position: absolute; z-index: 2; left: calc(var(--gutter) + var(--col)); right: calc(var(--gutter) + var(--col));
-  top: calc(80px + 15vh + 92px); display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--s-5);
+  top: calc(50% - 58px); display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--s-5);
   border-top: 1px solid rgba(237,235,230,calc(.22 * var(--rule, 1))); padding-top: var(--s-5);
 }
 .facts::after { content: ""; position: absolute; left: 0; top: -1px; width: calc(100% / 6); height: 2px; background: var(--ink);
-  transform: translateX(calc(var(--p, 0) * 500%)); opacity: var(--rule, 1); transition: transform .5s var(--ease-out); }
+  transform: translateX(calc(var(--p, 0) * 500%)); opacity: var(--rule, 1); transition: transform .35s var(--ease-out); }
 .fact { position: relative; transition: opacity .5s var(--ease-out); }
-@media (min-width: 1000px) { .js .fact { opacity: .32; } .js .fact.is-on { opacity: 1; } }
+.fact { --out: 1; }
+@media (min-width: 1000px) { .js .fact { opacity: calc(.32 * var(--out)); } .js .fact.is-on { opacity: var(--out); } }
 .fact__line { position: absolute; left: 0; top: calc(-1 * var(--s-5) - 5px); width: 1px; height: 9px; background: rgba(237,235,230,.6); }
 .fact p { font-size: 14px; line-height: 1.45; color: #c9cbcd; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 16px rgba(0,0,0,.8); max-width: 22ch; }
 .fact b { display: block; margin-bottom: var(--s-2); font-family: var(--serif); font-size: clamp(24px, 2.1vw, 34px); line-height: 1; font-weight: 400; color: var(--ink); }
@@ -365,14 +366,6 @@ h2.bleed__title { font-weight: 400; }
   display: grid; grid-template-rows: auto 1fr auto; justify-items: center; text-align: center; padding: var(--s-10) var(--gutter) var(--s-9); }
 .gt__stage { position: absolute; left: 50%; top: 50%; width: max(100%, 177.78vh); aspect-ratio: 16 / 9; transform: translate(-50%, -48%); }
 .gt__stage img { width: 100%; height: 100%; max-width: none; }
-.gt__light {
-  /* one overhead spotlight, in the picture's own coordinates: a cone from above onto the cover, and its pool on the floor */
-  position: absolute; inset: 0; pointer-events: none; mix-blend-mode: screen;
-  background:
-    radial-gradient(26% 7% at 50% 66%, rgba(255,250,240,.34), rgba(255,250,240,0) 72%),
-    conic-gradient(from 180deg at 50% -2%, transparent 0deg, transparent 168deg, rgba(255,250,240,.14) 174deg, rgba(255,250,240,.26) 180deg, rgba(255,250,240,.14) 186deg, transparent 192deg, transparent 360deg);
-  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 64%, transparent 80%); mask-image: linear-gradient(180deg, #000 0%, #000 64%, transparent 80%);
-}
 .gt__top, .gt__bottom { position: relative; z-index: 1; display: grid; justify-items: center; gap: var(--s-5); }
 .gt__bottom { grid-row: 3; gap: var(--s-5); }
 .gt__title { font-family: var(--serif); font-weight: 400; font-size: clamp(64px, 9vw, 148px); line-height: .92; letter-spacing: -.01em; }

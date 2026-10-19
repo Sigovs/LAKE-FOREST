@@ -110,6 +110,19 @@
     setFact(0);
     const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=320%', scrub: 0.6,
       onUpdate: (st) => setFact(Math.min(.999, st.progress / 0.9)) } });
+
+    /* a stop on every fact: when the wheel rests inside the board, the page settles on the nearest fact */
+    const lmST = lm.scrollTrigger; let settle = 0;
+    lenis.on('scroll', ({ scroll, velocity }) => {
+      clearTimeout(settle);
+      if (scroll <= lmST.start || scroll >= lmST.start + (lmST.end - lmST.start) * 0.9) return;
+      settle = setTimeout(() => {
+        const span = (lmST.end - lmST.start) * 0.9, n = facts.length;
+        const i = Math.max(0, Math.min(n - 1, Math.round(((lenis.scroll - lmST.start) / span) * n - 0.5)));
+        const target = lmST.start + span * (i + 0.5) / n;
+        if (Math.abs(target - lenis.scroll) > 4) lenis.scrollTo(target, { duration: 0.7, easing: (t) => 1 - Math.pow(1 - t, 3) });
+      }, 160);
+    });
     lm.to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0)
       /* as the camera closes in, the film softens and dims so the facts stay readable */
       .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(6px) brightness(0.6)', ease: 'power1.in', duration: 0.7 }, 0.75);
@@ -117,7 +130,7 @@
     /* the exit: the chapter text rides over the still frame; facts and title fade softly, the frame only dims */
     gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 20%', scrub: 1 } })
-      .to(qa('.fact'), { y: -90, autoAlpha: 0, stagger: 0.1, duration: 0.35, ease: 'power2.in' }, 0)
+      .to(qa('.fact'), { y: -90, '--out': 0, stagger: 0.1, duration: 0.35, ease: 'power2.in' }, 0)
       .to('.facts', { '--rule': 0, duration: 0.3 }, 0.5)
       .to('.lm__title', { autoAlpha: 0, duration: 0.5 }, 0)
       .to('.lm__photo', { opacity: 0.35, duration: 1 }, 0);
@@ -147,8 +160,6 @@
   /* the stage lights come up, then the words */
   gsap.timeline({ scrollTrigger: { trigger: '[data-gt]', start: 'top 65%', once: true } })
     .from('.gt__stage img', { autoAlpha: 0, duration: 1.8, ease: 'power2.out' }, 0)
-    /* the spotlight switches on: two short flickers, then it holds */
-    .fromTo('[data-gt-light]', { opacity: 0 }, { keyframes: [{ opacity: .7, duration: .06 }, { opacity: .1, duration: .08 }, { opacity: .9, duration: .05 }, { opacity: .3, duration: .1 }, { opacity: 1, duration: .5 }], ease: 'none' }, 0.9)
     .from('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 24, duration: 1, ease: 'expo.out', stagger: 0.12 }, 0.5);
 
   /* fonts and images change heights: keep the triggers honest */
