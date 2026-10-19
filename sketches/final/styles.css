@@ -128,13 +128,31 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   font-family: ui-monospace, "SFMono-Regular", Menlo, monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--mute);
 }
 
-/* ---------------------------------------------------------------- chapter strip */
-.strip { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--s-5); padding: var(--s-6) calc(var(--gutter) + var(--col) * .5) var(--s-8); border-bottom: 1px solid rgba(237,235,230,.1); }
-.strip__item { display: grid; gap: var(--s-3); align-content: end; text-decoration: none; color: var(--mute); font-size: var(--t-caption); padding-bottom: var(--s-3); border-bottom: 1px solid rgba(237,235,230,.14); transition: color .3s, border-color .3s; }
-.strip__item img, .strip__blank { height: 72px; width: 100%; object-fit: contain; object-position: left bottom; filter: grayscale(1) brightness(.8); transition: filter .3s; }
-.strip__blank { display: block; border: 1px dashed rgba(237,235,230,.25); }
-.strip__item:hover { color: var(--ink); border-color: var(--accent); }
-.strip__item:hover img { filter: none; }
+/* ---------------------------------------------------------------- chapter cards */
+.cards { padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); display: grid; gap: var(--s-7); }
+.cards__head { display: grid; gap: var(--s-4); }
+.heading--md { font-size: clamp(36px, 4vw, 60px); }
+.cards__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); }
+.card {
+  height: 100%; display: grid; grid-template-rows: auto auto auto 1fr auto; gap: var(--s-3);
+  padding: var(--s-3) var(--s-3) var(--s-5); background: var(--ground-2); border: 1px solid rgba(237,235,230,.08);
+  text-decoration: none; color: var(--ink); transition: border-color .3s, background-color .3s;
+}
+.card__media { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: #191b1e; margin-bottom: var(--s-3); }
+.card__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-out); }
+.card__media--cut img { object-fit: contain; padding: 8% 10%; }
+.card__media--need { display: grid; place-items: center; border: 1px dashed rgba(237,235,230,.28); }
+.need { display: grid; gap: var(--s-2); max-width: 26ch; text-align: center; font-size: 14px; line-height: 1.45; color: var(--mute); }
+.need b { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.card__meta, .card__title, .card__text, .card__go { padding: 0 var(--s-3); }
+.card__meta { font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.card__title { font-family: var(--serif); font-size: clamp(28px, 2.3vw, 36px); line-height: 1; }
+.card__text { font-size: 15px; line-height: 1.5; color: var(--mute); max-width: 36ch; }
+.card__go { margin-top: var(--s-3); font-size: 14px; font-weight: 600; }
+.card__go span { display: inline-block; transition: transform .3s var(--ease-out); }
+.card:hover { border-color: rgba(237,235,230,.32); background: #16181b; }
+.card:hover .card__media img { transform: scale(1.03); }
+.card:hover .card__go span { transform: translateX(4px); }
 
 @media (max-width: 999px) {
   .hero__copy { left: var(--gutter); right: var(--gutter); top: auto; bottom: var(--s-6); }
@@ -144,13 +162,17 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   .hero__photo img { object-position: 62% 50%; }
   .hero__shade { background: linear-gradient(180deg, rgba(11,12,13,.35) 0%, rgba(11,12,13,.3) 35%, rgba(11,12,13,.9) 62%, var(--ground) 100%); }
   .hero__rail { display: none; }
-  .strip { grid-template-columns: repeat(3, 1fr); row-gap: var(--s-5); padding: var(--s-6) var(--gutter) var(--s-7); }
+  .cards { padding: var(--s-8) var(--gutter) var(--s-9); }
+  .cards__grid { grid-template-columns: 1fr; }
+  .card__media { aspect-ratio: 16 / 9; }
 }
 
 /* ---------------------------------------------------------------- the Spirit drives in (Le Mans chapter) */
 .arrive { display: grid; justify-items: center; gap: var(--s-4); padding: var(--s-10) var(--gutter) 0; text-align: center; }
 .arrive img { width: min(70vw, 700px); filter: drop-shadow(0 30px 40px rgba(0,0,0,.65)); }
 .frame--paper img { object-fit: contain; background: var(--ground-2); }
+
+@media (min-width: 700px) and (max-width: 999px) { .cards__grid { grid-template-columns: 1fr 1fr; } }
 
 /* ================================================================ TICKER */
 .ticker { overflow: hidden; border-block: 1px solid rgba(237,235,230,.12); padding: var(--s-4) 0; background: var(--ground); }
