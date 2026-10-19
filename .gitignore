@@ -11,3 +11,10 @@ Thumbs.db
 # Client source archive (photos with unconfirmed publishing rights, PDFs, PSDs).
 # Not pushed to the public repository; web derivatives live in assets/img.
 lake photos/
+
+# User-supplied sources and generated mood material: local only.
+alex_images/
+mood_board/
+# Third-party reference captures (Behance) and raw review frames: local only.
+review/references/behance-*/
+review/2026-10-19-final/*.png
