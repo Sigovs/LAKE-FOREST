@@ -65,6 +65,14 @@
       .to(photo, { scale: 1.08, transformOrigin: '70% 62%' }, 0)
       .to(copy, { y: -80, autoAlpha: 0 }, 0);
 
+    /* chapter cards: the page stops, the row travels sideways with the scroll */
+    const track = q('[data-cards-track]'), vp = q('[data-cards-viewport]');
+    const dist = () => Math.max(0, track.scrollWidth - (vp.clientWidth - parseFloat(getComputedStyle(vp).paddingLeft) * 2));
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: '.cards', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, anticipatePin: 1, invalidateOnRefresh: true } })
+      .to(track, { x: () => -dist() }, 0)
+      .fromTo('[data-cards-bar]', { scaleX: 1 / 6 }, { scaleX: 1 }, 0);
+
     /* the Spirit drives in, head-on, up to (never past) its native size */
     gsap.fromTo('[data-arrive] img', { scale: 0.55, yPercent: 30, autoAlpha: 0 }, {
       scale: 1, yPercent: 0, autoAlpha: 1, ease: 'power2.out',
@@ -110,7 +118,7 @@
     });
   });
   gsap.from('.cards__head, .card', {
-    autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.08,
+    autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.07,
     scrollTrigger: { trigger: '.cards', start: 'top 75%', once: true },
   });
   qa('[data-paper], [data-frame], [data-cutout]').forEach((el) => gsap.from(el, {
