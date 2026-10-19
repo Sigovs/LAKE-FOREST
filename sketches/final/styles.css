@@ -250,7 +250,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .peak__head { grid-column: 1 / span 6; grid-row: 1; position: relative; z-index: 2; display: grid; gap: var(--s-4); align-self: start; }
 .peak__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); }
 .peak__title { font-family: var(--serif); font-size: clamp(44px, 5.4vw, 88px); line-height: .98; font-weight: 400; letter-spacing: -.01em; }
-.peak__title span { display: block; margin-top: var(--s-3); font-size: clamp(20px, 2.2vw, 34px); line-height: 1.2; color: rgba(13,34,54,.72); max-width: 26ch; }
+.peak__title span { display: block; margin-top: var(--s-3); font-size: clamp(20px, 2.2vw, 34px); line-height: 1.3; color: rgba(13,34,54,.72); max-width: 26ch; }
 .peak__car { position: absolute; z-index: 2; left: 50%; bottom: 9vh; width: min(48vw, 688px); transform: translateX(-6%); }
 .peak__car img { width: 100%; filter: drop-shadow(0 40px 36px rgba(13,34,54,.35)); }
 .peak__body { grid-column: 1 / span 4; grid-row: 2; align-self: end; position: relative; z-index: 2; display: grid; gap: var(--s-3); font-size: 16px; line-height: 1.55; color: var(--navy); }
@@ -352,14 +352,14 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .jim__quote { margin: 0; grid-column: 2 / span 6; display: grid; gap: var(--s-4); }
 .jim__quote p { font-family: var(--serif); font-size: clamp(40px, 4.6vw, 76px); line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
 .jim__quote--sm { grid-column: 2 / span 5; }
-.jim__quote--sm p { font-size: clamp(24px, 2.2vw, 34px); line-height: 1.2; color: var(--tone); }
+.jim__quote--sm p { font-size: clamp(24px, 2.2vw, 34px); line-height: 1.3; color: var(--tone); }
 .jim__letter { grid-column: 9 / span 3; grid-row: 1 / span 3; align-self: center; transform: rotate(1.5deg); }
 .jim__letter img { box-shadow: 0 2px 0 rgba(0,0,0,.4), 0 24px 50px rgba(0,0,0,.55); }
 .ch-full__aside .paper img { width: min(100%, 360px); box-shadow: 0 24px 50px rgba(0,0,0,.55); }
 
 /* ---------------------------------------------------------------- full-bleed chapters (LFSC, Lola) */
 .ch-full { position: relative; z-index: 2; background: var(--ground); }
-.bleed__sub { display: block; margin-top: var(--s-3); font-size: .42em; line-height: 1.2; opacity: .8; }
+.bleed__sub { display: block; margin-top: var(--s-3); font-size: .42em; line-height: 1.3; opacity: .8; }
 h2.bleed__title { font-weight: 400; }
 .bleed--showroom img { object-position: 50% 45%; }
 .bleed--wall .bleed__text { left: calc(var(--gutter) + var(--col)); top: 16vh; color: #121416; text-shadow: none; }
