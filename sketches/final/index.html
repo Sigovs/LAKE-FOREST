@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
-<link rel="stylesheet" href="styles.css?v=13">
+<link rel="stylesheet" href="styles.css?v=15">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -161,31 +161,35 @@ The spine: a dashed road centre-line runs down the whole history; scroll fills i
     </div>
   </section>
 
-  <!-- 03 · 1972–1976 · THE PEAK -->
-  <section class="ch ch--76" id="ch-76" aria-labelledby="h-76" data-ch data-peak>
+  <!-- 03 · 1972–1976 · THE PEAK — the page turns the colour of the car -->
+  <section class="ch ch--76 peak" id="ch-76" aria-labelledby="h-76" data-ch data-peak>
     <div class="peak__stage" data-peak-stage>
-      <p class="ghost ghost--76" aria-hidden="true" data-peak-num>76</p>
-      <span class="tick" aria-hidden="true">1972</span>
-      <div class="ch__head peak__head">
-        <p class="eyebrow">03 — 1972 · 1976</p>
-        <h2 id="h-76" class="heading">Rick takes it racing<span class="tone">The #76</span></h2>
+      <p class="peak__num" aria-hidden="true" data-peak-num>76</p>
+      <div class="peak__head">
+        <p class="peak__eyebrow">03 — 1972 · 1976</p>
+        <h2 id="h-76" class="peak__title">Rick takes it racing.<span>The #76, Mancuso Chevrolet's own Corvette.</span></h2>
       </div>
       <div class="peak__car" data-peak-car>
         <img src="../../assets/img/final/blue-76.webp" width="1377" height="730" loading="lazy"
              alt="The pale-blue Mancuso Chevrolet #76 Corvette, three-quarter front: “Mancuso Chevrolet” on the bonnet, “Mancuso · Fyhrie · Greenwood” across the windscreen.">
-        <ul class="peak__notes" aria-hidden="true">
-          <li style="--x: 44%; --y: 4%;  --len: 16vh" data-peak-note><span>Mancuso · Fyhrie · Greenwood</span></li>
-          <li style="--x: 22%; --y: 34%; --len: 24vh" data-peak-note><span>Mancuso Chevrolet</span></li>
-          <li style="--x: 66%; --y: 30%; --len: 30vh" data-peak-note><span>#76</span></li>
-        </ul>
       </div>
-      <div class="ch__body peak__body" data-peak-body>
-        <p class="lead">Rick Mancuso took the green flag in 1972, in a 1958 Corvette prepared to B-Production specs.</p>
-        <p class="body">By 1976 Mancuso Chevrolet had its own Corvette on track — the pale-blue #76, by the Revell kit's account the first “customer” car John Greenwood built.</p>
-        <p class="caption">Source: Fra&nbsp;Noi, February 2005; Revell model kit (customer-car claim, to be confirmed).</p>
+      <div class="peak__body" data-peak-body>
+        <p>Rick Mancuso took the green flag in 1972, in a 1958 Corvette prepared to B-Production specs. By 1976 Mancuso Chevrolet had its own Corvette on track — the pale-blue #76, by the Revell kit's account the first “customer” car John Greenwood built.</p>
+        <p class="peak__src">Source: Fra&nbsp;Noi, February 2005; Revell model kit (customer-car claim, to be confirmed).</p>
       </div>
     </div>
   </section>
+
+  <!-- full-bleed release into Le Mans: the car centred, open sky either side -->
+  <figure class="bleed bleed--center" data-bleed>
+    <img src="../../assets/img/final/spirit-today-center.jpg" width="2307" height="1384" loading="lazy"
+         alt="The white Spirit of Le Mans 76 Corvette, red, white and blue, on an empty circuit under a blue sky.">
+    <figcaption class="bleed__text">
+      <span class="bleed__eyebrow">Next</span>
+      <span class="bleed__title">Le Mans, June 1976.</span>
+    </figcaption>
+    <p class="caption bleed__cap">The Greenwood Corvette in its “Spirit of Le Mans 76” livery. Date and place not recorded.</p>
+  </figure>
 
   <!-- 04 · LE MANS 1976 · the mood-board composition
 Black dominates; bw1 (this car, this race) rises out of it; hairlines climb out of the smoke
@@ -224,12 +228,6 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
       </div>
     </div>
 
-    <figure class="arrive" data-arrive>
-      <img src="../../assets/img/final/spirit-front.webp" width="1420" height="885" loading="lazy"
-           alt="The Spirit of Le Mans 76 Corvette head-on, in colour: “Le Mans 76” across the bonnet, TOTAL and Goodyear decals.">
-      <figcaption class="caption">The same car, in colour: the Greenwood wide-body Corvette, “Spirit of Le Mans 76”.</figcaption>
-    </figure>
-
     <div class="lm__strip">
       <figure class="frame" data-frame>
         <img src="../../assets/img/final/bw2.jpg" width="1672" height="941" loading="lazy" alt="The Corvette pulls away from the camera at Le Mans, a trail of tyre smoke across the track.">
@@ -245,6 +243,16 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
       </figure>
     </div>
   </section>
+
+  <figure class="bleed bleed--left" data-bleed>
+    <img src="../../assets/img/final/spirit-today-rear.jpg" width="2218" height="1384" loading="lazy"
+         alt="The Spirit of Le Mans 76 Corvette from behind, “Mancuso Chevrolet” on the tail, on an empty circuit.">
+    <figcaption class="bleed__text">
+      <span class="bleed__eyebrow">Spirit of Le Mans 76</span>
+      <span class="bleed__title">Mancuso Chevrolet<br>on the tail.</span>
+    </figcaption>
+    <p class="caption bleed__cap">Date and place not recorded.</p>
+  </figure>
 
   <!-- 05 · LAKE FOREST SPORTS CARS (history — sold) -->
   <section class="ch ch--lfsc" id="ch-lfsc" aria-labelledby="h-lfsc" data-ch>
@@ -307,6 +315,6 @@ No car shown: no photograph or render of the GT has been released. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="motion.js?v=7"></script>
+<script src="motion.js?v=9"></script>
 </body>
 </html>

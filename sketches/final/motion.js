@@ -73,23 +73,20 @@
       .to(track, { x: () => -dist() }, 0)
       .fromTo('[data-cards-bar]', { scaleX: 1 / 6 }, { scaleX: 1 }, 0);
 
-    /* the Spirit drives in, head-on, up to (never past) its native size */
-    gsap.fromTo('[data-arrive] img', { scale: 0.55, yPercent: 30, autoAlpha: 0 }, {
-      scale: 1, yPercent: 0, autoAlpha: 1, ease: 'power2.out',
-      scrollTrigger: { trigger: '[data-arrive]', start: 'top 95%', end: 'center 55%', scrub: 0.6 },
-    });
 
-    /* the peak: the #76 arrives over its number; notes draw; hold */
+    /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
     const peak = q('[data-peak-stage]');
-    const ptl = gsap.timeline({
-      defaults: { ease: 'none' },
-      scrollTrigger: { trigger: peak, start: 'top top', end: '+=130%', pin: true, scrub: 0.7, anticipatePin: 1 },
-    });
-    ptl.from(q('[data-peak-num]'), { scale: 0.86, opacity: 0, duration: 0.3, ease: 'power2.out' }, 0)
-       .from(q('[data-peak-car]'), { scale: 0.84, xPercent: 8, duration: 0.45, ease: 'power2.out' }, 0)
-       .from(qa('[data-peak-note]'), { autoAlpha: 0, y: 14, duration: 0.12, stagger: 0.08 }, 0.35)
-       .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.15 }, 0.55)
-       .to({}, { duration: 0.3 });
+    gsap.timeline({ defaults: { ease: 'none' },
+      scrollTrigger: { trigger: peak, start: 'top top', end: '+=110%', pin: true, scrub: 0.7, anticipatePin: 1 } })
+      .fromTo(q('[data-peak-car]'), { xPercent: 40, scale: 0.82, autoAlpha: 0 }, { xPercent: -6, scale: 1, autoAlpha: 1, duration: 0.55, ease: 'power2.out' }, 0)
+      .fromTo(q('[data-peak-num]'), { xPercent: -18 }, { xPercent: 6, duration: 1 }, 0)
+      .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.2 }, 0.45)
+      .to({}, { duration: 0.25 });
+
+    /* full-bleed frames: the photograph settles as it arrives */
+    qa('[data-bleed] img').forEach((img) => gsap.fromTo(img, { scale: 1.08 }, {
+      scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'top top', scrub: true },
+    }));
 
     /* Le Mans: the lines climb out of the smoke one after another, the facts arrive at their tips */
     const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } });

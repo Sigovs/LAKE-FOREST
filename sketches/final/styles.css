@@ -14,7 +14,8 @@
   --accent:   #edebe6;   /* no hue: the interface is ink on graphite */
   --accent-fill: #edebe6; /* button fill: ground text 17:1 */
   --accent-ink: #0b0c0d;
-  --road:     #e9cf2a;   /* road marking only: spine, ticks */
+  --road:     #e9cf2a;
+  --navy:     #0d2236;   /* road marking only: spine, ticks */
 
   --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 24px;
   --s-6: 32px; --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px; --s-11: 192px;
@@ -235,22 +236,35 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .paper--letter { grid-column: 1 / span 3; grid-row: 1; margin-top: 52%; transform: rotate(-2deg); z-index: 2; }
 .paper--letter figcaption { background: var(--ground); padding-top: var(--s-2); }
 
-/* ---------------------------------------------------------------- the peak */
-.ch--76 { display: block; padding: 0; }
-.peak__stage { position: relative; min-height: 100vh; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-5); padding: var(--s-10) var(--gutter) var(--s-8); overflow: hidden; }
-.ghost--76 {
-  position: absolute; left: 50%; top: 50%; transform: translate(-30%, -50%); right: auto;
-  font-size: 62vh; line-height: .8; color: transparent; -webkit-text-stroke: 1.5px rgba(237,235,230,.22);
-  font-weight: 880; font-variation-settings: "wdth" 70;
+/* ---------------------------------------------------------------- the peak: the page turns the colour of the car */
+.peak { --livery: #a9d9ee; position: relative; z-index: 2; display: block; padding: 0; background: var(--livery); color: var(--navy); }
+.peak__stage { position: relative; height: 100vh; min-height: 640px; overflow: hidden; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-5); padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-7); }
+.peak__num {
+  position: absolute; right: -2vw; top: 50%; transform: translateY(-50%);
+  font-family: var(--serif); font-size: 78vh; line-height: .75; color: #ffffff; opacity: .55; pointer-events: none; user-select: none;
 }
-.peak__head { grid-column: 2 / span 5; grid-row: 1; align-self: start; padding-top: 0; }
-.peak__car { grid-column: 5 / span 8; grid-row: 1 / span 2; align-self: center; position: relative; z-index: 2; width: min(100%, 688px); justify-self: end; margin-top: var(--s-9); }
-.peak__car img { width: 100%; filter: drop-shadow(0 30px 40px rgba(0,0,0,.6)); }
-.peak__notes li { position: absolute; left: var(--x); top: var(--y); }
-.peak__notes li::before { content: ""; position: absolute; left: 0; bottom: 0; width: 1px; height: var(--len); background: linear-gradient(0deg, var(--ink), var(--hair) 70%, transparent); transform-origin: bottom; }
-.peak__notes li::after { content: ""; position: absolute; left: -3px; bottom: -3px; width: 7px; height: 7px; border-radius: 50%; background: var(--ink); }
-.peak__notes span { position: absolute; left: var(--s-3); bottom: calc(var(--len) - 10px); white-space: nowrap; font-size: var(--t-caption); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
-.peak__body { grid-column: 2 / span 4; grid-row: 2; align-self: end; }
+.peak__head { grid-column: 1 / span 6; grid-row: 1; position: relative; z-index: 2; display: grid; gap: var(--s-4); align-self: start; }
+.peak__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--navy); }
+.peak__title { font-family: var(--serif); font-size: clamp(44px, 5.4vw, 88px); line-height: .98; font-weight: 400; letter-spacing: -.01em; }
+.peak__title span { display: block; margin-top: var(--s-3); font-size: .4em; line-height: 1.2; color: rgba(13,34,54,.72); max-width: 26ch; }
+.peak__car { position: absolute; z-index: 2; left: 50%; bottom: 9vh; width: min(48vw, 688px); transform: translateX(-6%); }
+.peak__car img { width: 100%; filter: drop-shadow(0 40px 36px rgba(13,34,54,.35)); }
+.peak__body { grid-column: 1 / span 4; grid-row: 2; align-self: end; position: relative; z-index: 2; display: grid; gap: var(--s-3); font-size: 16px; line-height: 1.55; color: var(--navy); }
+.peak__src { font-size: var(--t-caption); color: rgba(13,34,54,.75); }
+.peak .tick { display: none; }
+
+/* ---------------------------------------------------------------- full-bleed photographs with text in their empty side */
+.bleed { position: relative; z-index: 2; height: 100vh; min-height: 560px; overflow: hidden; background: var(--ground); }
+.bleed img { width: 100%; height: 100%; object-fit: cover; }
+.bleed--center img { object-position: 50% 60%; }
+.bleed--left img { object-position: 70% 50%; }
+.bleed__text { position: absolute; z-index: 2; display: grid; gap: var(--s-3); color: #fff; text-shadow: 0 1px 24px rgba(0,0,0,.25); }
+.bleed--center .bleed__text { left: 0; right: 0; top: 12vh; text-align: center; color: var(--navy); text-shadow: none; }
+.bleed--left .bleed__text { left: calc(var(--gutter) + var(--col) * .5); top: 16vh; }
+.bleed--left::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(90deg, rgba(11,12,13,.7) 0%, rgba(11,12,13,.25) 38%, rgba(11,12,13,0) 55%); }
+.bleed__eyebrow { font-size: var(--t-caption); font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.bleed__title { font-family: var(--serif); font-size: clamp(44px, 5.6vw, 92px); line-height: .98; }
+.bleed__cap { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); text-align: right; color: rgba(255,255,255,.88); text-shadow: 0 1px 10px rgba(0,0,0,.5); }
 
 /* ---------------------------------------------------------------- Le Mans: the mood-board composition */
 .lm { display: block; padding: 0 0 var(--s-9); background: #050505; }
@@ -320,10 +334,15 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   .ghost { font-size: 40vw; top: var(--s-8); }
   .ch__docs { grid-template-columns: repeat(6, 1fr); }
   .makes-wall .makes { font-size: 30px; }
-  .peak__stage { display: flex; flex-direction: column; gap: var(--s-6); padding: var(--s-9) var(--gutter) var(--s-8) calc(var(--gutter) + 28px); min-height: 0; }
-  .ghost--76 { font-size: 70vw; top: 38%; }
-  .peak__car { margin-top: 0; width: 100%; }
-  .peak__notes { display: none; }
+  .peak__stage { height: auto; display: flex; flex-direction: column; gap: var(--s-6); padding: var(--s-9) var(--gutter) var(--s-8); }
+  .peak__num { font-size: 70vw; top: 46%; }
+  .peak__car { position: relative; left: auto; bottom: auto; transform: none; width: 100%; }
+  .bleed { height: 70svh; min-height: 0; }
+  .bleed--center img { object-position: 45% 70%; }
+  .bleed--left img { object-position: 62% 50%; }
+  .bleed__title { font-size: 40px; }
+  .bleed--left .bleed__text { left: var(--gutter); top: 9svh; }
+  .bleed__cap { left: var(--gutter); }
   .lm { padding-top: var(--s-9); }
   .lm__scene { height: auto; padding-top: var(--s-9); }
   .lm__title { position: static; margin-bottom: var(--s-6); }

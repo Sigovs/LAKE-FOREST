@@ -38,3 +38,10 @@ These are the open points from the first website prototype. Until each one is an
 15. Several archive photographs carry printed credits: Albert Lamberts, elji, Jean-Louis Pene, Claude Papin, Buzz Fyhrie, Bob Brandle and Tony Mezzacca / Mezzacca Motorsports. Do you hold permission to publish them, and must the printed credit stay visible inside the photograph?
 16. The Goodwood image of the Greenwood Corvette carries an Ultimatecarpage watermark. Do you have an unwatermarked original?
 17. Are these cars or photos connected to LFSC or the family, and may we use them: the white/red GTP Corvette #4 (Lola), the yellow #56 P2 Lola, the black Ferrari 512 TR with the "M AIR J" plate, and the Road America "turn 5" photograph?
+
+## Added 2026-10-19 (final sketch)
+
+18. **Fyhrie.** The #76 windscreen reads “Mancuso · Fyhrie · Greenwood”. Who is Fyhrie (Buzz Fyhrie also appears as a photo credit), and what was his role: driver, crew or partner?
+19. **The two modern photographs of the Spirit of Le Mans 76** (`76 Greenwood Adam 1/2`): who took them, when and where? Is this the original 1976 car? May we publish them?
+20. **The cut-outs** in `alex_images/` (blue #76, Spirit front, Aston 009): who made them, and may we publish them?
+21. **Missing cut-outs** for the chapter cards: a Mancuso Chevrolet-era car, and the green Lola #61.
