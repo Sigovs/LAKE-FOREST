@@ -99,7 +99,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .nav__links { display: flex; gap: var(--s-8); margin-left: auto; }
 .nav__links a { font-size: 15px; text-decoration: none; color: var(--ink); padding: var(--s-3) 0; }
 .nav__links a:hover { opacity: .7; }
-@media (max-width: 899px) { .nav { height: 72px; padding: 0 var(--gutter); } .nav__links { gap: var(--s-4); } .nav__links a:nth-child(-n+2) { display: none; } .brand__t { display: none; } }
+@media (max-width: 899px) { .nav { height: 72px; padding: 0 var(--gutter); } .nav__links { gap: var(--s-4); } .nav__links a:nth-child(-n+2), .nav__links a:nth-child(4) { display: none; } .brand__t { display: none; } }
 
 /* ================================================================ HERO — the approved concept */
 .hero { position: relative; height: 100vh; height: 100svh; min-height: 640px; overflow: hidden; background: var(--ground); }
