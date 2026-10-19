@@ -256,7 +256,10 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 /* ---------------------------------------------------------------- full-bleed photographs with text in their empty side */
 .bleed { position: relative; z-index: 2; height: 100vh; min-height: 560px; overflow: hidden; background: var(--ground); }
 .bleed img { width: 100%; height: 100%; object-fit: cover; }
-.bleed--center img { object-position: 50% 60%; }
+.bleed--center img { object-position: 50% 70%; }
+/* the blue of the #76 page runs on into the sky */
+.bleed--center::before { content: ""; position: absolute; inset: 0 0 auto; height: 55%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, #a9d9ee 0%, rgba(169,217,238,.85) 22%, rgba(169,217,238,.35) 60%, rgba(169,217,238,0) 100%); }
 .bleed--left img { object-position: 70% 50%; }
 .bleed__text { position: absolute; z-index: 2; display: grid; gap: var(--s-3); color: #fff; text-shadow: 0 1px 24px rgba(0,0,0,.25); }
 .bleed--center .bleed__text { left: 0; right: 0; top: 12vh; text-align: center; color: var(--navy); text-shadow: none; }
@@ -274,26 +277,21 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 300; font-variation-settings: "wdth" 125;
   letter-spacing: .32em; margin-right: -.32em; text-transform: uppercase; color: var(--ink);
 }
-.lm__scene { --H: max(100vh, 680px); position: relative; height: var(--H); }
-.lm__photo { position: absolute; left: 0; right: 0; bottom: 0; }
-.lm__photo video { display: block; aspect-ratio: 16 / 9; object-fit: cover; }
-.lm__photo img, .lm__photo video {
-  width: min(86vw, 118vh); margin: 0 auto;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 30%, #000 60%, #000 84%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-  -webkit-mask-composite: source-in;
-          mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 30%, #000 60%, #000 84%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
-          mask-composite: intersect;
-}
-.lm__credit { position: absolute; right: calc(50% - min(42vw, 600px)); bottom: var(--s-2); }
-.facts { position: absolute; inset: 0; }
+.lm__scene { --H: 100vh; position: relative; height: var(--H); min-height: 640px; overflow: hidden; }
+.lm__photo { position: absolute; inset: 0; }
+.lm__photo img, .lm__photo video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
+.lm__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg, rgba(5,5,5,.96) 0%, rgba(5,5,5,.9) 30%, rgba(5,5,5,.6) 46%, rgba(5,5,5,.12) 64%, rgba(5,5,5,0) 78%, rgba(5,5,5,.85) 100%); }
+.lm__credit { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); color: rgba(237,235,230,.82); }
+.facts { position: absolute; inset: 0; z-index: 2; }
 .fact { position: absolute; left: var(--x); top: calc(var(--y) * 1%); width: 0; }
 .fact__line {
   position: absolute; left: 0; top: 4px; width: 1px; height: calc((var(--foot) - var(--y)) * var(--H) / 100);
   background: linear-gradient(180deg, rgba(237,235,230,.8), rgba(237,235,230,.25) 80%, transparent);
   transform-origin: top center;
 }
-.fact p { position: absolute; left: var(--s-3); top: 0; width: 190px; font-size: var(--t-caption); line-height: 1.4; color: var(--mute); }
-.fact b { display: block; margin-bottom: 2px; font-size: 15px; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
+.fact p { position: absolute; left: var(--s-3); top: 0; width: 200px; font-size: 15px; line-height: 1.45; color: var(--ink); text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 18px rgba(0,0,0,.8); }
+.fact b { display: block; margin-bottom: 2px; font-size: 16px; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
 
 .lm__text { padding: var(--s-8) calc(var(--gutter) + var(--col)) 0; display: grid; gap: var(--s-6); }
 .lm__eyebrow { color: var(--mute); }
