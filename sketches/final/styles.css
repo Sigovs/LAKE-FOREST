@@ -148,7 +148,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 
 /* ---------------------------------------------------------------- the Spirit drives in (Le Mans chapter) */
-.arrive { display: grid; justify-items: center; gap: var(--s-4); padding: var(--s-9) var(--gutter) 0; }
+.arrive { display: grid; justify-items: center; gap: var(--s-4); padding: var(--s-10) var(--gutter) 0; text-align: center; }
 .arrive img { width: min(70vw, 700px); filter: drop-shadow(0 30px 40px rgba(0,0,0,.65)); }
 .frame--paper img { object-fit: contain; background: var(--ground-2); }
 
@@ -224,21 +224,43 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .peak__notes span { position: absolute; left: var(--s-3); bottom: calc(var(--len) - 10px); white-space: nowrap; font-size: var(--t-caption); letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
 .peak__body { grid-column: 2 / span 4; grid-row: 2; align-self: end; }
 
-/* ---------------------------------------------------------------- Le Mans: B&W break */
-.ch--lemans { display: block; padding: 0 0 var(--s-9); }
-.smoke { position: relative; height: 100vh; min-height: 600px; overflow: hidden; }
-.smoke img { width: 100%; height: 100%; object-fit: cover; object-position: 60% 50%; }
-.smoke::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,12,13,1) 0%, rgba(11,12,13,.75) 14%, rgba(11,12,13,0) 42%); }
-.smoke__cap { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); text-align: right; }
-.smoke__text {
-  position: relative; z-index: 2; margin-top: calc(-1.75 * var(--t-h));
-  padding-left: calc(var(--gutter) + var(--col)); width: min(60vw, 860px);
-  display: grid; gap: var(--s-4);
+/* ---------------------------------------------------------------- Le Mans: the mood-board composition */
+.lm { display: block; padding: 0 0 var(--s-9); background: #050505; }
+.lm .tick { top: 8%; z-index: 3; }
+.lm__title {
+  position: absolute; z-index: 2; top: 8%; left: 0; right: 0;
+  text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 300; font-variation-settings: "wdth" 125;
+  letter-spacing: .32em; margin-right: -.32em; text-transform: uppercase; color: var(--ink);
 }
-.smoke__text .body { max-width: 56ch; }
-.smoke__text .tick { position: absolute; left: calc(var(--gutter) + var(--col) * .5 - 6px); top: 0; }
-.pair { display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-5); padding: var(--s-9) var(--gutter) 0 calc(var(--gutter) + var(--col)); }
-.frame { display: grid; gap: var(--s-3); }
+.lm__scene { --H: max(100vh, 680px); position: relative; height: var(--H); }
+.lm__photo { position: absolute; left: 0; right: 0; bottom: 0; }
+.lm__photo img {
+  width: min(86vw, 118vh); margin: 0 auto;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 30%, #000 60%, #000 84%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+          mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 30%, #000 60%, #000 84%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
+          mask-composite: intersect;
+}
+.lm__credit { position: absolute; right: calc(50% - min(42vw, 600px)); bottom: var(--s-2); }
+.facts { position: absolute; inset: 0; }
+.fact { position: absolute; left: var(--x); top: calc(var(--y) * 1%); width: 0; }
+.fact__line {
+  position: absolute; left: 0; top: 4px; width: 1px; height: calc((var(--foot) - var(--y)) * var(--H) / 100);
+  background: linear-gradient(180deg, rgba(237,235,230,.8), rgba(237,235,230,.25) 80%, transparent);
+  transform-origin: top center;
+}
+.fact p { position: absolute; left: var(--s-3); top: 0; width: 190px; font-size: var(--t-caption); line-height: 1.4; color: var(--mute); }
+.fact b { display: block; margin-bottom: 2px; font-size: 15px; font-weight: 600; letter-spacing: .04em; color: var(--ink); }
+
+.lm__text { padding: var(--s-8) calc(var(--gutter) + var(--col)) 0; display: grid; gap: var(--s-6); }
+.lm__eyebrow { color: var(--mute); }
+.lm__grid { display: grid; grid-template-columns: repeat(11, 1fr); column-gap: var(--s-5); align-items: start; }
+.lm__num { grid-column: 1 / span 1; font-family: var(--serif); font-size: clamp(64px, 6vw, 104px); line-height: .8; color: var(--ink); }
+.lm__col { display: grid; gap: var(--s-4); }
+.lm__col:nth-of-type(1) { grid-column: 2 / span 4; }
+.lm__col:nth-of-type(2) { grid-column: 7 / span 5; }
+.lm__strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--s-5); padding: var(--s-9) var(--gutter) 0 calc(var(--gutter) + var(--col)); }
+.frame { display: grid; gap: var(--s-3); align-content: start; }
 .frame img { width: 100%; aspect-ratio: 1672 / 941; object-fit: cover; }
 
 /* ---------------------------------------------------------------- LFSC + Lola */
@@ -274,12 +296,18 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   .ghost--76 { font-size: 70vw; top: 38%; }
   .peak__car { margin-top: 0; width: 100%; }
   .peak__notes { display: none; }
-  .smoke { height: 78svh; min-height: 520px; }
-  .smoke__text { margin-top: -40px; width: auto; padding: 0 var(--gutter) 0 calc(var(--gutter) + 28px); }
-  .smoke__cap { bottom: auto; top: var(--s-4); }
-  .smoke__text .tick { display: none; }
-  .smoke::after { background: linear-gradient(0deg, rgba(11,12,13,.9), rgba(11,12,13,0) 40%); }
-  .pair { grid-template-columns: 1fr; padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
+  .lm { padding-top: var(--s-9); }
+  .lm__scene { height: auto; padding-top: var(--s-9); }
+  .lm__title { position: static; margin-bottom: var(--s-6); }
+  .lm .tick { display: none; }
+  .lm__photo { position: relative; }
+  .facts { position: relative; inset: auto; display: grid; gap: var(--s-4); padding: var(--s-6) var(--gutter) 0 calc(var(--gutter) + 28px); }
+  .fact { position: relative; left: auto; top: auto; width: auto; padding-left: var(--s-4); }
+  .fact__line { top: 0; height: 100%; }
+  .fact p { position: static; width: auto; }
+  .lm__text { padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
+  .lm__grid { display: flex; flex-direction: column; gap: var(--s-5); }
+  .lm__strip { grid-template-columns: 1fr; padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
   .cutout--aston, .ch--lola .frame--wide { width: 100%; }
   .gt { padding: var(--s-10) var(--gutter) var(--s-9); }
 }

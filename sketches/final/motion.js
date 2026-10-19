@@ -83,10 +83,12 @@
        .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.15 }, 0.55)
        .to({}, { duration: 0.3 });
 
-    gsap.fromTo('[data-smoke]', { clipPath: 'inset(14% 10% 14% 10%)' }, {
-      clipPath: 'inset(0% 0% 0% 0%)', ease: 'none',
-      scrollTrigger: { trigger: '[data-smoke]', start: 'top 90%', end: 'top 15%', scrub: 0.6 },
-    });
+    /* Le Mans: the lines climb out of the smoke one after another, the facts arrive at their tips */
+    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } });
+    lm.from('.fact__line', { scaleY: 0, transformOrigin: 'bottom center', stagger: 0.12, ease: 'power2.out' }, 0)
+      .from('.fact p', { autoAlpha: 0, y: 8, stagger: 0.12, ease: 'power2.out' }, 0.25)
+      .from('.lm__photo img', { scale: 1.06, transformOrigin: '50% 80%', ease: 'none', duration: 1.2 }, 0);
+
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
     }));
@@ -101,7 +103,7 @@
 
   /* chapter reveals: head, body, documents and frames arrive once */
   qa('[data-ch]').forEach((ch) => {
-    const items = qa('.ch__head, .ch__body:not([data-peak-body]), .smoke__text', ch);
+    const items = qa('.ch__head, .ch__body:not([data-peak-body]), .lm__text', ch);
     if (items.length) gsap.from(items, {
       autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.12,
       scrollTrigger: { trigger: ch, start: 'top 72%', once: true },
