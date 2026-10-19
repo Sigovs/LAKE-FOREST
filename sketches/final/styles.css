@@ -276,7 +276,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .lm__scene { --H: max(100vh, 680px); position: relative; height: var(--H); }
 .lm__photo { position: absolute; left: 0; right: 0; bottom: 0; }
-.lm__photo img {
+.lm__photo video { display: block; aspect-ratio: 16 / 9; object-fit: cover; }
+.lm__photo img, .lm__photo video {
   width: min(86vw, 118vh); margin: 0 auto;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, rgba(0,0,0,.12) 30%, #000 60%, #000 84%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 16%, #000 84%, transparent 100%);
   -webkit-mask-composite: source-in;

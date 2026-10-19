@@ -88,11 +88,21 @@
       scale: 1, ease: 'none', scrollTrigger: { trigger: img.parentElement, start: 'top bottom', end: 'top top', scrub: true },
     }));
 
+    /* Le Mans: the film's push-in is driven by the scroll (all-intra encode, so seeking is smooth) */
+    const vid = q('[data-lm-video]'); const lmScrub = { t: 0 };
+    if (vid) {
+      vid.pause();
+      /* load the film whole: seeking then works on any server, with or without range requests */
+      fetch(vid.querySelector('source').src).then(r => r.blob()).then(b => { vid.src = URL.createObjectURL(b); vid.load(); }).catch(() => {});
+      gsap.ticker.add(() => {
+      if (!vid.duration) return; const want = lmScrub.t * (vid.duration - 0.05);
+      if (Math.abs(vid.currentTime - want) > 0.02 && !vid.seeking) vid.currentTime = want; }); }
+
     /* Le Mans: the lines climb out of the smoke one after another, the facts arrive at their tips */
     const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } });
     lm.from('.fact__line', { scaleY: 0, transformOrigin: 'bottom center', stagger: 0.12, ease: 'power2.out' }, 0)
       .from('.fact p', { autoAlpha: 0, y: 8, stagger: 0.12, ease: 'power2.out' }, 0.25)
-      .from('.lm__photo img', { scale: 1.06, transformOrigin: '50% 80%', ease: 'none', duration: 1.2 }, 0);
+      .to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0);
 
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
