@@ -153,6 +153,10 @@
     autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.07,
     scrollTrigger: { trigger: '.cards', start: 'top 75%', once: true },
   });
+  gsap.from('[data-gen]', { autoAlpha: 0, y: 40, duration: 1.1, ease: 'expo.out', stagger: 0.12,
+    scrollTrigger: { trigger: '.gens', start: 'top 80%', once: true } });
+  gsap.from('.jim__head, .jim__quote', { autoAlpha: 0, y: 40, duration: 1.1, ease: 'expo.out', stagger: 0.15,
+    scrollTrigger: { trigger: '.jim', start: 'top 72%', once: true } });
   qa('[data-paper], [data-frame], [data-cutout]').forEach((el) => gsap.from(el, {
     autoAlpha: 0, y: 70, duration: 1.2, ease: 'expo.out',
     scrollTrigger: { trigger: el, start: 'top 88%', once: true },

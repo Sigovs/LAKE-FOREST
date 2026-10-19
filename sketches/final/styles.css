@@ -333,6 +333,30 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .frame { display: grid; gap: var(--s-3); align-content: start; }
 .frame img { width: 100%; aspect-ratio: 1672 / 941; object-fit: cover; }
 
+/* ---------------------------------------------------------------- the family: four generations */
+.family { position: relative; z-index: 2; padding: var(--s-10) calc(var(--gutter) + var(--col)) var(--s-10); display: grid; gap: var(--s-8); border-top: 1px solid rgba(237,235,230,.08); }
+.family__head { display: grid; gap: var(--s-4); }
+.gens { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--s-6); counter-reset: none; }
+.gen { display: grid; gap: var(--s-3); align-content: start; padding-top: var(--s-5); border-top: 1px solid rgba(237,235,230,.22); }
+.gen__no { font-family: var(--serif); font-size: 20px; color: var(--mute); }
+.gen__name { margin: 0; font-family: var(--serif); font-weight: 400; font-size: clamp(36px, 3.4vw, 56px); line-height: 1; }
+.gen__role { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.gen__text { font-size: 16px; line-height: 1.55; color: #c9cbcd; max-width: 30ch; }
+.family__src { max-width: none; }
+
+/* ---------------------------------------------------------------- Jim, in his own words */
+.jim { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(12, 1fr); column-gap: var(--s-5); row-gap: var(--s-8);
+  padding: var(--s-9) var(--gutter) var(--s-10); align-items: start; }
+.jim__head { grid-column: 2 / span 5; display: grid; gap: var(--s-5); }
+.jim__head .body { color: #c9cbcd; }
+.jim__quote { margin: 0; grid-column: 2 / span 6; display: grid; gap: var(--s-4); }
+.jim__quote p { font-family: var(--serif); font-size: clamp(40px, 4.6vw, 76px); line-height: 1.02; letter-spacing: -.01em; text-wrap: balance; }
+.jim__quote--sm { grid-column: 2 / span 5; }
+.jim__quote--sm p { font-size: clamp(24px, 2.2vw, 34px); line-height: 1.2; color: var(--tone); }
+.jim__letter { grid-column: 9 / span 3; grid-row: 1 / span 3; align-self: center; transform: rotate(1.5deg); }
+.jim__letter img { box-shadow: 0 2px 0 rgba(0,0,0,.4), 0 24px 50px rgba(0,0,0,.55); }
+.ch-full__aside .paper img { width: min(100%, 360px); box-shadow: 0 24px 50px rgba(0,0,0,.55); }
+
 /* ---------------------------------------------------------------- full-bleed chapters (LFSC, Lola) */
 .ch-full { position: relative; z-index: 2; background: var(--ground); }
 .bleed__sub { display: block; margin-top: var(--s-3); font-size: .42em; line-height: 1.2; opacity: .8; }
@@ -411,6 +435,11 @@ h2.bleed__title { font-weight: 400; }
   .bleed--wall .bleed__text, .bleed--low .bleed__text { left: var(--gutter); right: var(--gutter); bottom: 16svh; }
   .bleed--low .bleed__cap { bottom: var(--s-4); }
   .peak__row { grid-template-columns: 1fr 1fr; }
+  .gens { grid-template-columns: 1fr 1fr; }
+  .family { padding: var(--s-9) var(--gutter); }
+  .jim { grid-template-columns: 1fr; row-gap: var(--s-7); padding: var(--s-8) var(--gutter) var(--s-9); }
+  .jim__head, .jim__quote, .jim__quote--sm, .jim__letter { grid-column: 1; grid-row: auto; }
+  .jim__letter { width: 78%; }
   .lm__story { grid-template-columns: 1fr; row-gap: var(--s-8); padding: var(--s-7) var(--gutter) var(--s-9); }
   .lm__paper, .lm__log { grid-column: 1; position: static; }
   .lm__strip { grid-template-columns: 1fr; padding: var(--s-7) var(--gutter) 0 calc(var(--gutter) + 28px); }
