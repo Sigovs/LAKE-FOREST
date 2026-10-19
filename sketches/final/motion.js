@@ -105,12 +105,22 @@
       if (Math.abs(vid.currentTime - want) > 0.02 && !vid.seeking) vid.currentTime = want; }); }
 
     /* Le Mans: the lines climb out of the smoke one after another, the facts arrive at their tips */
-    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=140%', pin: true, scrub: 0.6, anticipatePin: 1 } });
+    /* the scene stays pinned without a spacer of its own: a 140vh spacer gives the film its run,
+       then the chapter text slides up OVER the pinned frame */
+    ScrollTrigger.create({ trigger: '[data-lm-scene]', start: 'top top', endTrigger: '[data-lm-text]', end: 'top top', pin: true, pinSpacing: false, anticipatePin: 1 });
+    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=140%', scrub: 0.6 } });
     lm.from('.fact__line', { scaleY: 0, transformOrigin: 'bottom center', stagger: 0.12, ease: 'power2.out' }, 0)
       .from('.fact p', { autoAlpha: 0, y: 8, stagger: 0.12, ease: 'power2.out' }, 0.25)
       .to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0)
       /* as the camera closes in, the film softens and dims so the facts stay readable */
-      .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(7px) brightness(0.42)', ease: 'power1.in', duration: 0.7 }, 0.75);
+      .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(6px) brightness(0.6)', ease: 'power1.in', duration: 0.7 }, 0.75);
+
+    /* the exit, in steps: as the next block rides over, the facts leave one by one, the frame sinks back */
+    gsap.timeline({ defaults: { ease: 'power2.in' },
+      scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 15%', scrub: 0.6 } })
+      .to(qa('.fact').reverse(), { y: -60, autoAlpha: 0, stagger: 0.12, duration: 0.4 }, 0)
+      .to('.lm__title', { autoAlpha: 0, duration: 0.3 }, 0)
+      .to('.lm__photo', { scale: 0.92, filter: 'brightness(0.7)', transformOrigin: '50% 30%', ease: 'none', duration: 1.2 }, 0);
 
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
