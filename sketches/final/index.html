@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-2400.jpg" media="(min-width: 700px)">
 <link rel="preload" as="image" href="../../assets/img/hero-lemans-1976-mobile.jpg" media="(max-width: 699px)">
-<link rel="stylesheet" href="styles.css?v=48">
+<link rel="stylesheet" href="styles.css?v=49">
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
@@ -134,80 +134,61 @@ the photograph's caption runs up the right edge. -->
     </div>
   </section>
 
-  <!-- THE FAMILY · four generations, every line sourced -->
-  <section class="family" id="family" aria-labelledby="h-family" data-ch>
-    <div class="family__head">
-      <p class="eyebrow">The family</p>
-      <h2 id="h-family" class="heading">Four generations<span class="tone">of the Mancuso automobile business</span></h2>
-    </div>
-    <ol class="gens">
-      <li class="gen" data-gen>
-        <p class="gen__no">I</p>
-        <h3 class="gen__name">Benjamin</h3>
-        <p class="gen__role">Pioneer dealer · Batavia, New York</p>
-        <p class="gen__text">Founds the family automobile business in 1923. Rick would later name his grandfather as the man who inspired him.</p>
-      </li>
-      <li class="gen" data-gen>
-        <p class="gen__no">II</p>
-        <h3 class="gen__name">Jim</h3>
-        <p class="gen__role">Mancuso Chevrolet · Skokie, Illinois</p>
-        <p class="gen__text">Opens Mancuso Chevrolet in 1953. A road rallyer, a regular in a Great Lakes version of the Mille Miglia. A columnist for Ward's: “Mancuso on service”.</p>
-      </li>
-      <li class="gen" data-gen>
-        <p class="gen__no">III</p>
-        <h3 class="gen__name">Rick &amp; Rob</h3>
-        <p class="gen__role">The dealership goes racing</p>
-        <p class="gen__text">Jim's sons sell cars with their father. Rick takes the green flag in 1972 and later runs Lake Forest Sports Cars; Rob, a Princeton graduate, is 1986 SCCA Midwest Council champion.</p>
-      </li>
-      <li class="gen" data-gen>
-        <p class="gen__no">IV</p>
-        <h3 class="gen__name">Adam</h3>
-        <p class="gen__role">Father and son on track</p>
-        <p class="gen__text">Rick's son. Go-karts at 12, Skip Barber Racing School at Road America, University of Denver, 2000. Races Lolas alongside his father.</p>
-      </li>
-    </ol>
-    <p class="caption family__src">Sources: Fra&nbsp;Noi, “Andrettis' heirs”, February 2005; Ward's Dealer Business, “Farewell to a late, great dealer: James Mancuso”, March 2001.</p>
-  </section>
+  <!-- THE FAMILY · one pinned screen, three panels ride in over each other:
+       the four generations → Mancuso Chevrolet, 1953 → Jim, in his own words. Every line sourced. -->
+  <section class="dyn" id="family" aria-label="The family" data-dyn>
+    <div class="dyn__stage" data-dyn-stage>
+      <ol class="dyn__rail" aria-hidden="true">
+        <li class="is-on" data-dyn-step><span>01</span>The family</li>
+        <li data-dyn-step><span>02</span>1953 · Skokie</li>
+        <li data-dyn-step><span>03</span>Jim Mancuso</li>
+      </ol>
+      <div class="dyn__panels">
 
-  <!-- 02 · 1953 -->
-  <section class="ch ch--1953" id="ch-1953" aria-labelledby="h-1953" data-ch>
-    <p class="ghost" aria-hidden="true" data-ghost>1953</p>
-    <div class="ch__head">
-      <p class="eyebrow">02 — 1953</p>
-      <h2 id="h-1953" class="heading">Mancuso Chevrolet<span class="tone">Skokie, Illinois</span></h2>
-    </div>
-    <div class="ch__body">
-      <p class="lead">His son Jim opens Mancuso Chevrolet in Skokie, Illinois.</p>
-      <p class="body">Jim was also an avid road rallyer, a regular in a Great Lakes version of Italy's Mille Miglia — the first sign of the racing that would follow.</p>
-      <p class="caption">Source: Fra&nbsp;Noi, February 2005.</p>
-    </div>
-    <div class="ch__media ch__docs">
-      <figure class="paper paper--letter" data-paper>
-        <img src="../../assets/img/final/yenko-deuce.jpg" width="770" height="932" loading="lazy" alt="A Yenko “Deuce” flyer, rubber-stamped “Mancuso Chevrolet, Inc., 4700 Golf Road, Skokie, Ill.”">
-        <figcaption class="caption">A Yenko “Deuce” flyer, stamped by the Skokie dealership. Date not recorded.</figcaption>
-      </figure>
-    </div>
-  </section>
+        <article class="dyn__panel dyn__panel--gens" aria-labelledby="h-family" data-dyn-panel>
+          <div class="dyn__head">
+            <p class="eyebrow">The family</p>
+            <h2 id="h-family" class="heading">Four generations<span class="tone">of the Mancuso automobile business</span></h2>
+          </div>
+          <ol class="gens">
+            <li class="gen"><p class="gen__no">I</p><h3 class="gen__name">Benjamin</h3><p class="gen__role">Pioneer dealer · Batavia, NY</p><p class="gen__text">Founds the family automobile business in 1923. Rick would later name his grandfather as the man who inspired him.</p></li>
+            <li class="gen"><p class="gen__no">II</p><h3 class="gen__name">Jim</h3><p class="gen__role">Mancuso Chevrolet · Skokie</p><p class="gen__text">Opens Mancuso Chevrolet in 1953. A road rallyer, and a columnist for Ward's: “Mancuso on service”.</p></li>
+            <li class="gen"><p class="gen__no">III</p><h3 class="gen__name">Rick &amp; Rob</h3><p class="gen__role">The dealership goes racing</p><p class="gen__text">Sell cars with their father. Rick races from 1972 and later runs Lake Forest Sports Cars; Rob is 1986 SCCA Midwest Council champion.</p></li>
+            <li class="gen"><p class="gen__no">IV</p><h3 class="gen__name">Adam</h3><p class="gen__role">Father and son on track</p><p class="gen__text">Rick's son. Go-karts at 12, Skip Barber Racing School at Road America; races Lolas alongside his father.</p></li>
+          </ol>
+          <p class="caption">Sources: Fra&nbsp;Noi, “Andrettis' heirs”, February 2005; Ward's Dealer Business, March 2001.</p>
+        </article>
 
-  <!-- JIM · in his own words (Ward's, March 2001) -->
-  <section class="jim" aria-labelledby="h-jim" data-ch>
-    <div class="jim__head">
-      <p class="eyebrow">Jim Mancuso · 1916 – 2001</p>
-      <h2 id="h-jim" class="heading">A dealer ahead<span class="tone">of his time</span></h2>
-      <p class="body">He practised customer service and fair dealing before they were industry standards. In the 1960s and '70s he held clinics teaching women how to buy a car and have it serviced, and put a “hot line” telephone booth in the service department for customers' comments.</p>
+        <article class="dyn__panel dyn__panel--split" id="ch-1953" aria-labelledby="h-1953" data-dyn-panel>
+          <div class="dyn__head">
+            <p class="eyebrow">02 — 1953</p>
+            <h2 id="h-1953" class="heading">Mancuso Chevrolet<span class="tone">Skokie, Illinois</span></h2>
+            <p class="lead">His son Jim opens Mancuso Chevrolet in Skokie, Illinois.</p>
+            <p class="body">Jim was also an avid road rallyer, a regular in a Great Lakes version of Italy's Mille Miglia — the first sign of the racing that would follow.</p>
+            <p class="caption">Source: Fra&nbsp;Noi, February 2005.</p>
+          </div>
+          <figure class="paper dyn__doc">
+            <img src="../../assets/img/final/yenko-deuce.jpg" width="770" height="932" loading="lazy" alt="A Yenko “Deuce” flyer, rubber-stamped “Mancuso Chevrolet, Inc., 4700 Golf Road, Skokie, Ill.”">
+            <figcaption class="caption">A Yenko “Deuce” flyer, stamped by the Skokie dealership. Date not recorded.</figcaption>
+          </figure>
+        </article>
+
+        <article class="dyn__panel dyn__panel--split" aria-labelledby="h-jim" data-dyn-panel>
+          <div class="dyn__head">
+            <p class="eyebrow">Jim Mancuso · 1916 – 2001</p>
+            <h2 id="h-jim" class="heading">A dealer ahead<span class="tone">of his time</span></h2>
+            <blockquote class="jim__quote"><p>“Never, ever be rude — unintentionally.”</p></blockquote>
+            <p class="body">He practised customer service and fair dealing before they were industry standards: clinics in the 1960s and '70s teaching women how to buy a car and have it serviced, a “hot line” booth in the service department. To his son Rob, on graduating from Princeton: “Forget all that. Let's sell cars.”</p>
+            <p class="caption">Ward's Dealer Business, “Farewell to a late, great dealer: James Mancuso”, March 2001.</p>
+          </div>
+          <figure class="paper dyn__doc dyn__doc--letter">
+            <img src="../../assets/img/final/rick-letter.jpg" width="619" height="800" loading="lazy" alt="A handwritten letter on Mancuso Chevrolet letterhead, 4700 Golf Rd., Skokie: “As an authorized Yenko dealer, I stock Yenko Deuces. I can get anything you want.” Signed Rick Mancuso.">
+            <figcaption class="caption">Rick at the family dealership: a letter on Mancuso Chevrolet paper. Date not recorded.</figcaption>
+          </figure>
+        </article>
+
+      </div>
     </div>
-    <blockquote class="jim__quote">
-      <p>“Never, ever be rude — unintentionally.”</p>
-      <footer class="caption">One of Jim Mancuso's stated principles. Ward's Dealer Business, March 2001.</footer>
-    </blockquote>
-    <blockquote class="jim__quote jim__quote--sm">
-      <p>“There are places to go, things to see and people to meet. Forget all that. Let's sell cars.”</p>
-      <footer class="caption">To his son Rob, on Rob's graduation from Princeton. Ward's Dealer Business, March 2001.</footer>
-    </blockquote>
-    <figure class="paper jim__letter" data-paper>
-      <img src="../../assets/img/final/rick-letter.jpg" width="619" height="800" loading="lazy" alt="A handwritten letter on Mancuso Chevrolet letterhead, 4700 Golf Rd., Skokie: “As an authorized Yenko dealer, I stock Yenko Deuces. I can get anything you want.” Signed Rick Mancuso.">
-      <figcaption class="caption">Rick at the family dealership: a letter on Mancuso Chevrolet paper. Date not recorded.</figcaption>
-    </figure>
   </section>
 
   <!-- 1953 close: the dealership's own roadside sign, full-bleed, the line in the empty sky -->
@@ -425,6 +406,6 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
-<script src="motion.js?v=29"></script>
+<script src="motion.js?v=30"></script>
 </body>
 </html>

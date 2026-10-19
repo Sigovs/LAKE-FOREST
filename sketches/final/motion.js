@@ -79,6 +79,31 @@
         .to({}, { duration: 0.4 });
     });
 
+    /* the family: one pinned screen; each panel rides up over the last, with a stop on every panel */
+    const dyn = q('[data-dyn-stage]');
+    if (dyn) {
+      const panels = qa('[data-dyn-panel]', dyn), steps = qa('[data-dyn-step]', dyn), n = panels.length;
+      const mark = (i) => steps.forEach((s, k) => s.classList.toggle('is-on', k === i));
+      gsap.set(panels.slice(1), { yPercent: 100 });
+      const dtl = gsap.timeline({ defaults: { ease: 'none' },
+        scrollTrigger: { trigger: dyn, start: 'top top', end: '+=' + (n - 1) * 100 + '%', pin: true, scrub: 0.6, anticipatePin: 1,
+          onUpdate: (st) => mark(Math.round(st.progress * (n - 1))) } });
+      panels.slice(1).forEach((p, k) => {
+        dtl.to(p, { yPercent: 0, duration: 1, ease: 'power2.inOut' }, k)
+           .to(panels[k], { yPercent: -12, autoAlpha: 0.15, duration: 1, ease: 'power2.inOut' }, k);
+      });
+      const dST = dtl.scrollTrigger; let dSettle = 0;
+      lenis.on('scroll', ({ scroll }) => {
+        clearTimeout(dSettle);
+        if (scroll <= dST.start || scroll >= dST.end) return;
+        dSettle = setTimeout(() => {
+          const i = Math.round(((lenis.scroll - dST.start) / (dST.end - dST.start)) * (n - 1));
+          const target = dST.start + (dST.end - dST.start) * i / (n - 1);
+          if (Math.abs(target - lenis.scroll) > 4) lenis.scrollTo(target, { duration: 0.8, easing: (t) => 1 - Math.pow(1 - t, 3) });
+        }, 160);
+      });
+    }
+
     /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
     const peak = q('[data-peak-stage]');
     gsap.timeline({ defaults: { ease: 'none' },
@@ -162,10 +187,6 @@
     autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.07,
     scrollTrigger: { trigger: '.cards', start: 'top 75%', once: true },
   });
-  gsap.from('[data-gen]', { autoAlpha: 0, y: 40, duration: 1.1, ease: 'expo.out', stagger: 0.12,
-    scrollTrigger: { trigger: '.gens', start: 'top 80%', once: true } });
-  gsap.from('.jim__head, .jim__quote', { autoAlpha: 0, y: 40, duration: 1.1, ease: 'expo.out', stagger: 0.15,
-    scrollTrigger: { trigger: '.jim', start: 'top 72%', once: true } });
   qa('[data-paper], [data-frame], [data-cutout]').forEach((el) => gsap.from(el, {
     autoAlpha: 0, y: 70, duration: 1.2, ease: 'expo.out',
     scrollTrigger: { trigger: el, start: 'top 88%', once: true },
