@@ -12,13 +12,9 @@
   const hero = document.querySelector('[data-hero]');
 
   /* ---------------- nav: solid after the hero, hides on scroll down */
-  let lastY = 0;
+  /* the header is locked: it never hides or resizes; it only gains a backing once past the hero */
   const onScroll = (y) => {
-    const past = y > (hero ? hero.offsetHeight * 0.6 : 200);
-    nav.classList.toggle('is-solid', past);
-    nav.classList.toggle('is-hidden', past && y > lastY + 2);
-    if (y < lastY - 2 || !past) nav.classList.remove('is-hidden');
-    lastY = y;
+    nav.classList.toggle('is-solid', y > (hero ? hero.offsetHeight * 0.6 : 200));
   };
 
   if (reduce || !window.gsap || !window.ScrollTrigger) {
