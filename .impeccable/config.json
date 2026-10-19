@@ -47,6 +47,42 @@
         ],
         "createdAt": "2026-10-17T01:49:38.455Z",
         "reason": "Claude: section.hero clips the cover photo stage by design; its positioned children are photo/name/car layers, not menus or tooltips"
+      },
+      {
+        "rule": "low-contrast",
+        "value": "*",
+        "files": [
+          "sketches/final/index.html"
+        ],
+        "createdAt": "2026-10-19T19:55:02.310Z",
+        "reason": "Claude: the flagged #000 'text' is decorative aria-hidden type with transparent fill or 4.5% ink (ghost years, outlined 76, footer word); all readable text measured on the ground: ink 17:1, tone 6.0:1, mute 7.6:1"
+      },
+      {
+        "rule": "all-caps-body",
+        "value": "*",
+        "files": [
+          "sketches/final/index.html"
+        ],
+        "createdAt": "2026-10-19T19:55:02.320Z",
+        "reason": "Claude: remaining uppercase runs are the aria-hidden ticker, the list of make names (each item a one-word label) and a heading's second line; long labels were changed to sentence case"
+      },
+      {
+        "rule": "clipped-overflow-container",
+        "value": "*",
+        "files": [
+          "sketches/final/index.html"
+        ],
+        "createdAt": "2026-10-19T19:55:02.329Z",
+        "reason": "Claude: body uses overflow-x: clip against horizontal scroll; hero__stage clips art layers (photo, car, trail, callouts) by design, with no tooltips or menus inside"
+      },
+      {
+        "rule": "marquee",
+        "value": "*",
+        "files": [
+          "sketches/final/index.html"
+        ],
+        "createdAt": "2026-10-19T19:55:02.339Z",
+        "reason": "Claude: user-approved ticker from the F1 reference (docs/final-package-references.md), one strip, aria-hidden, stopped under prefers-reduced-motion"
       }
     ]
   }

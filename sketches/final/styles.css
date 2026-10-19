@@ -62,7 +62,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 }
 .heading .tone, .heading--xl .tone { display: block; color: var(--tone); }
 .heading--xl { font-size: var(--t-xl); }
-.heading--xl .tone { font-size: .36em; line-height: 1.05; margin-top: var(--s-4); }
+.heading--xl .tone { font-size: clamp(20px, 2.4vw, 34px); line-height: 1.05; margin-top: var(--s-4); }
 .lead { font-size: var(--t-lead); line-height: 1.4; max-width: 34ch; text-wrap: pretty; }
 .body { max-width: 58ch; color: var(--ink); text-wrap: pretty; }
 .tone { color: var(--tone); }
@@ -292,7 +292,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   padding: var(--s-11) var(--gutter) var(--s-10); background: #050606; overflow: hidden;
 }
 .gt__lead { max-width: 40ch; color: var(--ink); }
-.gt__status { color: var(--mute); }
+.gt__status { color: var(--mute); text-transform: none; letter-spacing: .02em; font-size: 15px; }
 .gt__floor { position: absolute; left: 10%; right: 10%; bottom: var(--s-8); height: 1px; background: linear-gradient(90deg, transparent, rgba(67,209,220,.5), transparent); }
 
 .foot { padding: var(--s-9) var(--gutter) var(--s-7); display: grid; gap: var(--s-6); }
