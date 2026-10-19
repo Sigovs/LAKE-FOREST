@@ -145,10 +145,10 @@
     autoAlpha: 0, y: 70, duration: 1.2, ease: 'expo.out',
     scrollTrigger: { trigger: el, start: 'top 88%', once: true },
   }));
-  gsap.from('[data-gt] > *:not(.gt__floor)', {
-    autoAlpha: 0, y: 30, duration: 1, ease: 'expo.out', stagger: 0.1,
-    scrollTrigger: { trigger: '[data-gt]', start: 'top 70%', once: true },
-  });
+  /* the stage lights come up, then the words */
+  gsap.timeline({ scrollTrigger: { trigger: '[data-gt]', start: 'top 65%', once: true } })
+    .from('.gt__stage', { autoAlpha: 0, duration: 1.8, ease: 'power2.out' }, 0)
+    .from('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 24, duration: 1, ease: 'expo.out', stagger: 0.12 }, 0.5);
 
   /* fonts and images change heights: keep the triggers honest */
   if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
