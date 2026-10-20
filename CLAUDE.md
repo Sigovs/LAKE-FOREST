@@ -68,3 +68,15 @@ them. Write it here: the business goal, the audience, what must not change._
 - **Current direction:** `docs/art-direction-2026-10-15-direction-c.md` and `BRIEF.md`.
 - **Source photos** in `lake photos/` are read-only; web copies come from
   `tools/prepare-images.py`.
+
+## Feedback log
+
+- **Type system (approved 20 Oct 2026).** One face, Archivo. Display voice 640 / wdth 74; text voice wdth 100.
+  Roles are tokens in `styles.css` `:root`: D1 (the GT), D2 (h1 and chapter openers), D3 (titles inside a
+  chapter), H3, H4, sub-line, statement, lead, body, body-sm, caption, label (14px / 600 / .14em, uppercase),
+  control (15px / 500). Each role sets its own leading and tracking in em; never add a size by hand.
+- **Second lines:** a continuation of the sentence stays the title's size in `--tone`; a separate statement
+  (a place, a descriptor, a status) is the sentence-case `.sub` role. "218 mph" is the page's number moment
+  (`.figline`), never a geographic sub-line.
+- **Rejected:** the whole display tier at regular weight / normal width with every second line uppercase grey.
+- Long reading text is never set in the display face (the LFSC paragraph uses `.statement` sizing in the text voice).

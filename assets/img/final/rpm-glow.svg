@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1612.07" height="980.55" viewBox="0 0 1612.07 980.55" fill="none">
+<!-- RPM Club light, from Figma "RPM SECTION" (61:422), Ellipse 1: a tilted blob behind the hosts, blurred -->
+<g filter="url(#b)">
+<path d="M1240.5 494.951C1205.81 525.246 989.168 570.823 855.8 597.175C696.375 628.675 324.8 687.264 324.8 634.676C324.8 582.087 897.821 295.943 1110.19 327.175C1324.62 358.712 1311.9 432.578 1240.5 494.951Z" fill="#D9D9D9" fill-opacity="0.51"/>
+</g>
+<defs>
+<filter id="b" x="0" y="0" width="1612.07" height="980.55" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feGaussianBlur stdDeviation="162.4"/>
+</filter>
+</defs>
+</svg>
