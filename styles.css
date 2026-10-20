@@ -292,42 +292,29 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 /* off while the 'Next' frame is commented out: @media (min-width: 1000px) { .lm { position: relative; z-index: 1; margin-top: -100vh; } [data-bleed-pin] { z-index: 3; } } */
 .lm .tick { display: none; }
 .lm__title {
-  position: absolute; z-index: 2; top: calc(80px + 7vh); left: 0; right: 0;
-  text-align: center; font-size: clamp(16px, 1.5vw, 22px); font-weight: 400; font-variation-settings: "wdth" 125;
-  letter-spacing: .42em; margin-right: -.42em; text-transform: uppercase; color: rgba(237,235,230,.82);
+  position: absolute; z-index: 2; top: calc(50% - 150px); left: 0; right: 0;
+  text-align: center; font-size: clamp(20px, 2.2vw, 32px); font-weight: 300; font-variation-settings: "wdth" 125;
+  letter-spacing: .32em; margin-right: -.32em; text-transform: uppercase; color: var(--ink);
 }
 .lm__scene { --H: 100vh; position: relative; height: var(--H); min-height: 640px; overflow: hidden; }
 .lm__photo { position: absolute; inset: 0; }
 .lm__photo img, .lm__photo video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 60%; }
 .lm__photo::after { content: ""; position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(90deg, rgba(5,5,5,.88) 0%, rgba(5,5,5,.62) 36%, rgba(5,5,5,.1) 62%, rgba(5,5,5,0) 100%), linear-gradient(180deg, #050505 0%, rgba(5,5,5,.35) 22%, rgba(5,5,5,0) 50%, rgba(5,5,5,.55) 78%, #050505 100%); }
+  background: linear-gradient(180deg, #050505 0%, rgba(5,5,5,.7) 22%, rgba(5,5,5,.86) 36%, rgba(5,5,5,.86) 66%, rgba(5,5,5,.3) 84%, rgba(5,5,5,.85) 100%); }
 .lm__credit { position: absolute; z-index: 2; right: var(--gutter); bottom: var(--s-5); color: rgba(237,235,230,.82); }
-/* the stage: one fact at a time, big, on the dark left of the frame */
-.lm__stage { display: none; }
-@media (min-width: 1000px) {
-  .lm__stage { display: grid; gap: var(--s-4); position: absolute; z-index: 2; left: calc(var(--gutter) + var(--col)); top: 36%; width: min(46vw, 680px); }
-  .lm__count { font-size: 13px; font-weight: 600; letter-spacing: .2em; color: rgba(237,235,230,.6); }
-  .lm__count span { color: var(--ink); }
-  .lm__big { font-family: var(--f); font-weight: 760; font-variation-settings: "wdth" 70; font-size: clamp(76px, 8.4vw, 144px); line-height: .86;
-    letter-spacing: -.02em; text-transform: uppercase; color: var(--ink); }
-  .lm__say { font-size: clamp(18px, 1.45vw, 22px); line-height: 1.45; color: #d6d8d9; max-width: 34ch; min-height: 3em; }
-}
-/* the index: six facts on one rule along the foot of the frame */
 .facts {
+  /* a timing board: six facts on one rule under the title; the marker runs along it with the film */
   position: absolute; z-index: 2; left: calc(var(--gutter) + var(--col)); right: calc(var(--gutter) + var(--col));
-  bottom: 9vh; display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--s-5);
-  border-top: 1px solid rgba(237,235,230,calc(.25 * var(--rule, 1))); padding-top: var(--s-4);
+  top: calc(50% - 58px); display: grid; grid-template-columns: repeat(6, 1fr); column-gap: var(--s-5);
+  border-top: 1px solid rgba(237,235,230,calc(.22 * var(--rule, 1))); padding-top: var(--s-5);
 }
 .facts::after { content: ""; position: absolute; left: 0; top: -1px; width: calc(100% / 6); height: 2px; background: var(--ink);
-  transform: translateX(calc(var(--p, 0) * 500%)); opacity: var(--rule, 1); transition: transform .45s var(--ease-out); }
-.fact { position: relative; --out: 1; transition: opacity .4s var(--ease-out); }
-.fact__line { display: none; }
-.fact b { display: block; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
-@media (min-width: 1000px) {
-  .fact__say { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-  .js .fact { opacity: calc(.4 * var(--out)); }
-  .js .fact.is-on { opacity: var(--out); }
-}
+  transform: translateX(calc(var(--p, 0) * 500%)); opacity: var(--rule, 1); transition: transform .35s var(--ease-out); }
+.fact { --out: 1; position: relative; transition: opacity .5s var(--ease-out); }
+@media (min-width: 1000px) { .js .fact { opacity: calc(.32 * var(--out)); } .js .fact.is-on { opacity: var(--out); } }
+.fact__line { position: absolute; left: 0; top: calc(-1 * var(--s-5) - 5px); width: 1px; height: 9px; background: rgba(237,235,230,.6); }
+.fact p { font-size: 14px; line-height: 1.45; color: #c9cbcd; text-shadow: 0 1px 2px rgba(0,0,0,.9), 0 0 16px rgba(0,0,0,.8); max-width: 22ch; }
+.fact b { display: block; margin-bottom: var(--s-2); font-family: var(--serif); font-weight: 640; font-variation-settings: "wdth" var(--display-wdth); letter-spacing: -.012em; font-size: clamp(24px, 2.1vw, 34px); line-height: 1; color: var(--ink); }
 
 .lm__spacer { display: none; }
 @media (min-width: 1000px) { .lm__spacer { display: block; height: 320vh; } }
