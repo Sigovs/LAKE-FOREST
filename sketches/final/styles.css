@@ -150,6 +150,10 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .card__media--need { display: grid; place-items: center; border-style: dashed; border-color: rgba(237,235,230,.28); }
 .need { display: grid; gap: var(--s-2); max-width: 24ch; text-align: center; font-size: 14px; line-height: 1.45; color: var(--mute); }
 .need b { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink); }
+.card__media--gt img { object-position: 50% 62%; transform: scale(1.35); }
+.card:hover .card__media--gt img { transform: scale(1.4); }
+.card__badge { position: absolute; left: var(--s-3); top: var(--s-3); padding: 6px 10px; border-radius: 999px; background: rgba(11,12,13,.7);
+  border: 1px solid rgba(237,235,230,.3); font-size: 12px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); }
 .card__meta { display: flex; justify-content: space-between; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
 .card__arrow { transition: transform .3s var(--ease-out), color .3s; }
 .card__title { font-family: var(--serif); font-size: clamp(28px, 2.2vw, 34px); line-height: 1; }
