@@ -60,6 +60,18 @@
       scrollTrigger: { trigger: q('[data-hero]'), start: 'top top', end: 'bottom top', scrub: 0.6 } })
       .to(copy, { y: -80, autoAlpha: 0 }, 0);
 
+    /* hero: a small pointer parallax — the photograph drifts a few pixels against the cursor, the copy a little with it */
+    if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+      const heroEl = q('[data-hero]'), pic = q('[data-hero-photo]');
+      const px = gsap.quickTo(pic, 'x', { duration: 1.1, ease: 'power3.out' }), py = gsap.quickTo(pic, 'y', { duration: 1.1, ease: 'power3.out' });
+      const cx = gsap.quickTo(copy, 'x', { duration: 1.3, ease: 'power3.out' });
+      const onMove = (e) => { const r = heroEl.getBoundingClientRect(); if (r.bottom < 0) return;
+        const nx = (e.clientX / innerWidth) * 2 - 1, ny = ((e.clientY - r.top) / r.height) * 2 - 1;
+        px(-nx * 16); py(-ny * 10); cx(nx * 6); };
+      heroEl.addEventListener('pointermove', onMove);
+      heroEl.addEventListener('pointerleave', () => { px(0); py(0); cx(0); });
+    }
+
     /* chapter cards: the page stops, the row travels sideways with the scroll */
     const track = q('[data-cards-track]'), vp = q('[data-cards-viewport]');
     const dist = () => Math.max(0, track.scrollWidth - (vp.clientWidth - parseFloat(getComputedStyle(vp).paddingLeft) * 2));
