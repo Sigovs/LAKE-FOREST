@@ -173,8 +173,17 @@
     ScrollTrigger.create({ trigger: '[data-lm-scene]', start: 'top top', endTrigger: '[data-lm-text]', end: 'top top', pin: true, pinSpacing: false, anticipatePin: 1 });
     /* the timing board follows the film: one fact lit at a time, the marker runs along the rule */
     const facts = qa('[data-fact]'), board = q('.facts');
+    const big = q('[data-lm-big]'), say = q('[data-lm-say]'), num = q('[data-lm-n]');
+    const data = facts.map((f) => { const b = f.querySelector('b'); return { big: b.textContent, say: f.querySelector('p').textContent.replace(b.textContent, '').trim() }; });
+    let cur = -1;
     const setFact = (p) => { const i = Math.min(facts.length - 1, Math.floor(p * facts.length));
-      facts.forEach((f, k) => f.classList.toggle('is-on', k === i)); board.style.setProperty('--p', i); };
+      facts.forEach((f, k) => f.classList.toggle('is-on', k === i)); board.style.setProperty('--p', i);
+      if (i === cur || !big) return; const dir = i > cur ? 1 : -1; cur = i;
+      /* the stage changes: old fact leaves up, new one rises in */
+      gsap.timeline()
+        .to([big, say], { y: -24 * dir, autoAlpha: 0, duration: 0.18, ease: 'power2.in' })
+        .add(() => { big.textContent = data[i].big; say.textContent = data[i].say; num.textContent = String(i + 1).padStart(2, '0'); })
+        .fromTo([big, say], { y: 30 * dir, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.42, ease: 'power3.out', stagger: 0.06 }); };
     setFact(0);
     const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=320%', scrub: 0.6,
       onUpdate: (st) => setFact(Math.min(.999, st.progress / 0.9)) } });
@@ -198,7 +207,8 @@
     /* the exit: the chapter text rides over the still frame; facts and title fade softly, the frame only dims */
     gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: '[data-lm-text]', start: 'top bottom', end: 'top 20%', scrub: 1 } })
-      .to(qa('.fact'), { y: -90, '--out': 0, stagger: 0.1, duration: 0.35, ease: 'power2.in' }, 0)
+      .to(qa('.fact'), { y: -40, '--out': 0, stagger: 0.06, duration: 0.3, ease: 'power2.in' }, 0)
+      .to('[data-lm-stage]', { y: -60, autoAlpha: 0, duration: 0.35, ease: 'power2.in' }, 0)
       .to('.facts', { '--rule': 0, duration: 0.3 }, 0.5)
       .to('.lm__title', { autoAlpha: 0, duration: 0.5 }, 0)
       .to('.lm__photo', { opacity: 0.35, duration: 1 }, 0);
