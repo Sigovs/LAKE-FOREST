@@ -127,7 +127,7 @@
     const sk = q('[data-skokie]');
     if (sk) gsap.timeline({ defaults: { ease: 'none' },
       scrollTrigger: { trigger: sk, start: 'top top', end: '+=90%', pin: true, scrub: 0.6, anticipatePin: 1 } })
-      .fromTo(q('.bleed__text', sk).children, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3, stagger: 0.1, ease: 'power1.out' }, 0.05)
+      .fromTo(q('.bleed__text', sk).children, { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.35, stagger: 0.1, ease: 'power3.out' }, 0.05)
       .to({}, { duration: 0.5 });
 
     /* the swap: the white Spirit holds; the red GTP wipes in from the right over it, the Spirit drifts left and dims */
@@ -155,7 +155,10 @@
       .fromTo(q('[data-peak-car]'), { xPercent: 40, scale: 0.82, autoAlpha: 0 }, { xPercent: -6, scale: 1, autoAlpha: 1, duration: 0.55, ease: 'power2.out' }, 0)
       .fromTo(q('[data-peak-num]'), { xPercent: -18 }, { xPercent: 6, duration: 1 }, 0)
       .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.2 }, 0.45)
-      .to({}, { duration: 0.25 });
+      .fromTo(q('.peak__head').children, { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.25, stagger: 0.06, ease: 'power3.out' }, 0.02)
+      .to({}, { duration: 0.2 }, 0.65)
+      /* the head drives out upward, line by line, before the release */
+      .to(q('.peak__head').children, { y: -70, autoAlpha: 0, duration: 0.2, stagger: 0.05, ease: 'power2.in' }, 0.85);
 
     /* "Next — Le Mans": the frame stops, the line drives up, the CTA follows; on the way out it goes dark */
     const bp = q('[data-bleed-pin]');
