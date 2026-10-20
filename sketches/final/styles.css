@@ -322,7 +322,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .lm__grid { display: grid; grid-template-columns: repeat(11, 1fr); column-gap: var(--s-5); align-items: start; }
 .lm__num { grid-column: 1 / span 1; font-family: var(--serif); font-size: clamp(64px, 6vw, 104px); line-height: .8; color: var(--ink); }
 .lm__col { display: grid; gap: var(--s-4); }
-.lm__col:nth-of-type(1) { grid-column: 2 / span 5; }
+.lm__col:nth-of-type(1) { grid-column: 1 / span 5; }
 .lm__col:nth-of-type(2) { grid-column: 7 / span 5; }
 .lm__story { position: relative; z-index: 3; background: #050505; display: grid; grid-template-columns: minmax(0, 540px) minmax(0, 540px);
   justify-content: center; column-gap: clamp(48px, 6vw, 96px); padding: var(--s-9) var(--gutter) var(--s-10); align-items: start; }
