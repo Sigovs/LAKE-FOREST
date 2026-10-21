@@ -151,11 +151,21 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .brand { display: inline-flex; align-items: stretch; border: 1px solid rgba(237,235,230,.7); text-decoration: none; color: var(--ink); }
 .brand__m { font-size: 32px; line-height: 1; letter-spacing: -.012em; padding: 6px 12px 4px; border-right: 1px solid rgba(237,235,230,.7); }
 .brand__m--lfsc { font-size: 22px; padding: 10px 12px 8px; letter-spacing: .02em; }
+.brand--crest { border: 0; align-items: center; gap: var(--s-3); }
+.brand__crest { height: 48px; width: auto; }
+/* the wordmark follows the client's LFMS logo: classical capitals, wide tracking */
+.brand__words { display: grid; gap: 1px; font-family: "Cinzel", Georgia, serif; text-transform: uppercase; line-height: 1; }
+.brand__name { font-size: 17px; letter-spacing: .26em; }
+.brand__sub { font-size: 11px; letter-spacing: .38em; color: rgba(237,235,230,.78); }
+.foot__sign { display: flex; align-items: center; gap: clamp(24px, 3vw, 48px); }
+.foot__crest { height: clamp(140px, 14vw, 220px); width: auto; }
+.foot__lfms { font-family: "Cinzel", Georgia, serif; text-transform: uppercase; font-size: clamp(36px, 5.4vw, 88px); line-height: 1.02; letter-spacing: .14em; color: var(--ink); }
+.foot__by { margin-top: var(--s-4); font-family: "Cinzel", Georgia, serif; text-transform: uppercase; font-size: clamp(13px, 1.1vw, 17px); letter-spacing: .22em; color: var(--mute); }
 .brand__t { display: flex; align-items: center; padding: 0 var(--s-3); font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; }
 .nav__links { display: flex; gap: var(--s-8); margin-left: auto; }
 .nav__links a { text-decoration: none; color: var(--ink); padding: var(--s-3) 0; }
 .nav__links a:hover { opacity: .7; }
-@media (max-width: 899px) { .nav { height: 72px; padding: 0 var(--gutter); } .nav__links { gap: var(--s-4); } .nav__links a:nth-child(-n+2), .nav__links a:nth-child(4) { display: none; } .brand__t { display: none; } }
+@media (max-width: 899px) { .nav { height: 72px; padding: 0 var(--gutter); } .nav__links { gap: var(--s-4); } .nav__links a:nth-child(-n+2), .nav__links a:nth-child(4) { display: none; } .brand__sub { display: none; } .brand__name { font-size: 14px; letter-spacing: .2em; } .brand__crest { height: 40px; } .brand__t { display: none; } }
 
 /* ================================================================ HERO — the approved concept */
 .hero { position: relative; height: 100vh; height: 100svh; min-height: 640px; overflow: hidden; background: var(--ground); }
@@ -377,7 +387,7 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 @media (min-width: 1000px) { .js .fact.is-on b { color: var(--lm-blue); } }
 
 .lm__spacer { display: none; }
-@media (min-width: 1000px) { .lm__spacer { display: block; height: 320vh; } }
+@media (min-width: 1000px) { .lm__spacer { display: block; height: 120vh; } }
 .lm__text { position: relative; z-index: 3; margin-top: -24vh; padding: calc(24vh + var(--s-6)) calc(var(--gutter) + var(--col)) 0; display: grid; gap: var(--s-6);
   background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,.45) 10vh, rgba(5,5,5,.85) 18vh, #050505 26vh); }
 .lm__eyebrow { color: var(--mute); }
@@ -693,6 +703,8 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
 .foot__nav { display: flex; flex-wrap: wrap; gap: var(--s-6); }
 .foot__nav a { color: var(--ink-2); text-decoration: none; padding: var(--s-2) 0; }
 .foot__nav a:hover { color: var(--ink); }
+.foot__base { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: var(--s-4) var(--s-6); padding-top: var(--s-5); border-top: 1px solid rgba(237,235,230,.1); }
+.foot__powered { color: var(--mute); white-space: nowrap; }
 .foot__word { font-size: clamp(56px, 10.4vw, 176px); line-height: var(--lh-d1); letter-spacing: var(--ls-d1); color: var(--ink); white-space: nowrap; }
 
 /* ================================================================ mobile layout */
@@ -849,3 +861,167 @@ ol, ul { margin: 0; padding: 0; list-style: none; }
   radial-gradient(64% 58% at 62% 112%, rgba(13,34,54,.55) 0%, rgba(13,34,54,0) 72%),
   radial-gradient(44% 64% at -6% 106%, rgba(13,34,54,.5) 0%, rgba(13,34,54,0) 70%),
   radial-gradient(30% 50% at 104% 70%, rgba(13,34,54,.35) 0%, rgba(13,34,54,0) 70%); }
+
+/* ================================================================ v2: lean homepage (21 Oct) */
+/* hero: quieter copy, one text link instead of two buttons */
+.hero__title { font-size: clamp(36px, 3.6vw, 60px); }
+.hero__lead { font-size: clamp(17px, 1.3vw, 20px); color: rgba(237,235,230,.86); }
+.hero__ctas { margin-top: var(--s-5); }
+.hero__link { display: inline-flex; gap: var(--s-2); align-items: center; padding: var(--s-2) 0; font-size: 15px; font-weight: 600; letter-spacing: .02em;
+  color: var(--ink); text-decoration: none; border-bottom: 1px solid rgba(237,235,230,.45); transition: border-color .25s; }
+.hero__link:hover { border-color: var(--ink); }
+
+/* cards: a free horizontal row, never a pin */
+.cards { min-height: 0; padding: var(--s-9) 0 var(--s-8); }
+.cards__viewport { overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; scroll-snap-type: x proximity; cursor: grab; }
+.cards__viewport::-webkit-scrollbar { display: none; }
+.cards__viewport.is-drag { cursor: grabbing; scroll-snap-type: none; user-select: none; }
+.cards__track > li { scroll-snap-align: start; }
+.cards__track { padding-right: calc(var(--gutter) + var(--col) * .5); }
+
+/* family: the four generations as one plain screen */
+.dyn__stage--static { height: auto !important; padding-top: 0 !important; }
+.dyn__stage--static .dyn__panels { grid-column: 1 / -1; padding: 0 calc(var(--col) * .5); }
+.dyn__stage--static .dyn__panel { position: relative !important; inset: auto; pointer-events: auto; padding: var(--s-10) 0 var(--s-9); }
+
+/* the Lake Forest years: two pictures side by side, one screen */
+.era { position: relative; z-index: 2; display: grid; grid-template-columns: 1fr 1fr; gap: var(--s-7) var(--s-5);
+  padding: var(--s-10) calc(var(--gutter) + var(--col) * .5) var(--s-9); }
+.era__head { grid-column: 1 / -1; display: grid; gap: var(--s-4); }
+.era__pic { display: grid; gap: var(--s-4); }
+.era__pic img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; }
+.era__pic figcaption { display: grid; gap: var(--s-2); }
+.era__t { font-family: var(--serif); font-weight: 640; font-variation-settings: "wdth" var(--display-wdth); font-size: clamp(24px, 2vw, 32px); line-height: 1.1; }
+.era__src { grid-column: 1 / -1; }
+@media (max-width: 999px) { .era { grid-template-columns: 1fr; padding: var(--s-9) var(--gutter); } }
+
+/* v2 phones */
+@media (max-width: 999px) {
+  .facts { position: relative !important; left: auto !important; right: auto !important; top: auto !important; bottom: auto !important;
+    display: grid !important; grid-template-columns: 1fr 1fr; gap: var(--s-5) var(--s-4); padding: var(--s-6) var(--gutter) 0 !important; border-top: 0 !important; }
+  .facts::after { display: none; }
+  .fact { opacity: 1 !important; }
+  .fact b { font-size: 22px !important; }
+  .foot__lfms { font-size: clamp(26px, 8vw, 40px); letter-spacing: .1em; }
+  .foot__sign { align-items: flex-start; }
+  .foot__crest { height: 110px; }
+}
+@media (max-width: 520px) { .brand__words { display: none; } }
+@media (max-width: 899px) { .nav { justify-content: space-between; gap: var(--s-4); } .nav__links { margin-left: 0; gap: var(--s-5); } }
+/* nothing may widen the phone viewport: the hidden radio inputs get a containing box, and the page clips sideways */
+.choice { position: relative; }
+.choice input { left: 0; top: 0; width: 1px; height: 1px; }
+html { overflow-x: clip; }
+
+/* cards: all six on one screen, no horizontal scroll (desktop); a 2 × 3 grid on tablets, one column on phones */
+@media (min-width: 1000px) {
+  .cards__viewport { overflow: visible; cursor: auto; padding: 0 calc(var(--gutter) + var(--col) * .5); }
+  .cards__track { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: var(--s-4); width: auto; padding-right: 0; }
+  .cards__track > li { width: auto; }
+  .cards__progress { display: none; }
+  .card__media { aspect-ratio: 4 / 3; }
+  .card__title { font-size: clamp(20px, 1.6vw, 26px); }
+  .card__text { font-size: 14px; line-height: 1.45; }
+  .card__meta { font-size: 11px; }
+}
+@media (min-width: 700px) and (max-width: 999px) {
+  .cards__viewport { overflow: visible; cursor: auto; }
+  .cards__track { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: auto; }
+  .cards__track > li { width: auto; }
+}
+@media (min-width: 1000px) {
+  .card__meta { white-space: nowrap; }
+  .card__badge { font-size: 10px; padding: 4px 8px; letter-spacing: .14em; top: 8px; left: 8px; }
+}
+@media (min-width: 1000px) { .card__meta > span:first-child { overflow: hidden; text-overflow: ellipsis; min-width: 0; } .card { min-width: 0; } }
+
+/* Le Mans: the chapter text covers the pinned film completely — no film showing through below it */
+@media (min-width: 1000px) { .lm { padding-bottom: 0; } .lm__text { padding-bottom: var(--s-8); } }
+.lm__text { background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,.85) 10vh, #050505 20vh) !important; }
+.era { background: var(--ground); }
+.lm__text { background: linear-gradient(180deg, rgba(5,5,5,0) 0%, rgba(5,5,5,.85) 10vh, #050505 20vh, var(--ground) 100%) !important; }
+.lm { background: var(--ground); }
+
+/* hero: exactly one screen on any device, the copy anchored to the bottom */
+.hero { height: 100vh; height: 100svh; min-height: 560px; }
+.hero__copy { top: auto !important; bottom: clamp(40px, 9vh, 112px); }
+@media (max-width: 999px) { .hero__copy { bottom: var(--s-7); } }
+
+.era { padding-top: var(--s-9); }
+
+/* ================================================================ OLD HISTORY PAGE DRAFT (unused) */
+.page-history .phead { padding: calc(80px + var(--s-10)) calc(var(--gutter) + var(--col) * .5) var(--s-9); display: grid; gap: var(--s-5); max-width: 1180px; }
+.page-history .phead .eyebrow a { color: inherit; text-decoration: none; }
+.page-history .phead .eyebrow a:hover { color: var(--ink); }
+.phead__title { font-family: var(--serif); font-weight: 640; font-variation-settings: "wdth" var(--display-wdth); letter-spacing: -.012em;
+  font-size: clamp(48px, 6vw, 104px); line-height: .95; }
+.phead__title span { display: block; color: var(--tone); }
+.phead__lead { font-size: var(--t-lead); line-height: 1.5; color: #c9cbcd; max-width: 56ch; }
+.phead__index { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 var(--s-5); margin-top: var(--s-6); border-top: 1px solid rgba(237,235,230,.14); }
+.phead__index a { display: grid; gap: 2px; padding: var(--s-4) 0; border-bottom: 1px solid rgba(237,235,230,.1); text-decoration: none; color: var(--ink); font-size: 16px; }
+.phead__index a span { font-size: 12px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); }
+.phead__index a:hover { color: #fff; }
+@media (max-width: 999px) { .phead__index { grid-template-columns: 1fr 1fr; } }
+
+/* the family: all three panels, one after another */
+.page-history .dyn__stage--static .dyn__panels { display: grid; }
+.page-history .dyn__panel { position: relative !important; inset: auto !important; pointer-events: auto; padding: var(--s-9) 0; border-top: 1px solid rgba(237,235,230,.08); }
+.page-history .dyn__panel:first-child { border-top: 0; }
+
+/* Le Mans: the frame is a plain screen; its text follows below, no cover-over */
+.page-history .lm__scene { height: 100vh; }
+.page-history .lm__text { margin-top: 0 !important; padding-top: var(--s-9) !important; background: var(--ground) !important; }
+.page-history .lm__story { background: var(--ground); }
+.page-history .fact { cursor: pointer; }
+
+/* the red-car handover: the two frames simply stack */
+.page-history .swap { height: auto !important; overflow: visible !important; }
+.page-history .swap > .bleed { position: relative !important; inset: auto !important; }
+.page-history .swap__b { clip-path: none !important; }
+.page-history .swap .bleed__text { opacity: 1 !important; visibility: visible !important; transform: none !important; }
+
+/* full-bleed chapters: no sticky, no pin gap */
+.page-history .ch-full [data-bleed] { position: relative !important; }
+.page-history .pin-gap { display: none !important; }
+.page-history .ch-full__body { min-height: 0 !important; box-shadow: none !important; }
+
+/* the closing call */
+.pnext { padding: var(--s-10) calc(var(--gutter) + var(--col) * .5); display: grid; gap: var(--s-5); justify-items: start; border-top: 1px solid rgba(237,235,230,.08); }
+.pnext__title { font-family: "Besley", var(--serif); font-style: italic; font-weight: 700; font-size: clamp(56px, 7vw, 120px); line-height: .95; }
+.pnext__lead { font-size: var(--t-lead); color: #c9cbcd; max-width: 46ch; }
+.era__more { grid-column: 1 / -1; }
+/* the Lake Forest years fit one screen so its pin stop shows it whole */
+@media (min-width: 1000px) {
+  .era { padding-top: calc(80px + var(--s-6)); padding-bottom: var(--s-6); row-gap: var(--s-5); }
+  .era__pic img { aspect-ratio: auto; height: min(38vh, 380px); }
+  .era .heading { font-size: clamp(40px, 4.2vw, 68px); }
+}
+.era__pic { align-content: start; } .era__pic figcaption { min-height: 0; }
+
+/* hero film: covers the screen, softened so the copy reads; reduced motion shows the still */
+.hero__video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05); }
+@media (prefers-reduced-motion: reduce) { .hero__video { display: none; } .hero__photo { background: url(assets/img/final/hero-1977-poster.jpg) center / cover; } }
+
+.hero__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-5); }
+.hero__film { display: inline-flex; align-items: center; gap: var(--s-2); font-size: 15px; font-weight: 600; color: var(--ink); text-decoration: none;
+  padding: var(--s-2) 0; border-bottom: 1px solid rgba(237,235,230,.4); transition: border-color .25s; }
+.hero__film svg { width: 14px; height: 14px; fill: currentColor; }
+.hero__film:hover { border-color: var(--ink); }
+
+/* old-film grain over the hero film: fine, flickering, a little dust; never on reduced motion */
+.hero__grain { position: absolute; inset: -50%; z-index: 1; pointer-events: none; opacity: .16; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain .5s steps(4) infinite; }
+@keyframes grain { 0% { transform: translate(0, 0); } 25% { transform: translate(-4%, 3%); } 50% { transform: translate(3%, -5%); } 75% { transform: translate(-2%, -2%); } 100% { transform: translate(5%, 4%); } }
+@media (prefers-reduced-motion: reduce) { .hero__grain { animation: none; } }
+
+/* the logo: large at the top of the page, settling to its header size once you scroll.
+   Scaled, not resized, so the header bar itself never changes height. */
+.brand--crest { transform-origin: left center; transition: transform .6s cubic-bezier(.16,1,.3,1); }
+@media (min-width: 900px) {
+  .nav:not(.is-small) .brand--crest { transform: translateY(26px) scale(1.7); }
+}
+@media (max-width: 899px) {
+  .nav:not(.is-small) .brand--crest { transform: translateY(10px) scale(1.35); }
+}
+@media (prefers-reduced-motion: reduce) { .brand--crest { transition: none; } }

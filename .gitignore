@@ -22,3 +22,7 @@ review/vault-all-sites.jpg
 
 # Raw additions dropped in by Alex: local only; web copies live in assets/img/final
 ___Additions/
+video_sources/
+
+# client meeting transcripts stay local
+*_transcript.txt

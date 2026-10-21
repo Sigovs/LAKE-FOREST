@@ -7,6 +7,7 @@
         "rule": "cramped-padding",
         "value": "*",
         "files": [
+          "history.html",
           "index.html"
         ],
         "createdAt": "2026-10-15T21:57:13.913Z",
@@ -52,8 +53,9 @@
         "rule": "low-contrast",
         "value": "*",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T19:55:02.310Z",
         "reason": "Claude: the flagged #000 'text' is decorative aria-hidden type with transparent fill or 4.5% ink (ghost years, outlined 76, footer word); all readable text measured on the ground: ink 17:1, tone 6.0:1, mute 7.6:1"
@@ -62,8 +64,9 @@
         "rule": "all-caps-body",
         "value": "*",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T19:55:02.320Z",
         "reason": "Claude: remaining uppercase runs are the aria-hidden ticker, the list of make names (each item a one-word label) and a heading's second line; long labels were changed to sentence case"
@@ -72,8 +75,9 @@
         "rule": "clipped-overflow-container",
         "value": "*",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T19:55:02.329Z",
         "reason": "Claude: body uses overflow-x: clip against horizontal scroll; hero__stage clips art layers (photo, car, trail, callouts) by design, with no tooltips or menus inside"
@@ -82,8 +86,9 @@
         "rule": "marquee",
         "value": "*",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T19:55:02.339Z",
         "reason": "Claude: user-approved ticker from the F1 reference (docs/final-package-references.md), one strip, aria-hidden, stopped under prefers-reduced-motion"
@@ -92,8 +97,9 @@
         "rule": "overused-font",
         "value": "instrument serif",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T20:10:25.932Z",
         "reason": "Claude: the serif matches the client-approved hero concept screenshot (2026-10-19); revisit when the brand's own type is chosen"
@@ -102,11 +108,32 @@
         "rule": "tight-leading",
         "value": "*",
         "files": [
-          "sketches/final/index.html",
-          "index.html"
+          "history.html",
+          "index.html",
+          "sketches/final/index.html"
         ],
         "createdAt": "2026-10-19T22:41:13.463Z",
         "reason": "Claude: every remaining line-height under 1.3 is on serif display type 24px+ (headings, sublines, pull quotes, the ghost year); all body and caption text is 1.4-1.55"
+      },
+      {
+        "rule": "hero-eyebrow-chip",
+        "value": "*",
+        "files": [
+          "history.html",
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T18:10:04.475Z",
+        "reason": "Claude: eyebrow labels are an explicit user decision (Alex, 19 Oct 2026: keep the eyebrows from the AERO JET reference)"
+      },
+      {
+        "rule": "dark-glow",
+        "value": "*",
+        "files": [
+          "history.html",
+          "index.html"
+        ],
+        "createdAt": "2026-10-20T18:10:04.487Z",
+        "reason": "Claude: the glows are user-requested and neutral-toned (Alex: grainy radial behind RPM Club, Figma glow on the RPM hosts, GT stage light), not chromatic accent halos"
       }
     ]
   }

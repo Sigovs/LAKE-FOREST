@@ -15,6 +15,7 @@
   /* the header is locked: it never hides or resizes; it only gains a backing once past the hero */
   const onScroll = (y) => {
     nav.classList.toggle('is-solid', y > (hero ? hero.offsetHeight * 0.6 : 200));
+    nav.classList.toggle('is-small', y > 24);   /* the large logo settles to its header size as soon as the page moves */
   };
 
   if (reduce || !window.gsap || !window.ScrollTrigger) {
@@ -44,15 +45,18 @@
   const q = (s, r = document) => r.querySelector(s);
   const qa = (s, r = document) => [...r.querySelectorAll(s)];
 
-  const photo = q('[data-hero-photo] img'), copy = q('[data-hero-copy]');
+  const photo = q('[data-hero-photo] video, [data-hero-photo] img'), copy = q('[data-hero-copy]');
 
   /* ---------------- hero intro: the photograph fades in at full size, the copy slides in from the left
      as a staircase: eyebrow, title, its second line, lead, then each button, every step a beat later */
   const heroSteps = [q('.hero__eyebrow', copy), q('.hero__title', copy), q('.hero__lead', copy), ...qa('.hero__ctas > *', copy)];
   gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from(photo, { autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0)
-    .from(heroSteps, { autoAlpha: 0, x: -90, duration: 1.2, stagger: 0.11 }, 0.45)
-    .from(q('.hero__sub', copy), { autoAlpha: 0, x: -60, duration: 1.2 }, 0.67);   /* the title's second line, its own step */
+    /* slower and longer than before so it reads as a slide, not a fade: the eyebrow from the side,
+       the title up from under a mask, the lead and the button rise after it */
+    .from(heroSteps[0], { autoAlpha: 0, x: -140, duration: 1.5, ease: 'power3.out' }, 0.5)
+    .from(heroSteps[1], { autoAlpha: 0, y: 110, clipPath: 'inset(0 0 100% 0)', duration: 1.6, ease: 'power3.out' }, 0.65)
+    .from(heroSteps.slice(2), { autoAlpha: 0, y: 50, duration: 1.4, stagger: 0.15, ease: 'power3.out' }, 0.95);
 
   const mm = gsap.matchMedia();
 
@@ -75,13 +79,17 @@
       heroEl.addEventListener('pointerleave', () => { px(0); py(0); cx(0); });
     }
 
-    /* chapter cards: the page stops, the row travels sideways with the scroll */
-    const track = q('[data-cards-track]'), vp = q('[data-cards-viewport]');
-    const dist = () => Math.max(0, track.scrollWidth - (vp.clientWidth - parseFloat(getComputedStyle(vp).paddingLeft) * 2));
-    gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: '.cards', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 0.6, anticipatePin: 1, invalidateOnRefresh: true } })
-      .to(track, { x: () => -dist() }, 0)
-      .fromTo('[data-cards-bar]', { scaleX: 1 / 6 }, { scaleX: 1 }, 0);
+    /* chapter cards: no pin. The row scrolls sideways by itself (trackpad, shift + wheel, drag); the bar follows it */
+    const vp = q('[data-cards-viewport]'), bar = q('[data-cards-bar]');
+    if (vp && innerWidth < 700) {
+      const sync = () => { const max = vp.scrollWidth - vp.clientWidth; gsap.set(bar, { scaleX: max > 0 ? Math.max(1 / 6, vp.scrollLeft / max) : 1 }); };
+      vp.addEventListener('scroll', sync, { passive: true }); sync();
+      let down = false, sx = 0, sl = 0, moved = false;
+      vp.addEventListener('pointerdown', (e) => { if (e.pointerType !== 'mouse') return; down = true; moved = false; sx = e.clientX; sl = vp.scrollLeft; vp.classList.add('is-drag'); });
+      addEventListener('pointermove', (e) => { if (!down) return; const dx = e.clientX - sx; if (Math.abs(dx) > 4) moved = true; vp.scrollLeft = sl - dx; });
+      addEventListener('pointerup', () => { down = false; vp.classList.remove('is-drag'); });
+      vp.addEventListener('click', (e) => { if (moved) { e.preventDefault(); e.stopPropagation(); } }, true);
+    }
 
 
     /* pin stops on the full-bleed chapters: the frame is sticky (CSS), its title arrives and holds,
@@ -154,18 +162,35 @@
         .to({}, { duration: 0.1 }, 1.68);
     }
 
+    /* pin stops: each main section rests for a short beat when it reaches the top, so its slide-in plays
+       while the page holds still. Short (about half a screen), never a multi-screen trap. */
+    /* and on the way out of the stop, the section's parts leave upward one by one, scrubbed to the scroll */
+    const parts = {
+      '.cards': ['.cards__head .eyebrow', '.cards__head h2', '.card'],
+      '.dyn':   ['.dyn__head .eyebrow', '.dyn__head h2', '.gen', '.dyn__panel > .caption'],
+      '.peak':  ['.peak__eyebrow', '.peak__title', '[data-peak-car]', '[data-peak-body]'],
+      '.era':   ['.era__head .eyebrow', '.era__head h2', '.era__pic', '.era__src', '.era__more'],
+    };
+    Object.entries(parts).forEach(([sel, list]) => {
+      const el = q(sel); if (!el) return;
+      const st = ScrollTrigger.create({ trigger: el, start: () => (el.offsetHeight > innerHeight - 80 ? 'bottom bottom' : 'top 80px'),
+        end: '+=55%', pin: true, anticipatePin: 1, invalidateOnRefresh: true });
+      const items = list.flatMap((s) => qa(s, el));
+      gsap.timeline({ scrollTrigger: { trigger: el, start: () => st.start + innerHeight * 0.2, end: () => st.end, scrub: 0.6, invalidateOnRefresh: true } })
+        .fromTo(items, { y: 0, autoAlpha: 1 }, { y: -90, autoAlpha: 0, stagger: 0.08, ease: 'power2.in', immediateRender: false });   /* always leave from the visible state */
+    });   /* a tall section rests on its foot, a short one under the header */
+
     /* the peak: the page is already blue; the #76 drives in from the right, its number slides the other way */
-    const peak = q('[data-peak-stage]');
-    gsap.timeline({ defaults: { ease: 'none' },
-      scrollTrigger: { trigger: peak, start: 'top top', end: '+=110%', pin: true, scrub: 0.7, anticipatePin: 1 } })
-      .fromTo(q('[data-peak-car]'), { xPercent: 40, scale: 0.82, autoAlpha: 0 }, { xPercent: -6, scale: 1, autoAlpha: 1, duration: 0.55, ease: 'power2.out' }, 0)
-      .fromTo(q('[data-peak-num]'), { xPercent: -16 }, { xPercent: 0, duration: 1 }, 0)   /* ends at the margin, never cut */
-      .from(q('[data-peak-body]'), { autoAlpha: 0, y: 30, duration: 0.2 }, 0.45)
-      .fromTo(q('.peak__head').children, { y: 70, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.25, stagger: 0.06, ease: 'power3.out' }, 0.02)
-      .to({}, { duration: 0.2 }, 0.65)
-      /* the head drives out upward, line by line, before the release */
-      .to(q('.peak__head').children, { y: -70, autoAlpha: 0, duration: 0.2, stagger: 0.05, ease: 'power2.in' }, 0.85)
-      .to(q('[data-peak-body]'), { y: -70, autoAlpha: 0, duration: 0.2, ease: 'power2.in' }, 0.97);   /* the paragraph follows the head out */
+    const peak = q('[data-peak-static]');
+    if (peak) {
+      const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 1.4 } })
+        .from(q('.peak__eyebrow'), { x: -140, autoAlpha: 0 }, 0)
+        .from(q('.peak__title'), { y: 110, clipPath: 'inset(0 0 100% 0)', autoAlpha: 0, duration: 1.5 }, 0.12)
+        .from(q('.peak__title span'), { x: -120, autoAlpha: 0 }, 0.35)
+        .from(q('[data-peak-car]'), { xPercent: 22, autoAlpha: 0, duration: 1.6 }, 0.2)
+        .from(q('[data-peak-body]'), { y: 60, autoAlpha: 0, duration: 1.2 }, 0.55);
+      ScrollTrigger.create({ trigger: peak, start: 'top 70%', once: true, onEnter: () => tl.play() });
+    }
 
     /* "Next — Le Mans": the frame stops, the line drives up, the CTA follows; on the way out it goes dark */
     const bp = q('[data-bleed-pin]');
@@ -207,44 +232,11 @@
       speedN.textContent = String(v).padStart(3, '0'); speedBox.classList.toggle('is-top', v >= 218); };
     setFact(0);
     addEventListener('resize', () => setFact((factOn + 0.5) / facts.length));
-    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=320%', scrub: 0.6,
+    const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=120%', scrub: 0.4,
       onUpdate: (st) => { setFact(Math.min(.999, st.progress / 0.9)); setSpeed(st.progress / 0.9); } } });
 
-    /* a stop on every fact: when the wheel rests inside the board, the page settles on the nearest fact */
-    const lmST = lm.scrollTrigger; let settle = 0;
-    lenis.on('scroll', ({ scroll, velocity }) => {
-      clearTimeout(settle);
-      if (scroll <= lmST.start || scroll >= lmST.start + (lmST.end - lmST.start) * 0.9) return;
-      settle = setTimeout(() => {
-        const span = (lmST.end - lmST.start) * 0.9, n = facts.length;
-        const i = Math.max(0, Math.min(n - 1, Math.round(((lenis.scroll - lmST.start) / span) * n - 0.5)));
-        const target = lmST.start + span * (i + 0.5) / n;
-        if (Math.abs(target - lenis.scroll) > 4) lenis.scrollTo(target, { duration: 0.7, easing: (t) => 1 - Math.pow(1 - t, 3) });
-      }, 160);
-    });
+    const lmST = lm.scrollTrigger;
 
-    /* one wheel gesture = one fact: inside the board the wheel steps from fact to fact instead of
-       scrolling freely, so a single flick can no longer run the board to its end. A trackpad's
-       inertia tail belongs to the same gesture; a new step needs a pause or the step to finish. */
-    const lmStop = (i) => lmST.start + (lmST.end - lmST.start) * 0.9 * (i + 0.5) / facts.length;
-    let lmBusy = false, lmLastWheel = 0, lmLastStep = 0, lmPrev = lenis.scroll;
-    const lmGo = (i) => { lmBusy = true; lmLastStep = performance.now();
-      lenis.scrollTo(lmStop(i), { duration: 0.6, easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2), lock: true, force: true,   /* quicker, eased in and out */
-        onComplete: () => { lmBusy = false; } }); };
-    const lmWheel = (e) => {
-      if (e.ctrlKey || innerWidth < 1000) return;
-      const s = lenis.scroll, n = facts.length, first = lmStop(0), last = lmStop(n - 1), dir = Math.sign(e.deltaY);
-      const inside = dir > 0 ? s >= lmST.start - 2 && s < last - 4 : s > first + 4 && s <= last + 4;
-      const now = performance.now(), gap = now - lmLastWheel; lmLastWheel = now;
-      if (!dir || !inside) return;
-      e.preventDefault(); e.stopImmediatePropagation();
-      if (lmBusy || (gap < 140 && now - lmLastStep < 800)) return;
-      let i = dir > 0 ? n - 1 : 0;   /* the next stop in the wheel's direction */
-      if (dir > 0) { for (let k = n - 1; k >= 0; k--) if (lmStop(k) > s + 4) i = k; }
-      else { for (let k = 0; k < n; k++) if (lmStop(k) < s - 4) i = k; }
-      lmGo(i);
-    };
-    window.addEventListener('wheel', lmWheel, { capture: true, passive: false });
     /* the arrow skips the board: straight to the chapter text below it */
     const down = q('[data-lm-down]');
     const textTop = () => lenis.scroll + q('[data-lm-text]').getBoundingClientRect().top - (q('[data-nav]') ? q('[data-nav]').offsetHeight : 0);
@@ -252,15 +244,6 @@
       lenis.scrollTo(textTop(), { duration: 1.4, easing: (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2), force: true,
         /* the pins re-measure on the way: settle on the text's live position */
         onComplete: () => { const t = textTop(); if (Math.abs(t - lenis.scroll) > 4) lenis.scrollTo(t, { duration: 0.5, force: true }); } }); });
-    /* momentum from outside never coasts through the board: crossing its edge lands on the nearest end fact */
-    lenis.on('scroll', ({ scroll }) => {
-      const last = lmStop(facts.length - 1);
-      if (innerWidth >= 1000 && !lmBusy && performance.now() - lmLastWheel < 1000) {   /* wheel momentum only, never an anchor jump */
-        if (lmPrev < lmST.start - 2 && scroll >= lmST.start - 2) lmGo(0);
-        else if (lmPrev > last + 4 && scroll <= last + 4) lmGo(facts.length - 1);
-      }
-      lmPrev = scroll;
-    });
     lm.to(lmScrub, { t: 1, ease: 'none', duration: 1.2 }, 0)
       /* as the camera closes in, the film softens and dims so the facts stay readable */
       .fromTo('[data-lm-video]', { filter: 'blur(0px) brightness(1)' }, { filter: 'blur(6px) brightness(0.6)', ease: 'power1.in', duration: 0.7 }, 0.75);
@@ -273,7 +256,7 @@
       .to('.lm__title', { autoAlpha: 0, duration: 0.5 }, 0)
       .to('.lm__down', { autoAlpha: 0, duration: 0.12 }, 0)
       .to('.lm__speed', { autoAlpha: 0, duration: 0.12 }, 0)
-      .to('.lm__photo', { opacity: 0.35, duration: 1 }, 0);
+      .to('.lm__photo', { opacity: 0, duration: 1 }, 0);   /* gone by the time the text reaches the top: nothing shows through below it */
 
     qa('[data-ghost]').forEach((g) => gsap.fromTo(g, { yPercent: -12 }, {
       yPercent: 12, ease: 'none', scrollTrigger: { trigger: g.parentElement, start: 'top bottom', end: 'bottom top', scrub: true },
@@ -281,14 +264,6 @@
   });
 
   /* ================================================================ EVERY WIDTH */
-  /* chapter reveals: head, body, documents and frames arrive once */
-  qa('[data-ch]').forEach((ch) => {
-    const items = qa('.ch__head, .ch__body:not([data-peak-body]), .lm__text', ch);
-    if (items.length) gsap.from(items, {
-      autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.12,
-      scrollTrigger: { trigger: ch, start: 'top 72%', once: true },
-    });
-  });
   /* LFSC and Lola: as the text layer rolls up over the photograph, its text floats up into place with it
      (scrubbed to the scroll, so it never plays ahead of the reader) */
   qa('.ch-full__body').forEach((body) => {
@@ -301,14 +276,32 @@
   if (q('.rpm__hosts')) gsap.timeline({ scrollTrigger: { trigger: '.rpm__hosts', start: 'top 100%', end: 'top 20%', scrub: 1, refreshPriority: -1 } })   /* measured after the GT pin above it */
     .fromTo('.rpm__host--a', { xPercent: -14, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, ease: 'power2.out' }, 0)
     .fromTo('.rpm__host--b', { xPercent: 14, autoAlpha: 0 }, { xPercent: 0, autoAlpha: 1, ease: 'power2.out' }, 0.08);
-  gsap.from('.cards__head, .card', {
-    autoAlpha: 0, y: 40, duration: 1, ease: 'expo.out', stagger: 0.07,
-    scrollTrigger: { trigger: '.cards', start: 'top 75%', once: true },
-  });
-  qa('[data-reveal]').forEach((s) => gsap.from(s.querySelectorAll(':scope > div > *, :scope > form > *, .ig__grid > li, .ep-list > li'), {
-    autoAlpha: 0, y: 30, duration: 1, ease: 'expo.out', stagger: 0.06, scrollTrigger: { trigger: s, start: 'top 75%', once: true, refreshPriority: -1 } }));
-  qa('[data-paper], [data-frame], [data-cutout]').forEach((el) => gsap.from(el, {
-    autoAlpha: 0, y: 70, duration: 1.2, ease: 'expo.out',
+  /* ONE slide-in for every section head on the page, the same as the hero:
+     the small line above comes in from the side, the heading rises from under a mask, its grey second line
+     slides in from the side, then the text and the section's items rise one by one. Slow enough to see. */
+  const slideHead = (head, items, start = 'top 78%') => {
+    if (!head) return;
+    const eyebrow = head.querySelector('.eyebrow, .peak__eyebrow, .lm__eyebrow');
+    const heading = head.querySelector('h2');
+    const tone = heading && heading.querySelector('span');
+    const rest = [...head.querySelectorAll(':scope > p, :scope > .body, :scope > dl, :scope .lm__col > p, :scope .lm__col > .caption')].filter((el) => el !== eyebrow);
+    const tl = gsap.timeline({ paused: true, defaults: { ease: 'power3.out', duration: 1.4 } });
+    if (eyebrow) tl.from(eyebrow, { x: -140, autoAlpha: 0 }, 0);
+    if (heading) tl.from(heading, { y: 100, clipPath: 'inset(0 0 100% 0)', autoAlpha: 0, duration: 1.5 }, 0.12);
+    if (tone) tl.from(tone, { x: -120, autoAlpha: 0 }, 0.35);
+    if (rest.length) tl.from(rest, { y: 60, autoAlpha: 0, stagger: 0.12, duration: 1.2 }, 0.45);
+    if (items && items.length) tl.from(items, { y: 80, autoAlpha: 0, stagger: 0.1, duration: 1.3 }, 0.55);
+    ScrollTrigger.create({ trigger: head, start, once: true, onEnter: () => tl.play(), refreshPriority: -1 });
+  };
+  slideHead(q('.cards__head'), qa('.card'));
+  slideHead(q('.dyn__head'), qa('.gen'));
+  slideHead(q('.lm__text'), [], 'top 70%');
+  slideHead(q('.era__head'), qa('.era__pic, .era__more'));
+  slideHead(q('.rpm__head'), qa('.ep, .ep-list > li'));
+  slideHead(q('.ig__head'), qa('.ig__grid > li'));
+  slideHead(q('.contact__head'), qa('.enquiry > *'));
+  qa('[data-paper], [data-cutout]').forEach((el) => gsap.from(el, {
+    autoAlpha: 0, y: 80, duration: 1.4, ease: 'power3.out',
     scrollTrigger: { trigger: el, start: 'top 88%', once: true },
   }));
   /* the stage lights up with the scroll. The stage holds (pinned) on a dark frame; the left lamp strikes and
@@ -316,7 +309,7 @@
   const gtStage = q('[data-gt-stage]');
   gsap.set(gtStage, { '--la': '-10%', '--lb': '-10%' });   /* below zero: the soft edge too stays dark */
   gsap.timeline({ defaults: { ease: 'none' },
-    scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 0.8, anticipatePin: 1 } })
+    scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 0.8, anticipatePin: 1 } })   /* restored (Alex, 21 Oct): the stage holds while the lamps strike */
     .to({}, { duration: 0.08 }, 0)                                                                     /* dark, a beat */
     .to(gtStage, { '--la': '2%', duration: 0.05, ease: 'power4.out' }, 0.08)                           /* the left lamp strikes */
     .to(gtStage, { '--la': '100%', duration: 0.5, ease: 'power1.inOut' }, 0.16)                        /* its beam opens */
