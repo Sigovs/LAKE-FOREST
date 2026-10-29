@@ -144,7 +144,8 @@ illustrations of the generations, not GT builds. Originals and `credits.json` in
 
 | Web file | Where | Photo | Licence |
 |---|---|---|---|
-| `gt-c2-cockpit.jpg` | hero | Lothar Spurzem, [Chevrolet Corvette C 2 Cockpit](https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_C_2_Cockpit_(Foto_Sp_2016-06-05).JPG) | CC BY-SA 2.0 DE |
+| `gt-hero-c2-1963.jpg` | hero | Sicnag, [1963 Chevrolet C2 Corvette Coupe](https://commons.wikimedia.org/wiki/File:1963_Chevrolet_C2_Corvette_Coupe_(15269076897).jpg) | CC BY 2.0 |
+| (spare) `gt-c2-cockpit.jpg` | — | Lothar Spurzem, [Chevrolet Corvette C 2 Cockpit](https://commons.wikimedia.org/wiki/File:Chevrolet_Corvette_C_2_Cockpit_(Foto_Sp_2016-06-05).JPG) | CC BY-SA 2.0 DE |
 | `gt-c2-1966.jpg` | C2 band | Sicnag, [1966 Chevrolet C2 Corvette Coupe](https://commons.wikimedia.org/wiki/File:1966_Chevrolet_C2_Corvette_Coupe_(15564625654).jpg) | CC BY 2.0 |
 | `gt-c3-1969.jpg` | C3 band | Sicnag, [1969 Chevrolet C3 Corvette Coupe](https://commons.wikimedia.org/wiki/File:1969_Chevrolet_C3_Corvette_Coupe_(32588096753).jpg) | CC BY 2.0 |
 | (spare) | — | Joe Mabel, 1963 C2 split window: engine, dash | CC BY-SA 4.0 |

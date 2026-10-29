@@ -82,5 +82,10 @@ them. Write it here: the business goal, the audience, what must not change._
 - Long reading text is never set in the display face (the LFSC paragraph uses `.statement` sizing in the text voice).
 - **TO VERIFY plate (28 Oct 2026, Alex).** When the client's reference to a photo is unclear, stand in the best real candidate and mark it
   with `.verify` (road-yellow plate, `styles-v2.css`); never leave the slot empty or guess silently. Remove the plate when confirmed.
+- **"News section" (resolved 29 Oct 2026, client screenshot).** It is the homepage "Dealers and racers" block (`.era`): AutoWeek
+  2005 is its third panel beside Lake Forest Sports Cars and Father and son. AutoWeek also keeps its own history chapter. No separate
+  "In the press" section on the homepage.
+- **GT page (28 Oct 2026).** Content only from the family's film (`docs/gt-film-content.md`); stand-in photos are original C2/C3 Corvettes,
+  credited in place, until the client sends GT photos or renders. Rights for those are the client's call (Alex).
 - **v2 (28 Oct 2026):** client notes go into `index_v2.html` / `history_v2.html` / `styles-v2.css`; the delivered v1 (tag
   `client-2026-10-21`) stays untouched. Shared JS changes must keep v1 working (e.g. `data-speed` falls back to 218).
