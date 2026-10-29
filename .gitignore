@@ -26,3 +26,6 @@ video_sources/
 
 # client meeting transcripts stay local
 *_transcript.txt
+
+# Material the client sends through the ticket: local only; web copies live in assets/img/final
+from client/

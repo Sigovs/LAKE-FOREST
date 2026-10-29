@@ -225,11 +225,12 @@
       if (i !== factOn) board.classList.toggle('is-back', i < factOn); factOn = i;   /* the marker's gradient leads in the direction it travels */
       facts.forEach((f, k) => f.classList.toggle('is-on', k === i)); board.style.setProperty('--p', i);
       board.style.setProperty('--mx', facts[i].offsetLeft + 'px'); board.style.setProperty('--mw', facts[i].offsetWidth + 'px'); };
-    /* the speed readout climbs with the scroll and tops out at 218 on the 218 mph fact (fact 5 of 6) */
+    /* the speed readout climbs with the scroll and tops out on the mph fact (fact 5 of 6); the page sets the top in data-speed */
     const speedN = q('[data-speed-n]'), speedBox = q('[data-speed]');
+    const speedTop = Number(speedBox && speedBox.dataset.speed) || 218;
     const setSpeed = (p) => { if (!speedN) return; const k = Math.min(1, Math.max(0, p / (4.5 / 6)));
-      const v = Math.round(218 * (1 - Math.pow(1 - k, 2)));
-      speedN.textContent = String(v).padStart(3, '0'); speedBox.classList.toggle('is-top', v >= 218); };
+      const v = Math.round(speedTop * (1 - Math.pow(1 - k, 2)));
+      speedN.textContent = String(v).padStart(3, '0'); speedBox.classList.toggle('is-top', v >= speedTop); };
     setFact(0);
     addEventListener('resize', () => setFact((factOn + 0.5) / facts.length));
     const lm = gsap.timeline({ scrollTrigger: { trigger: '[data-lm-scene]', start: 'top top', end: '+=120%', scrub: 0.4,
@@ -309,14 +310,14 @@
   const gtStage = q('[data-gt-stage]');
   gsap.set(gtStage, { '--la': '-10%', '--lb': '-10%' });   /* below zero: the soft edge too stays dark */
   gsap.timeline({ defaults: { ease: 'none' },
-    scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 0.8, anticipatePin: 1 } })   /* restored (Alex, 21 Oct): the stage holds while the lamps strike */
+    scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 1.2 } })   /* restored (Alex, 21 Oct): the stage holds while the lamps strike. No anticipatePin: with Lenis it pinned a frame early and the stage jumped up and back (v2) */
     .to({}, { duration: 0.08 }, 0)                                                                     /* dark, a beat */
     .to(gtStage, { '--la': '2%', duration: 0.05, ease: 'power4.out' }, 0.08)                           /* the left lamp strikes */
     .to(gtStage, { '--la': '100%', duration: 0.5, ease: 'power1.inOut' }, 0.16)                        /* its beam opens */
     .to(gtStage, { '--lb': '2%', duration: 0.05, ease: 'power4.out' }, 0.3)                            /* the right lamp */
     .to(gtStage, { '--lb': '100%', duration: 0.5, ease: 'power1.inOut' }, 0.38)
     .fromTo('.gt__dark', { filter: 'brightness(0.16) contrast(1.05)' }, { filter: 'brightness(0.3) contrast(1.05)', duration: 0.5 }, 0.38)
-    .fromTo('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 24 }, { autoAlpha: 1, y: 0, duration: 0.18, stagger: 0.05, ease: 'power2.out' }, 0.8)
+    .fromTo('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72)
     .to({}, { duration: 0.2 }, 1.2);                                                                   /* hold lit, then release */
 
   /* fonts and images change heights: keep the triggers honest */

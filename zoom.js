@@ -31,9 +31,12 @@
   const open = (img) => {
     opener = img;
     big.src = img.currentSrc || img.src; big.alt = img.alt;
-    big.style.width = `${img.naturalWidth}px`;   /* never larger than the scan itself (the CSS caps it to the screen) */
+    /* never larger than the scan itself, and fitted to the screen by width and height together, so a tall page keeps its proportions */
+    const fit = Math.min(img.naturalWidth, innerWidth * 0.92, 1100, innerHeight * 0.84 * img.naturalWidth / img.naturalHeight);
+    big.style.width = `${Math.round(fit)}px`; big.style.height = 'auto';
     const fc = img.closest('figure').querySelector('figcaption');
-    cap.textContent = fc ? fc.textContent : '';
+    /* a caption built from several parts (publication, title, note) is read part by part, not run together */
+    cap.textContent = !fc ? '' : fc.children.length ? [...fc.children].map((c) => c.textContent.trim()).join(' · ') : fc.textContent;
     if (window.lenis) lenis.stop();
     dlg.showModal();
   };

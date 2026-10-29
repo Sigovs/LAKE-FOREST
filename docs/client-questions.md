@@ -46,3 +46,13 @@ These are the open points from the first website prototype. Until each one is an
 20. **The cut-outs** in `alex_images/` (blue #76, Spirit front, Aston 009): who made them, and may we publish them?
 21. **Missing cut-outs** for the chapter cards: a Mancuso Chevrolet-era car, and the green Lola #61.
 22. **The red GTP Corvette #4 (Lola T711, chassis HU T711-02):** how is it connected to the family? Was it Mancuso-owned or raced? The final sketch shows it as "The red car · 1984" with the connection marked as unconfirmed.
+
+## Added 2026-10-28 (client notes on v2)
+
+23. ~~Father and son photo~~ **Resolved:** the two files Kirsten attached to ticket #1049006 on 23 Oct (`from client/unnamed-2.jpg`, `unnamed (4).jpg`). Date and place of both still not recorded.
+24. **"Remove the phone number in the photo":** which photo? None of the pictures on the homepage shows a number.
+25. ~~RPM Club hosts~~ **Resolved in v2 (28 Oct):** the retouched cut-outs are replaced by `___Additions/rpm-hosts-corvette.jpg` (Rob left, Rick right), with no caption. A better photograph from the family is still welcome.
+26. **"Too AI" GT visual:** read as the site's old GT stage (the generated covered car), Alex's call. Replaced in v2 (28 Oct) by the client's own GT mark, cut from a frame of their Vimeo film, under two CSS-drawn lamps. Still needed: the original GT logo file (the frame is soft on retina) and real photos or renders of the car.
+27. **GT page:** name, photographs or renders, what may be published, launch timing, where enquiries go (questions 10–11 still open).
+28. **Hot Wheels:** a larger photo of the card if one exists (the Dropbox file is 320 px).
+29. **218 vs 222 mph:** Fra Noi gives 218; IMSA (March 2026) gives 222 in qualifying. v2 uses 222, per the client and IMSA.
