@@ -455,6 +455,28 @@ The car stays under its cover: no photograph of the GT has been released. -->
       if (!raf) raf = requestAnimationFrame(() => { raf = 0; torch.style.setProperty('--tx', x + 'px'); torch.style.setProperty('--ty', y + 'px'); }); });
     gt.addEventListener('pointerenter', () => torch.classList.add('is-on'));
     gt.addEventListener('pointerleave', () => torch.classList.remove('is-on'));
+
+    /* the two side lamps follow the torch: each beam turns on its lamp to aim at the pointer, eased so it swings
+       like a heavy stage light; when the pointer leaves, both settle back on the cars */
+    const beams = [...gt.querySelectorAll('.gt__lit .gt__beam')].map(el => {
+      const lamp = gt.querySelector('.gt__lit .gt__lamp--' + (el.classList.contains('gt__beam--l') ? 'l' : 'r'));
+      const home = parseFloat(getComputedStyle(el).transform === 'none' ? 0 : 0) || (el.classList.contains('gt__beam--l') ? -59 : 57);
+      return { el, lamp, home, cur: home, want: home };
+    });
+    let aim = null, swing = 0;
+    gt.addEventListener('pointermove', e => { aim = [e.clientX, e.clientY]; if (!swing) swing = requestAnimationFrame(turn); });
+    gt.addEventListener('pointerleave', () => { aim = null; if (!swing) swing = requestAnimationFrame(turn); });
+    function turn() {
+      swing = 0; let moving = false;
+      for (const b of beams) {
+        if (aim) { const r = b.lamp.getBoundingClientRect(), dx = aim[0] - (r.left + r.width / 2), dy = Math.max(aim[1] - (r.top + r.height / 2), 1);
+          b.want = Math.max(-80, Math.min(80, Math.atan2(-dx, dy) * 180 / Math.PI)); } else b.want = b.home;
+        b.cur += (b.want - b.cur) * .08;
+        b.el.style.transform = `rotate(${b.cur.toFixed(2)}deg)`;
+        if (Math.abs(b.want - b.cur) > .05) moving = true;
+      }
+      if (moving) swing = requestAnimationFrame(turn);
+    }
   })();
 </script>
 <script>
