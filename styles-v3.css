@@ -1471,9 +1471,18 @@ html { overflow-x: clip; }
     linear-gradient(180deg, #000 52%, transparent 70%);
           mask-composite: add, intersect; }
 
-/* v3 homepage GT: the hand torch — the lit frame once more, shown only in a soft pool under the pointer */
-.gt__torch { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity .5s ease; pointer-events: none;
-  -webkit-mask-image: radial-gradient(circle 280px at var(--tx, 50%) var(--ty, 50%), rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 45%, transparent 100%);
-          mask-image: radial-gradient(circle 280px at var(--tx, 50%) var(--ty, 50%), rgba(0,0,0,.85) 0%, rgba(0,0,0,.4) 45%, transparent 100%); }
+/* v3 homepage GT: the hand torch — the lit frame once more, shown in an uneven, larger pool under the pointer:
+   three offset soft spots make the edge irregular, and a slow noise breaks it up like a real beam on dust */
+.gt__torch { position: absolute; inset: 0; z-index: 1; opacity: 0; transition: opacity .5s ease; pointer-events: none; mix-blend-mode: lighten;   /* only ever adds light: the lamp beams stay */
+  --tm: radial-gradient(ellipse 300px 240px at var(--tx, 50%) var(--ty, 50%), rgba(0,0,0,.9) 0%, rgba(0,0,0,.45) 50%, transparent 100%),
+        radial-gradient(ellipse 210px 170px at calc(var(--tx, 50%) + 120px) calc(var(--ty, 50%) - 60px), rgba(0,0,0,.5) 0%, transparent 100%),
+        radial-gradient(ellipse 190px 230px at calc(var(--tx, 50%) - 110px) calc(var(--ty, 50%) + 70px), rgba(0,0,0,.45) 0%, transparent 100%);
+  -webkit-mask-image: var(--tm); mask-image: var(--tm); }
 .gt__torch.is-on { opacity: 1; }
-.gt__torch img { filter: brightness(2.4) contrast(1.05); }   /* the room is dark in the file itself: the torch lifts it well above the lamps */
+.gt__torch::after { content: ""; position: absolute; inset: 0; pointer-events: none; mix-blend-mode: multiply; opacity: .55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .3  0 0 0 0 .3  0 0 0 1.6 -.3'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.gt__torch img { filter: brightness(1.9) contrast(1.05); }
+
+/* v3 homepage GT, darker: the room is a dim warehouse; the lamps are the light, not the frame */
+.gt__stage--photo .gt__dark img { filter: brightness(.55); }
+.gt__stage--photo .gt__lit img { filter: brightness(.68) contrast(1.08); }
