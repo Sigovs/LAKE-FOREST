@@ -50,7 +50,9 @@
   /* ---------------- hero intro: the photograph fades in at full size, the copy slides in from the left
      as a staircase: eyebrow, title, its second line, lead, then each button, every step a beat later */
   const heroSteps = [q('.hero__eyebrow', copy), q('.hero__title', copy), q('.hero__lead', copy), ...qa('.hero__ctas > *', copy)];
-  gsap.timeline({ defaults: { ease: 'expo.out' } })
+  /* v3 runs its own staircase on the copy (data-own-intro); only the photograph fades in here */
+  if (copy && copy.hasAttribute('data-own-intro')) gsap.from(photo, { autoAlpha: 0, duration: 1.6, ease: 'power2.out' });
+  else gsap.timeline({ defaults: { ease: 'expo.out' } })
     .from(photo, { autoAlpha: 0, duration: 1.6, ease: 'power2.out' }, 0)
     /* slower and longer than before so it reads as a slide, not a fade: the eyebrow from the side,
        the title up from under a mask, the lead and the button rise after it */

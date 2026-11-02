@@ -29,3 +29,7 @@ video_sources/
 
 # Material the client sends through the ticket: local only; web copies live in assets/img/final
 from client/
+
+# client and working source folders (local only)
+______NOV 2026 UPDATES client/
+_______GT TRASFORM/
