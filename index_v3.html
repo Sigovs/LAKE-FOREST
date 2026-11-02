@@ -316,6 +316,7 @@ The car stays under its cover: no photograph of the GT has been released. -->
        bottom already graded to the page ground (#0B0C0D). The same frame twice: dimmed below, lit above, two lamps strike on the scroll and their light opens down onto the cars -->
   <div class="gt__stage gt__stage--photo" data-gt-stage>
     <div class="gt__dark" aria-hidden="true"><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""><img class="gt__mark gt__mark--cs" src="assets/img/final/gt-mark.png?v=2" width="699" height="285" alt=""></div>
+    <div class="gt__torch" aria-hidden="true" data-gt-torch><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""></div>
     <div class="gt__lit"><span class="gt__beam gt__beam--l"></span><span class="gt__beam gt__beam--r"></span><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt="The GT mark under a single spotlight, between the No. 48 race Corvette and the black 441 street Corvette, in black and white."><img class="gt__mark gt__mark--cs" src="assets/img/final/gt-mark.png?v=2" width="699" height="285" alt="The GT mark."></div>
   </div>
   <canvas class="gt__dust" aria-hidden="true" data-gt-dust></canvas>
@@ -443,6 +444,19 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="zoom.js?v=v2a"></script>
 <script src="micro.js?v=final1"></script>
 <script src="motion.js?v=v3a"></script>
+<script>
+  /* v3 GT: a hand torch. With a mouse, the pointer carries a soft pool of light over the dim warehouse, so the
+     visitor can look around the cars; touch screens keep the lamps alone */
+  (() => {
+    const gt = document.querySelector('[data-gt]'), torch = document.querySelector('[data-gt-torch]');
+    if (!gt || !torch || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let raf = 0, x = 0, y = 0;
+    gt.addEventListener('pointermove', e => { const r = torch.getBoundingClientRect(); x = e.clientX - r.left; y = e.clientY - r.top;
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; torch.style.setProperty('--tx', x + 'px'); torch.style.setProperty('--ty', y + 'px'); }); });
+    gt.addEventListener('pointerenter', () => torch.classList.add('is-on'));
+    gt.addEventListener('pointerleave', () => torch.classList.remove('is-on'));
+  })();
+</script>
 <script>
   /* v3 GT: a little dust drifting through the lamp light. Brighter in the two beams and over the cars,
      fainter in the dark; only runs while the section is on screen; off under reduced motion */
