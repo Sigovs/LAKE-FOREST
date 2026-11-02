@@ -1486,3 +1486,27 @@ html { overflow-x: clip; }
 /* v3 homepage GT, darker: the room is a dim warehouse; the lamps are the light, not the frame */
 .gt__stage--photo .gt__dark img { filter: brightness(.55); }
 .gt__stage--photo .gt__lit img { filter: brightness(.68) contrast(1.08); }
+
+/* v3 homepage GT, aiming: while the pointer steers the lamps, the photograph is lit only inside the two pools
+   where the beams land (positions and sizes set by the script), each as bright as its distance allows */
+.gt__stage--photo.is-aiming .gt__lit {
+  -webkit-mask-image:
+    radial-gradient(var(--p1w) var(--p1h) at var(--p1x) var(--p1y), rgba(0,0,0,var(--p1i)) 0%, rgba(0,0,0,calc(var(--p1i) * .55)) 45%, transparent 100%),
+    radial-gradient(var(--p2w) var(--p2h) at var(--p2x) var(--p2y), rgba(0,0,0,var(--p2i)) 0%, rgba(0,0,0,calc(var(--p2i) * .55)) 45%, transparent 100%);
+  -webkit-mask-composite: source-over;
+          mask-image:
+    radial-gradient(var(--p1w) var(--p1h) at var(--p1x) var(--p1y), rgba(0,0,0,var(--p1i)) 0%, rgba(0,0,0,calc(var(--p1i) * .55)) 45%, transparent 100%),
+    radial-gradient(var(--p2w) var(--p2h) at var(--p2x) var(--p2y), rgba(0,0,0,var(--p2i)) 0%, rgba(0,0,0,calc(var(--p2i) * .55)) 45%, transparent 100%);
+          mask-composite: add; }
+/* the lamp heads and their beams stay visible through the pools: they live outside the mask's reach */
+.gt__stage--photo.is-aiming .gt__beam { will-change: transform; }
+
+/* the rig (lamp heads and beams) sits above the lit frame and outside its mask, so a beam stays visible along its
+   whole length while the frame is lit only where it lands. It strikes on the scroll with the same reveal */
+.gt__stage--photo .gt__rig { position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  -webkit-mask-image:
+    radial-gradient(ellipse 120% 150% at 17.8% 15.6%, #000 var(--la), transparent calc(var(--la) + 10%)),
+    radial-gradient(ellipse 120% 150% at 81.6% 15.6%, #000 var(--lb), transparent calc(var(--lb) + 10%));
+          mask-image:
+    radial-gradient(ellipse 120% 150% at 17.8% 15.6%, #000 var(--la), transparent calc(var(--la) + 10%)),
+    radial-gradient(ellipse 120% 150% at 81.6% 15.6%, #000 var(--lb), transparent calc(var(--lb) + 10%)); }

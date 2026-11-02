@@ -317,7 +317,8 @@ The car stays under its cover: no photograph of the GT has been released. -->
   <div class="gt__stage gt__stage--photo" data-gt-stage>
     <div class="gt__dark" aria-hidden="true"><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""><img class="gt__mark gt__mark--cs" src="assets/img/final/gt-mark.png?v=2" width="699" height="285" alt=""></div>
     <div class="gt__torch" aria-hidden="true" data-gt-torch><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""></div>
-    <div class="gt__lit"><span class="gt__beam gt__beam--l"></span><span class="gt__beam gt__beam--r"></span><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt="The GT mark under a single spotlight, between the No. 48 race Corvette and the black 441 street Corvette, in black and white."><img class="gt__mark gt__mark--cs" src="assets/img/final/gt-mark.png?v=2" width="699" height="285" alt="The GT mark."></div>
+    <div class="gt__lit"><img src="assets/img/final/gt-coming-soon-2.jpg" srcset="assets/img/final/gt-coming-soon-2-1280.jpg 1280w, assets/img/final/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt="The No. 48 race Corvette and the black 441 street Corvette side by side in a dark warehouse, in black and white."><img class="gt__mark gt__mark--cs" src="assets/img/final/gt-mark.png?v=2" width="699" height="285" alt="The GT mark."></div>
+    <div class="gt__rig" aria-hidden="true"><span class="gt__beam gt__beam--l"></span><span class="gt__beam gt__beam--r"></span><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span></div>
   </div>
   <canvas class="gt__dust" aria-hidden="true" data-gt-dust></canvas>
   <div class="gt__top">
@@ -456,26 +457,44 @@ The car stays under its cover: no photograph of the GT has been released. -->
     gt.addEventListener('pointerenter', () => torch.classList.add('is-on'));
     gt.addEventListener('pointerleave', () => torch.classList.remove('is-on'));
 
-    /* the two side lamps follow the torch: each beam turns on its lamp to aim at the pointer, eased so it swings
-       like a heavy stage light; when the pointer leaves, both settle back on the cars */
-    const beams = [...gt.querySelectorAll('.gt__lit .gt__beam')].map(el => {
-      const lamp = gt.querySelector('.gt__lit .gt__lamp--' + (el.classList.contains('gt__beam--l') ? 'l' : 'r'));
-      const home = parseFloat(getComputedStyle(el).transform === 'none' ? 0 : 0) || (el.classList.contains('gt__beam--l') ? -59 : 57);
-      return { el, lamp, home, cur: home, want: home };
-    });
-    let aim = null, swing = 0;
-    gt.addEventListener('pointermove', e => { aim = [e.clientX, e.clientY]; if (!swing) swing = requestAnimationFrame(turn); });
-    gt.addEventListener('pointerleave', () => { aim = null; if (!swing) swing = requestAnimationFrame(turn); });
-    function turn() {
-      swing = 0; let moving = false;
-      for (const b of beams) {
-        if (aim) { const r = b.lamp.getBoundingClientRect(), dx = aim[0] - (r.left + r.width / 2), dy = Math.max(aim[1] - (r.top + r.height / 2), 1);
-          b.want = Math.max(-80, Math.min(80, Math.atan2(-dx, dy) * 180 / Math.PI)); } else b.want = b.home;
-        b.cur += (b.want - b.cur) * .08;
-        b.el.style.transform = `rotate(${b.cur.toFixed(2)}deg)`;
-        if (Math.abs(b.want - b.cur) > .05) moving = true;
+    /* the two side lamps follow the torch, with real light geometry:
+       · each lamp is a heavy head on a spring: it swings toward the pointer, overshoots a little and settles;
+       · its beam is a cone of fixed angle, so it widens with the distance it travels and stops where it lands;
+       · where it lands it throws an elliptical pool (flattened by the floor's perspective), larger and softer the
+         farther it reaches, and the photograph is lit only inside those pools;
+       · the light falls off with distance, so a near pool is bright and a far one dim.
+       When the pointer leaves, both heads swing back onto their car. */
+    const stage = gt.querySelector('[data-gt-stage]');
+    const HALF = 13 * Math.PI / 180;                 /* half-angle of the cone */
+    const lamps = [
+      { el: gt.querySelector('.gt__rig .gt__beam--l'), lx: .178, ly: .156, hx: .35, hy: .44, n: 1 },   /* aims home at the No. 48 */
+      { el: gt.querySelector('.gt__rig .gt__beam--r'), lx: .816, ly: .156, hx: .66, hy: .43, n: 2 },   /* and at the 441 */
+    ].map(l => Object.assign(l, { x: l.hx, y: l.hy, vx: 0, vy: 0 }));
+    let target = null, run = 0;
+    const kick = () => { if (!run) run = requestAnimationFrame(step); };
+    gt.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect();
+      target = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; stage.classList.add('is-aiming'); kick(); });
+    gt.addEventListener('pointerleave', () => { target = null; kick(); });
+    function step() {
+      run = 0; const r = stage.getBoundingClientRect(), W = r.width, H = r.height; let moving = false;
+      for (const l of lamps) {
+        const tx = target ? target[0] : l.hx, ty = target ? Math.max(target[1], l.ly + .08) : l.hy;
+        /* spring: stiffness pulls toward the aim, damping bleeds the swing off */
+        l.vx = (l.vx + (tx - l.x) * .045) * .84; l.vy = (l.vy + (ty - l.y) * .045) * .84;
+        l.x += l.vx; l.y += l.vy;
+        const dx = (l.x - l.lx) * W, dy = (l.y - l.ly) * H, d = Math.hypot(dx, dy), ang = Math.atan2(-dx, dy) * 180 / Math.PI;
+        const spread = 2 * d * Math.tan(HALF), fall = Math.min(1.25, Math.max(.45, Math.pow(H * .38 / d, 2)));
+        Object.assign(l.el.style, { left: (l.lx * W - spread / 2) + 'px', width: spread + 'px', height: d + 'px',
+          transform: `rotate(${ang.toFixed(2)}deg)`, opacity: fall.toFixed(3) });
+        /* the pool: as wide as the cone where it lands, flattened by the floor, and softer the farther it is */
+        const pw = spread * 1.15 + 80, ph = pw * (.42 + .25 * Math.min(1, (l.y - l.ly) * 1.6));
+        stage.style.setProperty(`--p${l.n}x`, l.x * W + 'px'); stage.style.setProperty(`--p${l.n}y`, l.y * H + 'px');
+        stage.style.setProperty(`--p${l.n}w`, pw + 'px'); stage.style.setProperty(`--p${l.n}h`, ph + 'px');
+        stage.style.setProperty(`--p${l.n}i`, Math.min(1, fall).toFixed(3));
+        if (Math.abs(tx - l.x) + Math.abs(ty - l.y) + Math.abs(l.vx) + Math.abs(l.vy) > .0004) moving = true;
       }
-      if (moving) swing = requestAnimationFrame(turn);
+      if (moving) run = requestAnimationFrame(step);
+      else if (!target) { stage.classList.remove('is-aiming'); lamps.forEach(l => l.el.removeAttribute('style')); }
     }
   })();
 </script>
