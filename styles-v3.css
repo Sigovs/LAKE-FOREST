@@ -1665,3 +1665,7 @@ html { overflow-x: clip; }
 }
 @media (prefers-reduced-motion: reduce) { .pmenu, .nav__menu-i i { transition: none; } }
 .pmenu[hidden] { display: none !important; }   /* closed means gone: it must never sit over the page and catch taps */
+
+/* v3 mobile: the #76 chapter fills the screen edge to edge. The chapters' phone padding (room for the rail) was
+   insetting the stage, so its light pools showed as a paler box inside the blue */
+@media (max-width: 999px) { .ch.peak { padding: 0; } }
