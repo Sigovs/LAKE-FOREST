@@ -175,10 +175,13 @@
     };
     Object.entries(parts).forEach(([sel, list]) => {
       const el = q(sel); if (!el) return;
+      /* data-hold (v3): a longer stop, and the parts only start to leave in its last third, so every card has
+         finished arriving and there is time to choose one */
+      const hold = el.hasAttribute('data-hold');
       const st = ScrollTrigger.create({ trigger: el, start: () => (el.offsetHeight > innerHeight - 80 ? 'bottom bottom' : 'top 80px'),
-        end: '+=55%', pin: true, anticipatePin: 1, invalidateOnRefresh: true });
+        end: hold ? '+=140%' : '+=55%', pin: true, anticipatePin: 1, invalidateOnRefresh: true });
       const items = list.flatMap((s) => qa(s, el));
-      gsap.timeline({ scrollTrigger: { trigger: el, start: () => st.start + innerHeight * 0.2, end: () => st.end, scrub: 0.6, invalidateOnRefresh: true } })
+      gsap.timeline({ scrollTrigger: { trigger: el, start: () => st.start + (hold ? (st.end - st.start) * 0.68 : innerHeight * 0.2), end: () => st.end, scrub: 0.6, invalidateOnRefresh: true } })
         .fromTo(items, { y: 0, autoAlpha: 1 }, { y: -90, autoAlpha: 0, stagger: 0.08, ease: 'power2.in', immediateRender: false });   /* always leave from the visible state */
     });   /* a tall section rests on its foot, a short one under the header */
 
@@ -296,7 +299,8 @@
     if (items && items.length) tl.from(items, { y: 80, autoAlpha: 0, stagger: 0.1, duration: 1.3 }, 0.55);
     ScrollTrigger.create({ trigger: head, start, once: true, onEnter: () => tl.play(), refreshPriority: -1 });
   };
-  slideHead(q('.cards__head'), qa('.card'));
+  /* a held cards row arrives as soon as it starts to come up, so the cards are all in place by the time it stops */
+  slideHead(q('.cards__head'), qa('.card'), q('.cards[data-hold]') ? 'top 95%' : 'top 78%');
   slideHead(q('.dyn__head'), qa('.gen'));
   slideHead(q('.lm__text'), [], 'top 70%');
   slideHead(q('.era__head'), qa('.era__pic, .era__more'));
