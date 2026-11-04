@@ -1718,3 +1718,14 @@ html { overflow-x: clip; }
 @media (max-width: 699px) {
   #gt[data-static-phone] .gt__phone { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%); mask-image: linear-gradient(180deg, transparent 0, #000 22%); }
 }
+
+/* v3 phone hero: the text link sits beside the button again, on one line in both slides (the film link drops
+   "full" on a phone so the two slides keep the same height); the slide tabs show focus as an underline, not a box */
+@media (max-width: 599px) {
+  .hero__slide .hero__ctas { flex-direction: row; flex-wrap: nowrap; align-items: center; gap: var(--s-4); }
+  .hero__slide .hero__ctas .pill { flex: none; padding-inline: var(--s-5); }
+  .hero__slide .hero__ctas .hero__film { flex: none; white-space: nowrap; }
+  .hero__opt { display: none; }
+}
+.hero__dot:focus-visible { outline: none; }
+.hero__dot:focus-visible .hero__dot-t { text-decoration: underline; text-underline-offset: 4px; }
