@@ -1615,3 +1615,7 @@ html { overflow-x: clip; }
   .rp-listen { grid-template-columns: 1fr; row-gap: var(--s-8); padding: var(--s-8) var(--gutter) var(--s-9); }
   .rp-where { position: static; }
 }
+
+/* v3 Family page, short like Contact and RPM: the hero, then the homepage's four-column generations */
+.fp-short { padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); }
+@media (max-width: 999px) { .fp-short { padding: var(--s-8) var(--gutter) var(--s-9); } }
