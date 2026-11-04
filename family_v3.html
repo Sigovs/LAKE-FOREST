@@ -14,7 +14,7 @@
 <script>document.documentElement.classList.add('js');</script>
 </head>
 <body class="cpage fpage">
-<a class="skip" href="#generations">Skip to the generations</a>
+<a class="skip" href="#family">Skip to the generations</a>
 <header class="nav" data-nav>
   <a class="brand brand--crest" href="index_v3.html" aria-label="Lake Forest Motor Sports, by Mancuso — home"><img class="brand__crest" src="assets/img/final/crest-mark.png" width="198" height="240" alt=""><span class="brand__words"><span class="brand__name">Lake Forest</span><span class="brand__sub">Motor Sports</span><span class="brand__by">By Mancuso · An automotive family since&nbsp;1923</span></span></a>
   <nav class="nav__links" aria-label="Primary">
@@ -29,10 +29,10 @@
 <main id="top">
 
 <!-- ================================================================ HERO · short: the words, one small photograph -->
-<section class="cp-hero" aria-labelledby="h-family">
+<section class="cp-hero" aria-labelledby="h-family-page">
   <div class="cp-hero__words">
-    <p class="eyebrow" data-cp-step>The family</p>
-    <h1 id="h-family" class="cp-hero__title" data-cp-step>Four generations.<span class="hero__sub">Of the Mancuso automobile business, since&nbsp;1923.</span></h1>
+    <p class="eyebrow" data-cp-step>Since 1923</p>
+    <h1 id="h-family-page" class="cp-hero__title" data-cp-step>The Mancuso family.<span class="hero__sub">Dealers and racers, from Batavia to Lake&nbsp;Bluff.</span></h1>
     <p class="pills" data-cp-step><a class="pill pill--fill" href="history_v3.html">Read the full history</a> <a class="pill pill--line" href="gt_v3.html">Next, the GT</a></p>
   </div>
   <figure class="cp-hero__pic" data-cp-pic>
@@ -41,19 +41,28 @@
   </figure>
 </section>
 
-<!-- ================================================================ THE GENERATIONS · the homepage block as it is: four columns,
-     one per generation. The longer story lives on the history page -->
-<section class="fp-short" id="generations" aria-labelledby="h-gens" tabindex="-1" data-ip-reveal>
-  <h2 id="h-gens" class="visually-hidden">The four generations</h2>
-  <div data-ip-step>
-  <ol class="gens">
+<!-- ================================================================ THE GENERATIONS · the homepage's "Four generations" block,
+     the same markup and styles, so the two never drift apart -->
+  <section class="dyn" id="family" aria-label="The family" tabindex="-1">
+    <div class="dyn__stage dyn__stage--static">
+            <div class="dyn__panels">
+
+        <article class="dyn__panel dyn__panel--gens" aria-labelledby="h-family">
+          <div class="dyn__head">
+            <p class="eyebrow">The family</p>
+            <h2 id="h-family" class="heading">Four generations<span class="tone">of the Mancuso automobile business</span></h2>
+          </div>
+          <ol class="gens">
             <li class="gen"><p class="gen__no">I</p><h3 class="gen__name">Benjamin</h3><p class="gen__role">Pioneer dealer&nbsp;· Batavia,&nbsp;NY</p><p class="gen__text">Founds the family automobile business in 1923. Rick would later name his grandfather as the man who inspired&nbsp;him.</p></li>
             <li class="gen"><p class="gen__no">II</p><h3 class="gen__name">Jim</h3><p class="gen__role">Mancuso Chevrolet&nbsp;·&nbsp;Skokie</p><p class="gen__text">Opens Mancuso Chevrolet in 1953. A road rallyer, and a columnist for Ward's: “Mancuso on&nbsp;service”.</p></li>
             <li class="gen"><p class="gen__no">III</p><h3 class="gen__name">Rick &amp; Rob</h3><p class="gen__role">The dealership goes racing</p><p class="gen__text">Sell cars with their father. Rick races from 1972 and in 1981 founds Lake Forest Sports Cars; Rob is 1986 SCCA Midwest Council&nbsp;champion.</p></li>
             <li class="gen"><p class="gen__no">IV</p><h3 class="gen__name">Adam</h3><p class="gen__role">Father and son on track</p><p class="gen__text">Rick's son. 25 years at Lake Forest Sports Cars / Ferrari of Lake Forest as COO&nbsp;/&nbsp;VP. Go-karts at 12, Skip Barber Racing School at Road America; races Lolas alongside his&nbsp;father.</p></li>
           </ol>
-  </div>
-</section>
+        </article>
+
+              </div>
+    </div>
+  </section>
 
 </main>
 
