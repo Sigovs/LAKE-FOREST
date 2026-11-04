@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Developer handoff · Lake Forest Motor Sports</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&display=swap">
+<link rel="stylesheet" href="design-system/tokens.css">
+<style>
+  body { margin: 0; background: var(--ground); color: var(--ink); font-family: var(--f); font-size: var(--t-body); line-height: var(--lh-body); }
+  main { max-width: 960px; margin: 0 auto; padding: var(--s-9) var(--gutter) var(--s-10); display: grid; gap: var(--s-8); }
+  .k { display: flex; align-items: center; gap: var(--s-3); margin: 0 0 var(--s-4); font-size: var(--t-label); font-weight: var(--w-label);
+    letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--mute); }
+  .k::before { content: ""; width: 36px; height: 8px; background: linear-gradient(90deg, var(--gt-red) 0 33.3%, var(--gt-white) 33.3% 66.6%, var(--gt-blue) 66.6%); }
+  h1 { margin: 0; font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth); font-size: var(--t-d2); line-height: var(--lh-d2); letter-spacing: var(--ls-d2); }
+  h1 span { display: block; color: var(--tone); }
+  ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-4); }
+  li a { display: grid; gap: var(--s-1); padding: var(--s-5); border: 1px solid var(--rule); border-radius: var(--r-media); text-decoration: none; color: var(--ink);
+    transition: border-color var(--d-fast); }
+  li a:hover, li a:focus-visible { border-color: var(--ink); }
+  li a:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+  li b { font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth); font-size: var(--t-h4); line-height: var(--lh-h4); }
+  li span { color: var(--ink-2); font-size: var(--t-body-sm); line-height: var(--lh-body-sm); }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <p class="k">Developer handoff · v3</p>
+    <h1>Lake Forest Motor Sports<span>by Mancuso</span></h1>
+  </header>
+  <ul>
+    <li><a href="site/index.html"><b>The website</b><span>Six pages, ready to serve: home, family, history, the GT, RPM Club, contact.</span></a></li>
+    <li><a href="design-system/"><b>Design system</b><span>Colour, type, space, brand and every component, drawn by the site's own stylesheet. Tokens in CSS and JSON.</span></a></li>
+    <li><a href="https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff"><b>Source and documentation</b><span>The files on GitHub, with README, development notes, the asset ledger and the to-do list before launch.</span></a></li>
+  </ul>
+</main>
+</body>
+</html>

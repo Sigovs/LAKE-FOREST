@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lake Forest Motor Sports — by Mancuso, an automotive family since 1923</title>
+<meta name="description" content="The Mancuso family: car dealers since 1923, racers since 1972. Next, the GT — a tribute to the Chevrolet Corvette.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%230b0c0d%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2218%22 fill=%22%23edebe6%22 text-anchor=%22middle%22%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Cinzel:wght@400;500&display=swap">
+<!-- the big chapter years (1923, 76) and the GT title: Besley Bold Italic, subset to the characters they use -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Besley:ital,wght@1,700&text=12367TheG.&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+<link rel="preload" as="image" href="assets/img/hero-v3-poster.jpg?v=10">
+<link rel="stylesheet" href="css/styles.css?v=v3m">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+<a class="skip" href="#history">Skip to the history</a>
+
+<header class="nav" data-nav>
+  <a class="brand brand--crest" href="#top" aria-label="Lake Forest Motor Sports, by Mancuso — back to the top"><img class="brand__crest" src="assets/brand/crest-mark.png" width="198" height="240" alt=""><span class="brand__words"><span class="brand__name">Lake Forest</span><span class="brand__sub">Motor Sports</span><span class="brand__by">By Mancuso · An automotive family since&nbsp;1923</span></span></a>
+  <p class="nav__where" aria-hidden="true" data-where><span data-where-a></span></p>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="family.html">Family</a>
+    <a href="history.html">History</a>
+    <a href="gt.html">The GT</a>
+    <a href="rpm.html">RPM Club</a>
+    <a href="contact.html">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+<!-- the chapter plate: which chapter of the story the reader is in (micro.js) -->
+<p class="plate" aria-hidden="true" data-plate><span class="plate__win"><span class="plate__n" data-plate-n></span></span><span class="plate__t"><span class="plate__k">Chapter</span><span data-plate-t></span></span></p>
+
+<!-- ================================================================ HERO · the client-approved concept
+Le Mans, June 1976, in colour, dimmed; the copy on the left, the car clear on the right;
+the photograph's caption runs up the right edge. -->
+<section class="hero" data-hero aria-labelledby="hero-title">
+  <div class="hero__photo" data-hero-photo>
+    <video class="hero__video" autoplay muted loop playsinline preload="auto" poster="assets/img/hero-v3-poster.jpg?v=10"
+           aria-label="Concept film: the No. 48 race Corvette turns into a black street Corvette. Then film from Road America, June Sprints 1977: the Mancuso Chevrolet transporter, the #11 Corvette in the paddock and on track." data-hero-video>
+      <source src="assets/video/hero-v3-mobile.mp4?v=10" type="video/mp4" media="(max-width: 699px)">
+      <source src="assets/video/hero-v3.mp4?v=10" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero__grain" aria-hidden="true"></div>
+  <div class="hero__shade" aria-hidden="true"></div>
+  <div class="hero__copy hero__slides" data-hero-copy data-own-intro>
+    <!-- v3: two slides over one video. Slide 1 runs with the concept clip (0–10 s), slide 2 with the 1977 film -->
+    <div class="hero__slide" data-hero-slide="gt">
+      <p class="hero__eyebrow">Coming soon · The GT</p>
+      <h1 id="hero-title" class="hero__title"><span class="hero__l1">We build the GT.</span><span class="hero__sub">Classic Corvettes, engineered for today.</span></h1>
+      <p class="hero__lead">C2 and C3 Corvettes, 1963–1982, inspired by the race cars of the&nbsp;’70s. By&nbsp;Mancuso.</p>
+      <p class="hero__ctas"><a class="pill pill--fill" href="gt.html">Discover the GT</a> <a class="hero__film" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h12M12.5 6.5 18 12l-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2"/></svg>Ask about the GT</a></p>
+    </div>
+    <div class="hero__slide" data-hero-slide="film" aria-hidden="true" inert>
+      <p class="hero__eyebrow">An automotive family since 1923</p>
+      <p class="hero__title"><span class="hero__l1">The Mancuso family.</span><span class="hero__sub">Four generations, one automobile business.</span></p>
+      <p class="hero__lead">From a Chevrolet dealership in Skokie in 1953 to Le&nbsp;Mans in 1976. Next, the&nbsp;GT.</p>
+      <p class="hero__ctas"><a class="pill pill--fill" href="#history">Explore our history</a> <a class="hero__film" href="https://www.youtube.com/watch?v=x57KnA5achU" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13L18.5 12z"/></svg>Watch the <span class="hero__opt">full </span>1977 film<span class="visually-hidden"> (opens YouTube)</span></a></p>
+    </div>
+  </div>
+  <p class="hero__rail" aria-hidden="true" data-hero-rail>From the No. 48 to the street · Concept film</p>
+  <div class="hero__ctrl" role="group" aria-label="Hero film" data-hero-ctrl>
+    <button class="hero__toggle" type="button" aria-label="Pause the film" data-hero-toggle>
+      <svg class="i-pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5h3v14H8zM13 5h3v14h-3z"/></svg>
+      <svg class="i-play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13L18.5 12z"/></svg>
+    </button>
+    <button class="hero__dot is-on" type="button" aria-current="true" data-hero-go="gt"><span class="hero__dot-t">The GT</span><span class="hero__dot-bar"><span data-hero-bar="gt"></span></span></button>
+    <button class="hero__dot" type="button" data-hero-go="film"><span class="hero__dot-t">Since 1923</span><span class="hero__dot-bar"><span data-hero-bar="film"></span></span></button>
+  </div>
+  <script>
+    /* v3: the concept clip plays first (0–10 s), then the 1977 film. The copy, the rail and the controller
+       follow whichever is on screen; the controller jumps to a slide and pauses the film */
+    (() => {
+      const v = document.querySelector('[data-hero-video]'), r = document.querySelector('[data-hero-rail]');
+      const slides = [...document.querySelectorAll('[data-hero-slide]')];
+      const dots = [...document.querySelectorAll('[data-hero-go]')], toggle = document.querySelector('[data-hero-toggle]');
+      const bars = { gt: document.querySelector('[data-hero-bar="gt"]'), film: document.querySelector('[data-hero-bar="film"]') };
+      const CLIP = 10, rails = { gt: r.textContent, film: 'Road America · June Sprints · 1977 · Film courtesy of Buzz Fyhrie' };
+      /* every line and every button is its own step of the staircase; the delay comes from its place */
+      slides.forEach(sl => sl.querySelectorAll('.hero__eyebrow, .hero__title > span, .hero__lead, .hero__ctas > *')
+        .forEach((el, i) => { el.classList.add('hero__step'); el.style.setProperty('--i', i); }));
+      let cur = 'gt';
+      requestAnimationFrame(() => requestAnimationFrame(() => slides[0].classList.add('is-on')));
+      const show = now => {
+        if (now === cur) return;
+        cur = now; r.textContent = rails[now];
+        slides.forEach(el => { const on = el.dataset.heroSlide === now;
+          if (!on && el.classList.contains('is-on')) {   /* the leaving slide drives off to the right, then resets out of sight */
+            el.classList.add('is-out'); clearTimeout(el._out); el._out = setTimeout(() => el.classList.remove('is-out'), 1300); }
+          if (on) { clearTimeout(el._out); el.classList.remove('is-out'); }
+          el.classList.toggle('is-on', on); el.inert = !on; el.setAttribute('aria-hidden', String(!on)); });
+        dots.forEach(d => { const on = d.dataset.heroGo === now; d.classList.toggle('is-on', on);
+          on ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current'); });
+      };
+      const tick = () => {
+        const t = v.currentTime, end = v.duration || 40;
+        show(t < CLIP ? 'gt' : 'film');
+        bars.gt.style.transform = `scaleX(${t < CLIP ? t / CLIP : 1})`;
+        bars.film.style.transform = `scaleX(${t < CLIP ? 0 : (t - CLIP) / (end - CLIP)})`;
+        if (!v.paused) requestAnimationFrame(tick);
+      };
+      v.addEventListener('play', () => { requestAnimationFrame(tick); toggle.classList.remove('is-paused'); toggle.setAttribute('aria-label', 'Pause the film'); });
+      v.addEventListener('pause', () => { tick(); toggle.classList.add('is-paused'); toggle.setAttribute('aria-label', 'Play the film'); });
+      v.addEventListener('seeked', tick);
+      toggle.addEventListener('click', () => v.paused ? v.play() : v.pause());
+      dots.forEach(d => d.addEventListener('click', () => {
+        v.currentTime = d.dataset.heroGo === 'gt' ? 0 : CLIP + 0.05; tick(); if (v.paused) v.play();
+      }));
+    })();
+  </script>
+</section>
+
+<!-- ================================================================ CHAPTER CARDS — each picture is the chapter it opens -->
+<section class="cards" aria-labelledby="h-cards" data-hold>
+  <div class="cards__head">
+    <div class="cards__title">
+      <p class="eyebrow">The family story</p>
+      <h2 id="h-cards" class="heading heading--md">From a Chevrolet dealership<span class="tone">to Le Mans, and next, the GT</span></h2>
+    </div>
+    <div class="cards__progress" aria-hidden="true"><span class="cards__count">Chapters</span><span class="cards__bar"><span data-cards-bar></span></span></div>
+  </div>
+  <div class="cards__viewport" data-cards-viewport>
+  <ul class="cards__track" data-cards-track>
+    <li><a class="card" href="history.html#y1953">
+      <span class="card__media"><img src="assets/img/skokie-sign.jpg" alt="" width="1672" height="940" loading="lazy" style="object-position: 40% 60%"></span>
+      <span class="card__meta"><span>1953 · Skokie</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">Mancuso Chevrolet</span>
+      <span class="card__text">Jim opens the family's Chevrolet dealership in Skokie.</span>
+    </a></li>
+    <li><a class="card" href="history.html#y76">
+      <span class="card__media"><img src="assets/img/mancuso-76-blue.jpg" alt="" width="2048" height="1536" loading="lazy" style="object-position: 50% 60%"></span>
+      <span class="card__meta"><span>1972 – 1976</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">The #76</span>
+      <span class="card__text">Rick takes the dealership racing; by 1976 Mancuso Chevrolet has its own Corvette.</span>
+    </a></li>
+    <li><a class="card" href="history.html#y1976">
+      <span class="card__media"><img src="assets/img/lemans-1976-nose.jpg" alt="" width="976" height="622" loading="lazy" style="object-position: 50% 50%"></span>
+      <span class="card__meta"><span>June 1976</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">Le Mans</span>
+      <span class="card__text">222 mph on the Mulsanne Straight in qualifying, the fastest entry on the course.</span>
+    </a></li>
+    <li><a class="card" href="history.html#lfsc">
+      <span class="card__media"><img src="assets/img/aston-009-007.jpg" alt="" width="2000" height="1500" loading="lazy" style="object-position: 30% 60%"></span>
+      <span class="card__meta"><span>Lake Forest</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">Rick's dealership</span>
+      <span class="card__text">Ferrari, Maserati and Aston Martin. The dealership has since been sold.</span>
+    </a></li>
+    <li><a class="card" href="history.html#lola">
+      <span class="card__media"><img src="assets/img/father-son-garage-1200.jpg" alt="" width="1200" height="750" loading="lazy" style="object-position: 46% 40%"></span>
+      <span class="card__meta"><span>2000s</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">Father and son</span>
+      <span class="card__text">Rick and Adam race Lola Sports Racers in Aston Martin racing green.</span>
+    </a></li>
+    <li><a class="card card--next" href="#gt">
+      <span class="card__media card__media--gt card__media--mark"><img src="assets/brand/gt-mark.png?v=2" alt="" width="699" height="285" loading="lazy"><span class="card__badge">Coming soon</span></span>
+      <span class="card__meta"><span>Next</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">The GT</span>
+      <span class="card__text">A tribute to the Chevrolet Corvette. Launching soon; photography to be announced.</span>
+    </a></li>
+  </ul>
+  </div>
+</section>
+
+<!-- ================================================================ HISTORY
+-->
+<div class="history" id="history" tabindex="-1" data-history>
+
+  <!-- THE FAMILY · one pinned screen, three panels ride in over each other:
+       the four generations → Mancuso Chevrolet, 1953 → Jim, in his own words. Every line sourced. -->
+  <section class="dyn" id="family" data-chapter="I" data-title="The family" data-where="Four generations · 1923–today" aria-label="The family" data-dyn>
+    <div class="dyn__stage dyn__stage--static">
+            <div class="dyn__panels">
+
+        <article class="dyn__panel dyn__panel--gens" aria-labelledby="h-family" data-dyn-panel>
+          <div class="dyn__head">
+            <p class="eyebrow">The family</p>
+            <h2 id="h-family" class="heading">Four generations<span class="tone">of the Mancuso automobile business</span></h2>
+          </div>
+          <ol class="gens">
+            <li class="gen"><p class="gen__no">I</p><h3 class="gen__name">Benjamin</h3><p class="gen__role">Pioneer dealer&nbsp;· Batavia,&nbsp;NY</p><p class="gen__text">Founds the family automobile business in 1923. Rick would later name his grandfather as the man who inspired&nbsp;him.</p></li>
+            <li class="gen"><p class="gen__no">II</p><h3 class="gen__name">Jim</h3><p class="gen__role">Mancuso Chevrolet&nbsp;·&nbsp;Skokie</p><p class="gen__text">Opens Mancuso Chevrolet in 1953. A road rallyer, and a columnist for Ward's: “Mancuso on&nbsp;service”.</p></li>
+            <li class="gen"><p class="gen__no">III</p><h3 class="gen__name">Rick &amp; Rob</h3><p class="gen__role">The dealership goes racing</p><p class="gen__text">Sell cars with their father. Rick races from 1972 and in 1981 founds Lake Forest Sports Cars; Rob is 1986 SCCA Midwest Council&nbsp;champion.</p></li>
+            <li class="gen"><p class="gen__no">IV</p><h3 class="gen__name">Adam</h3><p class="gen__role">Father and son on track</p><p class="gen__text">Rick's son. 25 years at Lake Forest Sports Cars / Ferrari of Lake Forest as COO&nbsp;/&nbsp;VP. Go-karts at 12, Skip Barber Racing School at Road America; races Lolas alongside his&nbsp;father.</p></li>
+          </ol>
+        </article>
+
+              </div>
+    </div>
+  </section>
+
+  <!-- 1953 close: the dealership's own roadside sign, full-bleed, the line in the empty sky -->
+  <figure class="bleed bleed--sky bleed--link" data-bleed>
+    <img src="assets/img/skokie-sign.jpg" width="1672" height="940" loading="lazy"
+         alt="Black and white: a roadside sign on a tree-lined street — “OK Used Cars, Mancuso Chevrolet, follow arrow 4 blocks”.">
+    <figcaption class="bleed__text">
+      <span class="bleed__eyebrow">Skokie, Illinois</span>
+      <span class="bleed__title">Mancuso Chevrolet,<br>four blocks on.</span>
+      <a class="pill bleed__go" href="history.html#y1953">Read the family history <span aria-hidden="true">→</span></a>
+    </figcaption>
+    <p class="caption bleed__cap">“OK Used Cars” — Mancuso Chevrolet. Date and place not recorded.</p>
+  </figure>
+
+  <!-- 03 · 1972–1976 · THE PEAK — the page turns the colour of the car -->
+  <section class="ch ch--76 peak" id="ch-76" data-chapter="II" data-title="The #76" data-where="1972–1976 · Racing" aria-labelledby="h-76" data-ch data-peak>
+    <div class="peak__stage" data-peak-static>
+      <p class="peak__num" aria-hidden="true" data-peak-num>76</p>
+      <div class="peak__head">
+        <p class="peak__eyebrow">1972 · 1976</p>
+        <h2 id="h-76" class="peak__title">Rick takes it racing.<span>The #76, Mancuso&nbsp;Chevrolet's own Corvette.</span></h2>
+      </div>
+      <div class="peak__car" data-peak-car>
+        <img src="assets/img/blue-76.webp" width="1377" height="730" loading="lazy"
+             alt="The pale-blue Mancuso Chevrolet #76 Corvette, three-quarter front: “Mancuso Chevrolet” on the bonnet, “Mancuso · Fyhrie · Greenwood” across the windscreen.">
+      </div>
+      <div class="peak__body" data-peak-body>
+        <p>Rick Mancuso took the green flag in 1972, in a 1958 Corvette prepared to B-Production specs. By 1976 Mancuso Chevrolet had its own Corvette on track — the pale-blue #76, by the Revell kit's account the first “customer” car John Greenwood built.</p>
+        <figure class="peak__toy">
+          <img src="assets/img/hotwheels-76.png" width="265" height="306" loading="lazy" alt="Hot Wheels Premium “’76 Greenwood Corvette” in its card: the pale-blue #76.">
+          <figcaption>Hot Wheels, “’76 Greenwood Corvette”.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- OFF FOR NOW (Alex, 19 Oct): "Next · Le Mans, June 1976" full-bleed frame. Restore by removing this comment wrapper.
+  <figure class="bleed bleed--center" data-bleed data-bleed-pin>
+    <img src="assets/img/spirit-today-center.jpg?v=final1" width="1920" height="1080" loading="lazy"
+         alt="The white Spirit of Le Mans 76 Corvette, red, white and blue, on an empty circuit under a blue sky.">
+    <figcaption class="bleed__text" data-bleed-text>
+      <span class="bleed__eyebrow">Next</span>
+      <span class="bleed__title">Le Mans, June 1976.</span>
+    </figcaption>
+    <p class="bleed__cta" data-bleed-cta><a class="btn btn--fill" href="#ch-lemans">Enter Le Mans 1976 <span aria-hidden="true">↓</span></a></p>
+    <p class="caption bleed__cap">The Greenwood Corvette in its “Spirit of Le Mans 76” livery. Date and place not recorded.</p>
+    <span class="bleed__dark" aria-hidden="true" data-bleed-dark></span>
+  </figure>
+  -->
+
+  <!-- 04 · LE MANS 1976 · the mood-board composition
+Black dominates; bw1 (this car, this race) rises out of it; hairlines climb out of the smoke
+to the facts of the race; then a chapter numeral, two columns and a strip of the race's frames. -->
+  <section class="ch ch--lemans lm" id="ch-lemans" data-chapter="III" data-title="Le Mans" data-where="June 1976 · Le Mans" aria-labelledby="h-lemans" data-ch data-lm>
+    <div class="lm__scene" data-lm-scene>
+      <p class="lm__title" aria-hidden="true">Le Mans · 1976</p>
+      <figure class="lm__photo">
+        <video data-lm-video muted playsinline preload="auto" poster="assets/img/lemans-76-poster.jpg?v=2"
+               aria-label="Le Mans, June 1976, in black and white: the Spirit of Le Mans Corvette lays tyre smoke in front of the TOTAL hoardings; the camera slowly closes in.">
+          <source src="assets/video/lemans-76.mp4?v=2" type="video/mp4">
+        </video>
+      </figure>
+      <p class="lm__speed" aria-hidden="true" data-speed="222"><b data-speed-n>000</b><span>mph · Mulsanne</span></p>
+      <button class="lm__down" type="button" data-lm-down aria-label="Skip to the Le Mans chapter"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 4v15M5.5 12.5 12 19l6.5-6.5"/></svg></button>
+      <ul class="facts" aria-label="Le Mans 1976 in six facts">
+        <li class="fact" style="--x: 10%; --y: 18; --foot: 80" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>1976</b>America's bicentennial. The French government invites Mancuso and his team to race a Corvette at Le&nbsp;Mans.</p>
+        <li class="fact" style="--x: 24%; --y: 32; --foot: 78" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>12–13 June</b>The 24 Hours of Le&nbsp;Mans.</p>
+        <li class="fact" style="--x: 38%; --y: 14; --foot: 84" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>Greenwood</b>The wide-body Corvette, “Spirit of Le&nbsp;Mans&nbsp;76”.</p>
+        <li class="fact" style="--x: 52%; --y: 30; --foot: 84" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>Rick</b>Stays home to run the business. His teammates drive.</p>
+        <li class="fact" style="--x: 66%; --y: 17; --foot: 78" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>222 mph</b>On the Mulsanne Straight in qualifying, the fastest entry on the course.</p>
+        <li class="fact" style="--x: 80%; --y: 28; --foot: 80" data-fact><span class="fact__line" aria-hidden="true"></span><p><b>Hour 8</b>A fuel malfunction ends its race.</p>
+      </ul>
+    </div>
+
+    <div class="lm__spacer" aria-hidden="true"></div>
+    <div class="lm__text" data-lm-text>
+      <p class="eyebrow lm__eyebrow">June 1976</p>
+      <div class="lm__grid">
+        <div class="lm__col">
+          <h2 id="h-lemans" class="heading">Le Mans<span class="figline"><span class="figline__num"><span data-count="222">222</span>&nbsp;mph</span> on the Mulsanne</span></h2>
+        </div>
+        <div class="lm__col">
+          <p class="body">For America's bicentennial the French government invited Mancuso and his team to race a Corvette at Le Mans. Rick stayed home to run the business and turned the Greenwood wide-body Corvette over to his teammates.</p>
+          <p class="body">It was the fastest entry on the course; a fuel malfunction ended its race in the eighth hour.</p>
+          <p class="body">In 2026 the Greenwood Corvettes were inducted into the IMSA Hall of&nbsp;Fame.</p>
+          <p class="caption">Source: Fra&nbsp;Noi, February 2005; IMSA, March 2026 (222&nbsp;mph, qualifying).</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- THE LAKE FOREST YEARS · one screen: the dealership and father and son, side by side, no pins -->
+  <section class="era" id="ch-lfsc" data-chapter="IV" data-title="Lake Forest" data-where="Lake Forest, IL · SCCA" aria-labelledby="h-era" data-ch>
+    <div class="era__head">
+      <p class="eyebrow">The Lake Forest years</p>
+      <h2 id="h-era" class="heading">Dealers and racers<span class="tone">Lake Forest Sports Cars, and father and son</span></h2>
+    </div>
+    <figure class="era__pic" data-frame>
+      <img src="assets/img/lfsc-showroom.jpg?v=final1" width="1920" height="1080" loading="lazy" style="object-position: 12% 50%" alt="Aston Martin #009 lettered “Lake Forest Sportscars” in a white showroom, with the #007 prototype behind it.">
+      <figcaption><span class="era__t">Lake Forest Sports Cars</span><span class="caption">Rick's dealership for Ferrari, Maserati and Aston Martin. Since sold.</span></figcaption>
+    </figure>
+    <figure class="era__pic" id="ch-lola" data-frame>
+      <img src="assets/img/father-son-garage.jpg" width="2400" height="1500" loading="lazy" style="object-position: 46% 45%" alt="Adam and Rick Mancuso, arm in arm, in race suits in a garage beside a white Ferrari race car, its door open.">
+      <figcaption><span class="era__t">Father and son</span><span class="caption">Adam and Rick. They raced Lola Sports Racers in SCCA, in Aston Martin racing green.</span></figcaption>
+    </figure>
+    <figure class="era__pic era__paper paper" data-frame>
+      <img src="assets/img/autoweek-2005.jpg" width="917" height="1900" loading="lazy" alt="AutoWeek, 14 March 2005, “Life with cars”: “The Little Car That Could” by Rich Ceppos, with a photograph of him in the Lola #5.">
+      <figcaption><span class="era__t">In AutoWeek</span><span class="caption">“The Little Car That Could”: Rich Ceppos on a day of hot laps in Rick's Lola Sports&nbsp;2000.</span></figcaption>
+    </figure>
+    <p class="caption era__src">Sources: Fra&nbsp;Noi, February 2005; AutoWeek, 14&nbsp;March&nbsp;2005.</p>
+    <p class="era__more"><a class="pill pill--line" href="history.html">Read the full history</a></p>
+  </section>
+</div>
+
+<!-- ================================================================ THE GT · next chapter
+The car stays under its cover: no photograph of the GT has been released. -->
+<section class="gt" id="gt" data-static-phone data-chapter="V" data-title="The GT" data-where="Next · The GT" tabindex="-1" aria-labelledby="h-gt" data-gt>
+  <!-- the stage lights up on scroll: a dimmed frame below, the lit frame above it, revealed from each lamp outward -->
+  <!-- v2: no generated car. Two lamps (drawn in CSS) strike on the scroll and light the GT mark from the family's own film -->
+  <!-- v3: the family's own frame, "GT coming soon": the GT mark between the No. 48 and the black 441, its top and
+       bottom already graded to the page ground (#0B0C0D). The same frame twice: dimmed below, lit above, two lamps strike on the scroll and their light opens down onto the cars -->
+  <div class="gt__stage gt__stage--photo" data-gt-stage>
+    <div class="gt__dark" aria-hidden="true"><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span><img src="assets/img/gt-coming-soon-2.jpg" srcset="assets/img/gt-coming-soon-2-1280.jpg 1280w, assets/img/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""><img class="gt__mark gt__mark--cs" src="assets/brand/gt-mark.png?v=2" width="699" height="285" alt=""></div>
+    <div class="gt__torch" aria-hidden="true" data-gt-torch><img src="assets/img/gt-coming-soon-2.jpg" srcset="assets/img/gt-coming-soon-2-1280.jpg 1280w, assets/img/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt=""></div>
+    <div class="gt__lit"><img src="assets/img/gt-coming-soon-2.jpg" srcset="assets/img/gt-coming-soon-2-1280.jpg 1280w, assets/img/gt-coming-soon-2.jpg 1920w" sizes="max(100vw, 178vh)" width="1920" height="1080" loading="lazy" alt="The No. 48 race Corvette and the black 441 street Corvette side by side in a dark warehouse, in black and white."><img class="gt__mark gt__mark--cs" src="assets/brand/gt-mark.png?v=2" width="699" height="285" alt="The GT mark."></div>
+    <div class="gt__rig" aria-hidden="true"><span class="gt__beam gt__beam--l"></span><span class="gt__beam gt__beam--r"></span><span class="gt__lamp gt__lamp--l"></span><span class="gt__lamp gt__lamp--r"></span></div>
+  </div>
+  <img class="gt__phone" src="assets/img/gt-coming-soon-phone-720.jpg?v=4" srcset="assets/img/gt-coming-soon-phone-720.jpg?v=4 720w, assets/img/gt-coming-soon-phone.jpg?v=4 1080w" sizes="100vw" width="1080" height="1920" loading="lazy" alt="The GT mark above the No. 48 race Corvette and the black 441 street Corvette, in black and white.">
+  <canvas class="gt__dust" aria-hidden="true" data-gt-dust></canvas>
+  <div class="gt__top">
+    <h2 id="h-gt" class="gt__title gt__title--mark" data-gt-title><span class="visually-hidden">The GT. </span><span class="gt__sub">A tribute to the Chevrolet Corvette</span></h2>
+    <p class="gt__lead">C2 and C3 Corvettes, 1963–1982, built for&nbsp;today.</p>
+  </div>
+  <div class="gt__bottom">
+    <p class="gt__status">Launching soon</p>
+    <p class="pills pills--center">
+      <a class="pill pill--fill" href="gt.html">Discover the GT</a>
+      <a class="pill pill--line" href="#contact">Ask about the GT</a>
+    </p>
+  </div>
+</section>
+
+<!-- ================================================================ RPM CLUB · the family on the radio -->
+<section class="rpm" id="rpm-club" aria-labelledby="h-rpm" tabindex="-1" data-reveal>
+  <div class="rpm__head">
+    <p class="eyebrow">On air · AM 560 The Answer, Chicago</p>
+    <h2 id="h-rpm" class="rpm__title">RPM Club.<span>A weekly radio show with Rick and Rob&nbsp;Mancuso.</span></h2>
+    <p class="body">The love of cars and the joy of driving: the business and the pleasure of all things automotive, with industry guests and callers.</p>
+    <p class="pills">
+      <a class="pill pill--fill" href="https://www.rpmclub.com/" target="_blank" rel="noopener">RPM Club website<span class="visually-hidden"> (opens in a new tab)</span></a>
+      <a class="pill pill--line" href="https://560theanswer.com/radioshow/rpm-club">The show on AM 560</a>
+      <a class="pill pill--line" href="https://omny.fm/shows/rpm-club">All episodes</a>
+    </p>
+  </div>
+  <figure class="rpm__photo">
+    <img src="assets/img/rpm-yellow-vette.jpg" width="1123" height="1400" loading="lazy"
+         alt="Rob and Rick Mancuso in white shirts, sitting on the nose of a yellow Corvette in a service bay, laughing.">
+  </figure>
+  <div class="rpm__eps">
+    <!-- the latest episode plays in the page, from the show's public feed (Omny); the wave is the progress bar -->
+    <div class="ep ep--latest player" data-player>
+      <p class="ep__meta"><span>Latest episode</span><time datetime="2026-10-12">12 October 2026</time></p>
+      <div class="player__main">
+        <button class="player__btn" type="button" data-player-btn aria-label="Play: Coach Tony and driving tips, and “Shift Point”">
+          <svg class="player__ico player__ico--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.2v13.6L19 12z"/></svg>
+          <svg class="player__ico player__ico--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg>
+        </button>
+        <div class="player__text">
+          <h3 class="ep__title">Coach Tony and driving tips, and “Shift Point”</h3>
+          <p class="player__status"><span data-player-time>Listen · 40 min</span><a class="player__ext" href="https://omny.fm/shows/rpm-club/coach-tony-and-driving-tips-and-shift-point">Episode page<span aria-hidden="true"> ↗</span></a></p>
+        </div>
+      </div>
+      <div class="player__wave" data-player-wave style="--p:0">
+        <span class="player__bars" aria-hidden="true"><i style="--h:0.48"></i><i style="--h:0.88"></i><i style="--h:0.86"></i><i style="--h:0.75"></i><i style="--h:0.78"></i><i style="--h:0.55"></i><i style="--h:0.41"></i><i style="--h:0.63"></i><i style="--h:0.52"></i><i style="--h:0.53"></i><i style="--h:0.55"></i><i style="--h:0.24"></i><i style="--h:0.51"></i><i style="--h:0.38"></i><i style="--h:0.29"></i><i style="--h:0.33"></i><i style="--h:0.5"></i><i style="--h:0.89"></i><i style="--h:0.96"></i><i style="--h:0.62"></i><i style="--h:0.4"></i><i style="--h:0.29"></i><i style="--h:0.52"></i><i style="--h:0.87"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.41"></i><i style="--h:0.31"></i><i style="--h:0.43"></i><i style="--h:0.46"></i><i style="--h:0.35"></i><i style="--h:0.57"></i><i style="--h:0.56"></i><i style="--h:0.71"></i><i style="--h:0.84"></i><i style="--h:0.52"></i><i style="--h:0.39"></i><i style="--h:0.55"></i><i style="--h:0.64"></i><i style="--h:0.89"></i><i style="--h:0.87"></i><i style="--h:0.46"></i><i style="--h:0.25"></i><i style="--h:0.23"></i><i style="--h:0.32"></i><i style="--h:0.44"></i><i style="--h:0.25"></i><i style="--h:0.64"></i><i style="--h:0.65"></i><i style="--h:0.51"></i><i style="--h:0.52"></i><i style="--h:0.36"></i><i style="--h:0.58"></i><i style="--h:0.9"></i><i style="--h:0.81"></i><i style="--h:0.76"></i><i style="--h:0.77"></i><i style="--h:0.46"></i><i style="--h:0.43"></i><i style="--h:0.47"></i><i style="--h:0.31"></i><i style="--h:0.32"></i><i style="--h:0.27"></i><i style="--h:0.52"></i></span>
+        <input class="player__seek" type="range" min="0" max="2392" step="1" value="0" data-player-seek aria-label="Position in episode" aria-valuetext="0:00 of 39:52">
+      </div>
+      <audio preload="none" data-player-audio src="https://traffic.omny.fm/d/clips/5e27a451-e6e6-4c51-aa03-a7370003783c/cc3cd802-ba9a-482b-b5d3-b48a00f20615/a8e8eadc-cefa-43e4-b0bb-b4de011e59e7/audio.mp3"></audio>
+    </div>
+    <ol class="ep-list">
+      <li><a href="https://omny.fm/shows/rpm-club/new-carmax-management-update-and-more"><time datetime="2026-10-05">5 Oct</time><span>New CarMax management update, and more</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/inside-track-auto-shows-then-now"><time datetime="2026-09-28">28 Sep</time><span>Inside Track: auto shows, “Then &amp; Now!”</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/honoring-roger-penske"><time datetime="2026-09-14">14 Sep</time><span>Honoring Roger Penske</span><span aria-hidden="true">→</span></a></li>
+    </ol>
+  </div>
+</section>
+
+<!-- ================================================================ INSTAGRAM · no invented posts -->
+<section class="ig" id="instagram" aria-labelledby="h-ig" data-reveal>
+  <div class="ig__head">
+    <p class="eyebrow">Follow</p>
+    <h2 id="h-ig" class="ig__title">Instagram</h2>
+    <p class="caption">Handle to be confirmed. Until the account is connected, the tiles show photographs from the family archive.</p>
+  </div>
+  <ul class="ig__grid">
+    <li class="ig__tile ig__tile--img"><img src="assets/img/mancuso-76-blue.jpg" alt="The Mancuso Corvette, 1976" loading="lazy"><svg class="ig__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></li>
+    <li class="ig__tile ig__tile--img"><img src="assets/img/lola-paddock-1.jpg" alt="The Lake Forest Sportscars Lola in the paddock" loading="lazy"><svg class="ig__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></li>
+    <li class="ig__tile ig__tile--img"><img src="assets/img/mancuso-truck.jpg" alt="The Mancuso Chevrolet transporter and race car in the paddock" loading="lazy"><svg class="ig__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></li>
+    <li class="ig__tile ig__tile--img"><img src="assets/img/mancuso-chevrolet-sign.jpg" alt="The Mancuso Chevrolet sign" loading="lazy"><svg class="ig__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></li>
+  </ul>
+</section>
+
+<!-- ================================================================ CONTACT -->
+<section class="contact" id="contact" aria-labelledby="h-contact" tabindex="-1" data-reveal>
+  <div class="contact__head">
+    <p class="eyebrow">Contact</p>
+    <h2 id="h-contact" class="contact__title">Get in touch.</h2>
+    <p class="body">About the GT, the family's cars, or anything else.</p>
+    <dl class="contact__record">
+      <div><dt>Address</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=924+Sherwood+Dr+Lake+Bluff+IL+60044" target="_blank" rel="noopener">924 Sherwood Dr.<br>Lake Bluff, IL 60044</a></dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:adam@LakeForestMotorsports.com">adam@LakeForestMotorsports.com</a></dd></div>
+      <div><dt>Contact</dt><dd>Adam Mancuso</dd></div>
+    </dl>
+  </div>
+  <form class="enquiry" novalidate>
+    <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
+    <div class="field field--wide"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <fieldset class="field field--wide choices"><legend>About</legend>
+      <label class="choice"><input type="radio" name="topic" value="gt" checked><span>The GT</span></label>
+      <label class="choice"><input type="radio" name="topic" value="other"><span>Something else</span></label>
+    </fieldset>
+    <div class="field field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
+    <div class="field--wide enquiry__actions"><button class="pill pill--fill" type="submit">Send enquiry</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
+  </form>
+</section>
+
+<footer class="foot">
+  <nav class="foot__nav" aria-label="Footer">
+    <a href="family.html">Family</a><a href="history.html">History</a><a href="gt.html">The GT</a><a href="rpm.html">RPM Club</a><a href="contact.html">Contact</a>
+  </nav>
+  <div class="foot__sign">
+    <img class="foot__crest" src="assets/brand/crest-full.png" width="392" height="520" alt="The Mancuso family crest">
+    <div>
+      <p class="foot__lfms">Lake Forest<br>Motor Sports</p>
+      <p class="foot__by">By Mancuso · An automotive family since&nbsp;1923</p>
+    </div>
+  </div>
+  <div class="foot__base">
+    <p class="caption foot__note">© 2026 Lake Forest Motor Sports, by Mancuso. All rights reserved.</p>
+    <p class="caption foot__powered">Powered by All Auto Network</p>
+  </div>
+</footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="js/form.js?v=final1"></script>
+<script src="js/player.js?v=final1"></script>
+<script src="js/zoom.js?v=v2a"></script>
+<script src="js/micro.js?v=final1"></script>
+<script src="js/motion.js?v=v3c"></script>
+<script>
+  /* v3 GT: a hand torch. With a mouse, the pointer carries a soft pool of light over the dim warehouse, so the
+     visitor can look around the cars; touch screens keep the lamps alone */
+  (() => {
+    const gt = document.querySelector('[data-gt]'), torch = document.querySelector('[data-gt-torch]');
+    if (!gt || !torch || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    let raf = 0, x = 0, y = 0;
+    gt.addEventListener('pointermove', e => { const r = torch.getBoundingClientRect(); x = e.clientX - r.left; y = e.clientY - r.top;
+      if (!raf) raf = requestAnimationFrame(() => { raf = 0; torch.style.setProperty('--tx', x + 'px'); torch.style.setProperty('--ty', y + 'px'); }); });
+    gt.addEventListener('pointerenter', () => torch.classList.add('is-on'));
+    gt.addEventListener('pointerleave', () => torch.classList.remove('is-on'));
+
+    /* the two side lamps follow the torch, with real light geometry:
+       · each lamp is a heavy head on a spring: it swings toward the pointer, overshoots a little and settles;
+       · its beam is a cone of fixed angle, so it widens with the distance it travels and stops where it lands;
+       · where it lands it throws an elliptical pool (flattened by the floor's perspective), larger and softer the
+         farther it reaches, and the photograph is lit only inside those pools;
+       · the light falls off with distance, so a near pool is bright and a far one dim.
+       When the pointer leaves, both heads swing back onto their car. */
+    const stage = gt.querySelector('[data-gt-stage]');
+    const HALF = 13 * Math.PI / 180;                 /* half-angle of the cone */
+    const lamps = [
+      { el: gt.querySelector('.gt__rig .gt__beam--l'), lx: .178, ly: .156, hx: .35, hy: .44, n: 1 },   /* aims home at the No. 48 */
+      { el: gt.querySelector('.gt__rig .gt__beam--r'), lx: .816, ly: .156, hx: .66, hy: .43, n: 2 },   /* and at the 441 */
+    ].map(l => Object.assign(l, { x: l.hx, y: l.hy, vx: 0, vy: 0 }));
+    let target = null, run = 0;
+    const kick = () => { if (!run) run = requestAnimationFrame(step); };
+    gt.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect();
+      target = [(e.clientX - r.left) / r.width, (e.clientY - r.top) / r.height]; stage.classList.add('is-aiming'); kick(); });
+    gt.addEventListener('pointerleave', () => { target = null; kick(); });
+    function step() {
+      run = 0; const r = stage.getBoundingClientRect(), W = r.width, H = r.height; let moving = false;
+      for (const l of lamps) {
+        const tx = target ? target[0] : l.hx, ty = target ? Math.max(target[1], l.ly + .08) : l.hy;
+        /* spring: stiffness pulls toward the aim, damping bleeds the swing off */
+        l.vx = (l.vx + (tx - l.x) * .045) * .84; l.vy = (l.vy + (ty - l.y) * .045) * .84;
+        l.x += l.vx; l.y += l.vy;
+        const dx = (l.x - l.lx) * W, dy = (l.y - l.ly) * H, d = Math.hypot(dx, dy), ang = Math.atan2(-dx, dy) * 180 / Math.PI;
+        const spread = 2 * d * Math.tan(HALF), fall = Math.min(1.25, Math.max(.45, Math.pow(H * .38 / d, 2)));
+        Object.assign(l.el.style, { left: (l.lx * W - spread / 2) + 'px', width: spread + 'px', height: d + 'px',
+          transform: `rotate(${ang.toFixed(2)}deg)`, opacity: fall.toFixed(3) });
+        /* the pool: as wide as the cone where it lands, flattened by the floor, and softer the farther it is */
+        const pw = spread * 1.15 + 80, ph = pw * (.42 + .25 * Math.min(1, (l.y - l.ly) * 1.6));
+        stage.style.setProperty(`--p${l.n}x`, l.x * W + 'px'); stage.style.setProperty(`--p${l.n}y`, l.y * H + 'px');
+        stage.style.setProperty(`--p${l.n}w`, pw + 'px'); stage.style.setProperty(`--p${l.n}h`, ph + 'px');
+        stage.style.setProperty(`--p${l.n}i`, Math.min(1, fall).toFixed(3));
+        if (Math.abs(tx - l.x) + Math.abs(ty - l.y) + Math.abs(l.vx) + Math.abs(l.vy) > .0004) moving = true;
+      }
+      if (moving) run = requestAnimationFrame(step);
+      else if (!target) { stage.classList.remove('is-aiming'); lamps.forEach(l => l.el.removeAttribute('style')); }
+    }
+  })();
+</script>
+<script>
+  /* v3 GT: a little dust drifting through the lamp light. Brighter in the two beams and over the cars,
+     fainter in the dark; only runs while the section is on screen; off under reduced motion */
+  (() => {
+    const c = document.querySelector('[data-gt-dust]');
+    if (!c || innerWidth < 700 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const ctx = c.getContext('2d'), N = innerWidth < 700 ? 300 : 800;
+    let w, h, dpr, ps = [], run = false, raf;
+    const size = () => { dpr = Math.min(devicePixelRatio || 1, 2); w = c.clientWidth; h = c.clientHeight;
+      c.width = w * dpr; c.height = h * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); };
+    /* light: strongest under the two lamps' beams and around the cars in the middle of the frame */
+    const light = (x, y) => { const nx = x / w, ny = y / h;
+      const beam = (cx) => Math.max(0, 1 - Math.hypot((nx - cx) * 2.2, (ny - .32) * 1.4));
+      return Math.min(1, .25 + beam(.3) + beam(.7) + Math.max(0, 1 - Math.hypot((nx - .5) * 1.6, (ny - .45) * 2.4)) * .6); };
+    /* motes gather where the light is: a spot is kept with a chance that grows steeply with the light there */
+    const spot = () => { for (let i = 0; i < 40; i++) { const x = Math.random() * w, y = Math.random() * h;
+      if (Math.random() < Math.pow(light(x, y), 4)) return [x, y]; } return [w * (.3 + Math.random() * .4), h * (.25 + Math.random() * .35)]; };
+    const spawn = (p = {}) => { const [x, y] = spot(); return Object.assign(p, { x, y,
+      r: .4 + Math.random() * 1.2, vx: (Math.random() - .5) * .5, vy: (Math.random() - .65) * .45,
+      a: .0575 + Math.random() * .23, t: Math.random() * 6.28,
+      /* each mote has its own wander: speed, sway width and rhythm, so they never move as one */
+      wf: .004 + Math.random() * .03, wx: .1 + Math.random() * .5, wy: .05 + Math.random() * .35, ph: Math.random() * 6.28 }); };
+    const tick = () => {
+      ctx.clearRect(0, 0, w, h);
+      for (const p of ps) {
+        p.t += p.wf; p.x += p.vx + Math.sin(p.t) * p.wx; p.y += p.vy + Math.cos(p.t * 1.3 + p.ph) * p.wy;
+        /* now and then a mote is caught by a new draught and changes course */
+        if (Math.random() < .004) { p.vx = (Math.random() - .5) * .5; p.vy = (Math.random() - .65) * .45; }
+        if (p.y < -4 || p.y > h + 4 || p.x < -4 || p.x > w + 4 || (light(p.x, p.y) < .4 && Math.random() < .01)) { spawn(p); }   /* strays in the dark fade back into the light */
+        ctx.globalAlpha = p.a * light(p.x, p.y) * (.7 + .3 * Math.sin(p.t * 2));
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.283); ctx.fill();
+      }
+      if (run) raf = requestAnimationFrame(tick);
+    };
+    size(); ctx.fillStyle = '#edebe6'; ps = Array.from({ length: N }, () => spawn());
+    addEventListener('resize', () => { size(); ctx.fillStyle = '#edebe6'; });
+    new IntersectionObserver(([e]) => { run = e.isIntersecting; cancelAnimationFrame(raf); if (run) raf = requestAnimationFrame(tick); }).observe(c);
+  })();
+</script>
+<script>
+  /* v3: "222 mph" counts up from 0 each time the Le Mans title comes on screen; the static 222 stays without JS
+     and under reduced motion */
+  (() => {
+    const el = document.querySelector('[data-count]');
+    if (!el || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const to = +el.dataset.count, dur = 1600;
+    let raf;
+    new IntersectionObserver(([e]) => {
+      cancelAnimationFrame(raf);
+      if (!e.isIntersecting) { el.textContent = '0'; return; }
+      const t0 = performance.now();
+      const step = now => { const k = Math.min((now - t0) / dur, 1);
+        el.textContent = Math.round(to * (1 - Math.pow(1 - k, 3))); if (k < 1) raf = requestAnimationFrame(step); };
+      raf = requestAnimationFrame(step);
+    }, { threshold: 0.6 }).observe(el);
+  })();
+</script>
+<script src="js/menu.js?v=1"></script>
+</body>
+</html>

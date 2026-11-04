@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Design system · Lake Forest Motor Sports</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Cinzel:wght@400;500&display=swap">
+<link rel="stylesheet" href="../site/css/styles.css">
+<link rel="stylesheet" href="tokens.css">
+<style>
+  /* the design-system page's own chrome, built from the same tokens */
+  body { background: var(--ground); color: var(--ink); }
+  .ds { max-width: 1240px; margin: 0 auto; padding: var(--s-9) var(--gutter) var(--s-10); }
+  .ds-top { display: grid; gap: var(--s-5); padding-bottom: var(--s-8); border-bottom: 1px solid var(--rule); }
+  .ds-top h1 { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+    font-size: var(--t-d2); line-height: var(--lh-d2); letter-spacing: var(--ls-d2); }
+  .ds-top h1 span { display: block; color: var(--tone); }
+  .ds-index { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); margin: 0; padding: 0; list-style: none; }
+  .ds-index a { color: var(--ink-2); text-underline-offset: 4px; font-size: var(--t-body-sm); }
+  .ds-sec { padding: var(--s-9) 0 0; display: grid; gap: var(--s-6); }
+  .ds-sec > h2 { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+    font-size: var(--t-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); }
+  .ds-sec > p, .ds-note { margin: 0; max-width: 68ch; color: var(--ink-2); font-size: var(--t-body); line-height: var(--lh-body); }
+  .ds-h { margin: var(--s-5) 0 0; font-size: var(--t-label); font-weight: var(--w-label); letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--mute); }
+  .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--s-5); margin: 0; padding: 0; list-style: none; }
+  .ds-swatches li { display: grid; gap: var(--s-1); font-size: var(--t-body-sm); line-height: var(--lh-body-sm); }
+  .ds-chip { height: 88px; border-radius: var(--r-media); border: 1px solid var(--rule); margin-bottom: var(--s-2); }
+  .ds-hex, .ds-ratio { color: var(--mute); font-variant-numeric: tabular-nums; }
+  .ds-role { color: var(--ink-2); }
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 14px; color: var(--ink); }
+  .ds-type { display: grid; grid-template-columns: minmax(0, 260px) minmax(0, 1fr); gap: var(--s-6); align-items: baseline; padding: var(--s-5) 0; border-top: 1px solid var(--rule); }
+  .ds-type__meta { display: grid; gap: var(--s-1); font-size: var(--t-body-sm); color: var(--mute); }
+  .ds-type__meta b { color: var(--ink); }
+  .ds-type__sample { margin: 0; text-wrap: balance; }
+  .ds-space { display: grid; gap: var(--s-3); margin: 0; padding: 0; list-style: none; }
+  .ds-space li { display: grid; grid-template-columns: 72px minmax(0, 1fr) 64px; gap: var(--s-4); align-items: center; }
+  .ds-bar { display: block; height: 12px; background: var(--ink-2); border-radius: 2px; max-width: 100%; }
+  .ds-px { color: var(--mute); font-size: var(--t-body-sm); font-variant-numeric: tabular-nums; }
+  .ds-table { width: 100%; border-collapse: collapse; font-size: var(--t-body-sm); }
+  .ds-table th, .ds-table td { text-align: left; padding: var(--s-3) var(--s-4) var(--s-3) 0; border-top: 1px solid var(--rule); vertical-align: top; }
+  .ds-table th { color: var(--mute); font-weight: var(--w-label); }
+  .ds-stage { position: relative; padding: var(--s-7) var(--s-6); background: var(--ground-2); border: 1px solid var(--rule); border-radius: var(--r-media); }
+  .ds-stage--flush { padding: 0; overflow: hidden; }
+  .ds-row { display: flex; flex-wrap: wrap; gap: var(--s-5); align-items: center; }
+  .ds-cap { margin: var(--s-3) 0 0; color: var(--mute); font-size: var(--t-caption); line-height: var(--lh-caption); }
+  .ds-grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s-6); }
+  .ds-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--s-5); margin: 0; padding: 0; list-style: none; }
+  .ds-rules li { padding: var(--s-5); border: 1px solid var(--rule); border-radius: var(--r-media); display: grid; gap: var(--s-2); }
+  .ds-rules b { font-size: var(--t-label); letter-spacing: var(--ls-label); text-transform: uppercase; }
+  .ds-rules .do b { color: var(--ink); } .ds-rules .dont b { color: var(--gt-red); }
+  .ds-rules p { margin: 0; color: var(--ink-2); font-size: var(--t-body-sm); line-height: var(--lh-body-sm); }
+  /* components shown in place: the fixed header and the stage-wide blocks are put back in the flow */
+  .ds-stage .nav { position: relative; inset: auto; }
+  .ds-stage .foot { border-top: 0; }
+  .ds-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 300px)); gap: var(--s-5); margin: 0; padding: 0; list-style: none; }
+  .ds-stage .enquiry { grid-column: auto; }
+  @media (max-width: 699px) { .ds-type { grid-template-columns: 1fr; gap: var(--s-3); } .ds-stage { padding: var(--s-6) var(--s-4); } }
+</style>
+</head>
+<body>
+<main class="ds">
+
+<header class="ds-top">
+  <p class="eyebrow">Design system · v3</p>
+  <h1>Lake Forest Motor Sports<span>by Mancuso</span></h1>
+  <p class="ds-note">The values and components the v3 site is built from. Every component below is copied from the
+  built pages in <code>../site/</code> and drawn by the site’s own stylesheet, so this page is the reference.
+  Tokens: <a href="tokens.css">tokens.css</a> · <a href="tokens.json">tokens.json</a>.</p>
+  <ul class="ds-index">
+    <li><a href="#principles">Principles</a></li><li><a href="#colour">Colour</a></li><li><a href="#type">Type</a></li>
+    <li><a href="#space">Space &amp; layout</a></li><li><a href="#shape">Shape &amp; motion</a></li><li><a href="#brand">Brand</a></li>
+    <li><a href="#components">Components</a></li><li><a href="#rules">Rules</a></li>
+  </ul>
+</header>
+
+<section class="ds-sec" id="principles">
+  <h2>Principles</h2>
+  <ul class="ds-rules">
+    <li><b>Ink on graphite</b><p>The interface has no brand hue. Text is warm off-white on near-black; the only accent is the GT tricolour flag.</p></li>
+    <li><b>History is the trust</b><p>Real photographs at natural brightness, with their printed credits. Facts carry their source on the page.</p></li>
+    <li><b>One face, two voices</b><p>Archivo throughout: a condensed display voice (640, wdth 74) for titles and the normal text voice (wdth 100) for reading.</p></li>
+    <li><b>Phones get their own layout</b><p>Below 700px the hero, the GT block and Le Mans are re-composed, not squeezed: the picture first, the words below it.</p></li>
+  </ul>
+</section>
+
+<section class="ds-sec" id="colour">
+  <h2>Colour</h2>
+  <p>Contrast ratios are WCAG 2.x against <code>--ground</code>. Everything set as text clears AA (4.5:1); <code>--lm-blue</code> is used for large type only.</p>
+  <h3 class="ds-h">Surface</h3><ul class="ds-swatches">
+<li><span class="ds-chip" style="background:#0b0c0d"></span><code>--ground</code><span class="ds-hex">#0b0c0d</span><span class="ds-role">Page background</span></li>
+<li><span class="ds-chip" style="background:#121416"></span><code>--ground-2</code><span class="ds-hex">#121416</span><span class="ds-role">Raised surface: panels, the form, tiles</span></li>
+</ul>
+<h3 class="ds-h">Text</h3><ul class="ds-swatches">
+<li><span class="ds-chip" style="background:#edebe6"></span><code>--ink</code><span class="ds-hex">#edebe6</span><span class="ds-role">Primary text, headings, button fill</span><span class="ds-ratio">16.4:1 on ground</span></li>
+<li><span class="ds-chip" style="background:#c9cbcd"></span><code>--ink-2</code><span class="ds-hex">#c9cbcd</span><span class="ds-role">Secondary reading text</span><span class="ds-ratio">12.0:1 on ground</span></li>
+<li><span class="ds-chip" style="background:#a3a5a7"></span><code>--mute</code><span class="ds-hex">#a3a5a7</span><span class="ds-role">Captions, labels, sources</span><span class="ds-ratio">7.9:1 on ground</span></li>
+<li><span class="ds-chip" style="background:#8d8f91"></span><code>--tone</code><span class="ds-hex">#8d8f91</span><span class="ds-role">Second line of a two-tone heading</span><span class="ds-ratio">6.0:1 on ground</span></li>
+</ul>
+<h3 class="ds-h">Accent: the GT tricolour (only as the label flag)</h3><ul class="ds-swatches">
+<li><span class="ds-chip" style="background:#e2342b"></span><code>--gt-red</code><span class="ds-hex">#e2342b</span><span class="ds-role">Flag, first third</span></li>
+<li><span class="ds-chip" style="background:#e6e6ea"></span><code>--gt-white</code><span class="ds-hex">#e6e6ea</span><span class="ds-role">Flag, second third</span></li>
+<li><span class="ds-chip" style="background:#1f5fd0"></span><code>--gt-blue</code><span class="ds-hex">#1f5fd0</span><span class="ds-role">Flag, last third</span></li>
+</ul>
+<h3 class="ds-h">Chapter colours (one chapter each, never interface)</h3><ul class="ds-swatches">
+<li><span class="ds-chip" style="background:#5a9fc7"></span><code>--livery</code><span class="ds-hex">#5a9fc7</span><span class="ds-role">The #76 chapter ground</span><span class="ds-ratio">navy 5.6:1 on ground</span></li>
+<li><span class="ds-chip" style="background:#0d2236"></span><code>--navy</code><span class="ds-hex">#0d2236</span><span class="ds-role">Text on the livery blue</span></li>
+<li><span class="ds-chip" style="background:#1869d2"></span><code>--lm-blue</code><span class="ds-hex">#1869d2</span><span class="ds-role">Le Mans: the lit fact, large type only</span><span class="ds-ratio">3.7:1 on ground</span></li>
+</ul>
+</section>
+
+<section class="ds-sec" id="type">
+  <h2>Type</h2>
+  <p>Archivo variable (wdth 62–125, wght 100–900) from Google Fonts; Cinzel only for the wordmark. Each role sets its own size,
+  leading and tracking — set a role, never a size by hand. Display sizes are fluid between their <code>clamp()</code> limits.</p>
+  <div class="ds-type"><div class="ds-type__meta"><b>D1</b><code>--t-d1 · --lh-d1</code><span>The page’s one peak: the hero title</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-d1);line-height:var(--lh-d1);letter-spacing:var(--ls-d1)'>We build the GT.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>D2</b><code>--t-d2 · --lh-d2</code><span>h1 and chapter openers</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-d2);line-height:var(--lh-d2);letter-spacing:var(--ls-d2)'>Four generations</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>D3</b><code>--t-d3 · --lh-d3</code><span>Section titles inside a chapter</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-d3);line-height:var(--lh-d3);letter-spacing:var(--ls-d3)'>Dealers and racers</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>H3</b><code>--t-h3 · --lh-h3</code><span>Item titles, pull quotes</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-h3);line-height:var(--lh-h3);letter-spacing:var(--ls-h3)'>Rick takes it racing.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>H4</b><code>--t-h4 · --lh-h4</code><span>Small titles, times</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-h4);line-height:var(--lh-h4);letter-spacing:var(--ls-h4)'>Lake Forest Sports Cars</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Sub-line</b><code>--t-sub · --lh-sub</code><span>A separate statement under a title, in --tone</span></div><p class="ds-type__sample" style='font-family:var(--f-display);font-weight:var(--w-display);font-variation-settings:"wdth" var(--display-wdth);font-size:var(--t-sub);line-height:var(--lh-sub);letter-spacing:var(--ls-sub);color:var(--tone)'>A tribute to the Chevrolet Corvette</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Statement</b><code>--t-statement</code><span>A chapter’s one paragraph, set large</span></div><p class="ds-type__sample" style='font-size:var(--t-statement);line-height:var(--lh-statement)'>Timeless Corvettes engineered for today, by Mancuso.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Lead</b><code>--t-lead</code><span>The first paragraph of a page or block</span></div><p class="ds-type__sample" style='font-size:var(--t-lead);line-height:var(--lh-lead)'>C2 and C3 Corvettes, 1963–1982, inspired by the race cars of the ’70s.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Body</b><code>--t-body</code><span>Reading text</span></div><p class="ds-type__sample" style='font-size:var(--t-body);line-height:var(--lh-body)'>Rick Mancuso took the green flag in 1972, in a 1958 Corvette prepared to B-Production specs.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Body small</b><code>--t-body-sm</code><span>Card text, list text, form notes</span></div><p class="ds-type__sample" style='font-size:var(--t-body-sm);line-height:var(--lh-body-sm)'>Jim opens the family’s Chevrolet dealership in Skokie.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Caption</b><code>--t-caption</code><span>Photo credits and sources — the 14px floor</span></div><p class="ds-type__sample" style='font-size:var(--t-caption);line-height:var(--lh-caption);color:var(--mute)'>Source: Fra Noi, February 2005.</p></div>
+<div class="ds-type"><div class="ds-type__meta"><b>Label</b><code>--t-label · --w-label · --ls-label</code><span>Uppercase, short: eyebrows, field labels, meta</span></div><p class="ds-type__sample" style='font-size:var(--t-label);font-weight:var(--w-label);letter-spacing:var(--ls-label);line-height:var(--lh-label);text-transform:uppercase;color:var(--mute)'>The family story</p></div>
+</section>
+
+<section class="ds-sec" id="space">
+  <h2>Space &amp; layout</h2>
+  <p>One 4-based scale. Inside a group the gap is smaller than between groups: a label sits <code>--s-3</code> from its title, a block <code>--s-9</code> from the next.</p>
+  <ul class="ds-space"><li><code>--s-1</code><span class="ds-bar" style="width:4px"></span><span class="ds-px">4px</span></li>
+<li><code>--s-2</code><span class="ds-bar" style="width:8px"></span><span class="ds-px">8px</span></li>
+<li><code>--s-3</code><span class="ds-bar" style="width:12px"></span><span class="ds-px">12px</span></li>
+<li><code>--s-4</code><span class="ds-bar" style="width:16px"></span><span class="ds-px">16px</span></li>
+<li><code>--s-5</code><span class="ds-bar" style="width:24px"></span><span class="ds-px">24px</span></li>
+<li><code>--s-6</code><span class="ds-bar" style="width:32px"></span><span class="ds-px">32px</span></li>
+<li><code>--s-7</code><span class="ds-bar" style="width:48px"></span><span class="ds-px">48px</span></li>
+<li><code>--s-8</code><span class="ds-bar" style="width:64px"></span><span class="ds-px">64px</span></li>
+<li><code>--s-9</code><span class="ds-bar" style="width:96px"></span><span class="ds-px">96px</span></li>
+<li><code>--s-10</code><span class="ds-bar" style="width:128px"></span><span class="ds-px">128px</span></li>
+<li><code>--s-11</code><span class="ds-bar" style="width:192px"></span><span class="ds-px">192px</span></li></ul>
+  <h3 class="ds-h">Layout</h3>
+  <table class="ds-table">
+    <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+    <tr><td><code>--gutter</code></td><td>clamp(16px, 3.4vw, 48px)</td><td>Page side margin</td></tr>
+    <tr><td><code>--col</code></td><td>(100vw − 2 × gutter) / 12</td><td>One column of the 12-column grid; content usually starts half a column in</td></tr>
+    <tr><td><code>--header-h</code></td><td>80px · 72px below 900px</td><td>Fixed header; anchors offset by 96px</td></tr>
+  </table>
+  <h3 class="ds-h">Breakpoints</h3>
+  <table class="ds-table">
+    <tr><th>Width</th><th>What changes</th></tr>
+    <tr><td>≤ 999px</td><td>One column; the history rail, the pinned stops and the side-by-side spreads are off</td></tr>
+    <tr><td>≤ 899px</td><td>The phone menu replaces the header links</td></tr>
+    <tr><td>≤ 699px</td><td>Own layouts: hero film on top with the words below, the GT block as a still 9:16 frame, Le Mans as a photo and a fact list</td></tr>
+    <tr><td>≤ 599px</td><td>Small-phone adjustments: buttons and links stack only where they must</td></tr>
+  </table>
+</section>
+
+<section class="ds-sec" id="shape">
+  <h2>Shape &amp; motion</h2>
+  <table class="ds-table">
+    <tr><th>Token</th><th>Value</th><th>Use</th></tr>
+    <tr><td><code>--r-media</code></td><td>14px</td><td>Photographs in frames, panels, tiles, the form</td></tr>
+    <tr><td><code>--r-pill</code></td><td>999px</td><td>Buttons and chips</td></tr>
+    <tr><td><code>--ease-out</code></td><td>cubic-bezier(.16, 1, .3, 1)</td><td>All arrivals</td></tr>
+    <tr><td><code>--d-fast</code></td><td>.25s</td><td>Hover: colour, border</td></tr>
+    <tr><td><code>--d-base</code></td><td>.4s</td><td>State changes, fades</td></tr>
+    <tr><td><code>--d-arrive</code></td><td>1.4s</td><td>Section heads and items sliding in (GSAP)</td></tr>
+  </table>
+  <p>Motion is GSAP 3.15 + ScrollTrigger on Lenis 1.3.26 smooth scroll, one ticker. Under <code>prefers-reduced-motion: reduce</code>
+  Lenis is not created, nothing pins and every element stands in its final place.</p>
+</section>
+
+<section class="ds-sec" id="brand">
+  <h2>Brand</h2>
+  <div class="ds-grid2">
+    <div class="ds-stage"><img src="../site/assets/brand/crest-full.png" width="196" alt="The Mancuso family crest"><p class="ds-cap">Family crest, full — footer. <code>assets/brand/crest-full.png</code></p></div>
+    <div class="ds-stage"><img src="../site/assets/brand/crest-mark.png" width="80" alt="The crest mark"><p class="ds-cap">Crest mark — header. <code>assets/brand/crest-mark.png</code></p></div>
+    <div class="ds-stage"><img src="../site/assets/brand/gt-mark.png" width="280" alt="The GT mark"><p class="ds-cap">The GT mark. <code>assets/brand/gt-mark.png</code></p></div>
+    <div class="ds-stage"><p class="eyebrow">The family story</p><p class="ds-cap">The tricolour flag: 36×8px, red · white · blue, before a section label. Its only use.</p></div>
+  </div>
+</section>
+
+<section class="ds-sec" id="components">
+  <h2>Components</h2>
+
+  <h3 class="ds-h">Header</h3>
+  <div class="ds-stage ds-stage--flush"><header class="nav" data-nav>
+  <a class="brand brand--crest" href="#top" aria-label="Lake Forest Motor Sports, by Mancuso — back to the top"><img class="brand__crest" src="../site/assets/brand/crest-mark.png" width="198" height="240" alt=""><span class="brand__words"><span class="brand__name">Lake Forest</span><span class="brand__sub">Motor Sports</span><span class="brand__by">By Mancuso · An automotive family since&nbsp;1923</span></span></a>
+  <p class="nav__where" aria-hidden="true" data-where><span data-where-a></span></p>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="../site/family.html">Family</a>
+    <a href="../site/history.html">History</a>
+    <a href="../site/gt.html">The GT</a>
+    <a href="../site/rpm.html">RPM Club</a>
+    <a href="../site/contact.html">Contact</a>
+  </nav>
+</header></div>
+  <p class="ds-note">Fixed, 80px, transparent over the hero and solid once the page scrolls. Below 900px the links become a Menu button
+  that opens every page full-screen (<code>js/menu.js</code>).</p>
+
+  <h3 class="ds-h">Buttons and links</h3>
+  <div class="ds-stage"><div class="ds-row">
+    <a class="pill pill--fill" href="#components">Discover the GT</a>
+    <a class="pill pill--line" href="#components">Ask about the GT</a>
+    <a class="hero__film" href="#components"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.5v13L18.5 12z"/></svg>Watch the 1977 film</a>
+  </div><p class="ds-cap"><code>.pill.pill--fill</code> one primary action per block · <code>.pill.pill--line</code> secondary · text link with an icon for media.</p></div>
+
+  <h3 class="ds-h">Section head</h3>
+  <div class="ds-stage">
+    <p class="eyebrow">The Lake Forest years</p>
+    <h2 class="heading">Dealers and racers<span class="tone">Lake Forest Sports Cars, and father and son</span></h2>
+    <p class="ds-cap">Label with the flag, then a two-tone title: a continuation of the sentence stays the title’s size in <code>--tone</code>.</p>
+  </div>
+
+  <h3 class="ds-h">Chapter card</h3>
+  <div class="ds-stage"><ul class="ds-cards"><li><a class="card" href="../site/history.html#y76">
+      <span class="card__media"><img src="../site/assets/img/mancuso-76-blue.jpg" alt="" width="2048" height="1536" loading="lazy" style="object-position: 50% 60%"></span>
+      <span class="card__meta"><span>1972 – 1976</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">The #76</span>
+      <span class="card__text">Rick takes the dealership racing; by 1976 Mancuso Chevrolet has its own Corvette.</span>
+    </a></li><li><a class="card card--next" href="#gt">
+      <span class="card__media card__media--gt card__media--mark"><img src="../site/assets/brand/gt-mark.png?v=2" alt="" width="699" height="285" loading="lazy"><span class="card__badge">Coming soon</span></span>
+      <span class="card__meta"><span>Next</span><span class="card__arrow" aria-hidden="true">→</span></span>
+      <span class="card__title">The GT</span>
+      <span class="card__text">A tribute to the Chevrolet Corvette. Launching soon; photography to be announced.</span>
+    </a></li></ul></div>
+
+  <h3 class="ds-h">Generations</h3>
+  <div class="ds-stage"><ol class="gens">
+            <li class="gen"><p class="gen__no">I</p><h3 class="gen__name">Benjamin</h3><p class="gen__role">Pioneer dealer&nbsp;· Batavia,&nbsp;NY</p><p class="gen__text">Founds the family automobile business in 1923. Rick would later name his grandfather as the man who inspired&nbsp;him.</p></li>
+            <li class="gen"><p class="gen__no">II</p><h3 class="gen__name">Jim</h3><p class="gen__role">Mancuso Chevrolet&nbsp;·&nbsp;Skokie</p><p class="gen__text">Opens Mancuso Chevrolet in 1953. A road rallyer, and a columnist for Ward's: “Mancuso on&nbsp;service”.</p></li>
+            <li class="gen"><p class="gen__no">III</p><h3 class="gen__name">Rick &amp; Rob</h3><p class="gen__role">The dealership goes racing</p><p class="gen__text">Sell cars with their father. Rick races from 1972 and in 1981 founds Lake Forest Sports Cars; Rob is 1986 SCCA Midwest Council&nbsp;champion.</p></li>
+            <li class="gen"><p class="gen__no">IV</p><h3 class="gen__name">Adam</h3><p class="gen__role">Father and son on track</p><p class="gen__text">Rick's son. 25 years at Lake Forest Sports Cars / Ferrari of Lake Forest as COO&nbsp;/&nbsp;VP. Go-karts at 12, Skip Barber Racing School at Road America; races Lolas alongside his&nbsp;father.</p></li>
+          </ol></div>
+
+  <h3 class="ds-h">Photograph with caption</h3>
+  <div class="ds-stage"><div style="max-width:560px"><figure class="era__pic" data-frame>
+      <img src="../site/assets/img/father-son-garage.jpg" width="2400" height="1500" loading="lazy" style="object-position: 46% 45%" alt="Adam and Rick Mancuso, arm in arm, in race suits in a garage beside a white Ferrari race car, its door open.">
+      <figcaption><span class="era__t">Father and son</span><span class="caption">Adam and Rick. They raced Lola Sports Racers in SCCA, in Aston Martin racing green.</span></figcaption>
+    </figure></div></div>
+
+  <h3 class="ds-h">Contact record</h3>
+  <div class="ds-stage"><div style="max-width:520px"><dl class="contact__record">
+      <div><dt>Address</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=924+Sherwood+Dr+Lake+Bluff+IL+60044" target="_blank" rel="noopener">924 Sherwood Dr.<br>Lake Bluff, IL 60044<span class="visually-hidden"> (opens Google Maps)</span></a></dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:adam@LakeForestMotorsports.com">adam@LakeForestMotorsports.com</a></dd></div>
+      <div><dt>Contact</dt><dd>Adam Mancuso</dd></div>
+      <div><dt>On air</dt><dd><a href="https://www.rpmclub.com/" target="_blank" rel="noopener">RPM Club, AM 560<span class="visually-hidden"> (opens in a new tab)</span></a></dd></div>
+    </dl></div></div>
+
+  <h3 class="ds-h">Enquiry form</h3>
+  <div class="ds-stage"><div style="max-width:720px"><form class="enquiry cp-form" novalidate aria-labelledby="h-form">
+    <div class="field--wide cp-form__head"><p class="eyebrow">Write to us</p><h2 id="h-form" class="cp-form__t">Send a message.</h2><p class="cp-form__note">Name, email and a message; the phone is optional.</p></div>
+    <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
+    <div class="field field--wide"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <fieldset class="field field--wide choices"><legend>About</legend>
+      <label class="choice"><input type="radio" name="topic" value="gt" checked><span>The GT</span></label>
+      <label class="choice"><input type="radio" name="topic" value="cars"><span>The family’s cars</span></label>
+      <label class="choice"><input type="radio" name="topic" value="other"><span>Something else</span></label>
+    </fieldset>
+    <div class="field field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
+    <div class="field--wide enquiry__actions"><button class="pill pill--fill" type="submit">Send enquiry</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
+  </form></div>
+  <p class="ds-cap">Validation and states are live (<code>js/form.js</code>); the form does not send yet. Errors appear in reserved space, so nothing moves.</p></div>
+
+  <h3 class="ds-h">Audio player and episode list</h3>
+  <div class="ds-stage"><div style="max-width:620px;display:grid;gap:var(--s-5)"><div class="ep ep--latest player" data-player>
+      <p class="ep__meta"><span>Latest episode</span><time datetime="2026-10-12">12 October 2026</time></p>
+      <div class="player__main">
+        <button class="player__btn" type="button" data-player-btn aria-label="Play: Coach Tony and driving tips, and “Shift Point”">
+          <svg class="player__ico player__ico--play" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M8 5.2v13.6L19 12z"/></svg>
+          <svg class="player__ico player__ico--pause" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M7 5h3.6v14H7zM13.4 5H17v14h-3.6z"/></svg>
+        </button>
+        <div class="player__text">
+          <h3 class="ep__title">Coach Tony and driving tips, and “Shift Point”</h3>
+          <p class="player__status"><span data-player-time>Listen · 40 min</span><a class="player__ext" href="https://omny.fm/shows/rpm-club/coach-tony-and-driving-tips-and-shift-point">Episode page<span aria-hidden="true"> ↗</span></a></p>
+        </div>
+      </div>
+      <div class="player__wave" data-player-wave style="--p:0">
+        <span class="player__bars" aria-hidden="true"><i style="--h:0.48"></i><i style="--h:0.88"></i><i style="--h:0.86"></i><i style="--h:0.75"></i><i style="--h:0.78"></i><i style="--h:0.55"></i><i style="--h:0.41"></i><i style="--h:0.63"></i><i style="--h:0.52"></i><i style="--h:0.53"></i><i style="--h:0.55"></i><i style="--h:0.24"></i><i style="--h:0.51"></i><i style="--h:0.38"></i><i style="--h:0.29"></i><i style="--h:0.33"></i><i style="--h:0.5"></i><i style="--h:0.89"></i><i style="--h:0.96"></i><i style="--h:0.62"></i><i style="--h:0.4"></i><i style="--h:0.29"></i><i style="--h:0.52"></i><i style="--h:0.87"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.41"></i><i style="--h:0.31"></i><i style="--h:0.43"></i><i style="--h:0.46"></i><i style="--h:0.35"></i><i style="--h:0.57"></i><i style="--h:0.56"></i><i style="--h:0.71"></i><i style="--h:0.84"></i><i style="--h:0.52"></i><i style="--h:0.39"></i><i style="--h:0.55"></i><i style="--h:0.64"></i><i style="--h:0.89"></i><i style="--h:0.87"></i><i style="--h:0.46"></i><i style="--h:0.25"></i><i style="--h:0.23"></i><i style="--h:0.32"></i><i style="--h:0.44"></i><i style="--h:0.25"></i><i style="--h:0.64"></i><i style="--h:0.65"></i><i style="--h:0.51"></i><i style="--h:0.52"></i><i style="--h:0.36"></i><i style="--h:0.58"></i><i style="--h:0.9"></i><i style="--h:0.81"></i><i style="--h:0.76"></i><i style="--h:0.77"></i><i style="--h:0.46"></i><i style="--h:0.43"></i><i style="--h:0.47"></i><i style="--h:0.31"></i><i style="--h:0.32"></i><i style="--h:0.27"></i><i style="--h:0.52"></i></span>
+        <input class="player__seek" type="range" min="0" max="2392" step="1" value="0" data-player-seek aria-label="Position in episode" aria-valuetext="0:00 of 39:52">
+      </div>
+      <audio preload="none" data-player-audio src="https://traffic.omny.fm/d/clips/5e27a451-e6e6-4c51-aa03-a7370003783c/cc3cd802-ba9a-482b-b5d3-b48a00f20615/a8e8eadc-cefa-43e4-b0bb-b4de011e59e7/audio.mp3"></audio>
+    </div><ol class="ep-list">
+      <li><a href="https://omny.fm/shows/rpm-club/new-carmax-management-update-and-more"><time datetime="2026-10-05">5 Oct</time><span>New CarMax management update, and more</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/inside-track-auto-shows-then-now"><time datetime="2026-09-28">28 Sep</time><span>Inside Track: auto shows, “Then &amp; Now!”</span><span aria-hidden="true">→</span></a></li>
+      <li><a href="https://omny.fm/shows/rpm-club/honoring-roger-penske"><time datetime="2026-09-14">14 Sep</time><span>Honoring Roger Penske</span><span aria-hidden="true">→</span></a></li>
+    </ol></div></div>
+
+  <h3 class="ds-h">Footer</h3>
+  <div class="ds-stage ds-stage--flush"><footer class="foot">
+  <nav class="foot__nav" aria-label="Footer">
+    <a href="../site/family.html">Family</a><a href="../site/history.html">History</a><a href="../site/gt.html">The GT</a><a href="../site/rpm.html">RPM Club</a><a href="../site/contact.html">Contact</a>
+  </nav>
+  <div class="foot__sign">
+    <img class="foot__crest" src="../site/assets/brand/crest-full.png" width="392" height="520" alt="The Mancuso family crest">
+    <div>
+      <p class="foot__lfms">Lake Forest<br>Motor Sports</p>
+      <p class="foot__by">By Mancuso · An automotive family since&nbsp;1923</p>
+    </div>
+  </div>
+  <div class="foot__base">
+    <p class="caption foot__note">© 2026 Lake Forest Motor Sports, by Mancuso. All rights reserved.</p>
+    <p class="caption foot__powered">Powered by All Auto Network</p>
+  </div>
+</footer></div>
+</section>
+
+<section class="ds-sec" id="rules">
+  <h2>Rules</h2>
+  <ul class="ds-rules">
+    <li class="do"><b>Do</b><p>Use a type role from the scale; let each role carry its own leading and tracking.</p></li>
+    <li class="do"><b>Do</b><p>Keep photographs at natural brightness, uncropped where the subject would be cut, with their credits.</p></li>
+    <li class="do"><b>Do</b><p>Give every animation a still state that reads on its own (reduced motion, no script).</p></li>
+    <li class="do"><b>Do</b><p>One primary button per block; the second action is a line button or a text link.</p></li>
+    <li class="dont"><b>Don’t</b><p>Set functional text below 14px, or long reading text in the display voice.</p></li>
+    <li class="dont"><b>Don’t</b><p>Use the tricolour anywhere but the label flag, or add a new hue to the interface.</p></li>
+    <li class="dont"><b>Don’t</b><p>Put words over a car on a phone: the picture goes first, the words below it.</p></li>
+    <li class="dont"><b>Don’t</b><p>Add a fact without a source, or present a concept image as a photograph.</p></li>
+  </ul>
+</section>
+
+</main>
+<script src="../site/js/form.js"></script>
+<script src="../site/js/player.js"></script>
+</body>
+</html>

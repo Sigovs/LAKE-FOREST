@@ -1,0 +1,80 @@
+/* ==========================================================================
+   Lake Forest Motor Sports — design tokens (v3)
+   The single source of the values the site is built from. These are the same
+   custom properties declared at the top of site/css/styles.css; import this file
+   on its own when building something new to the same system.
+   Contrast ratios are WCAG 2.x, measured against --ground (#0b0c0d).
+   ========================================================================== */
+:root {
+  /* ---- colour: ink on graphite, no brand hue in the interface */
+  --ground:      #0b0c0d;  /* page background */
+  --ground-2:    #121416;  /* raised surface: panels, the form, tiles */
+  --ink:         #edebe6;  /* primary text, button fill · 16.4:1 */
+  --ink-2:       #c9cbcd;  /* secondary reading text · 12.0:1 */
+  --mute:        #a3a5a7;  /* captions, labels · 7.9:1 */
+  --tone:        #8d8f91;  /* second line of a two-tone heading · 6.0:1 */
+  --hair:        rgba(237, 235, 230, .42);  /* outline of line buttons */
+  --rule:        rgba(237, 235, 230, .14);  /* hairline between rows (list, record) */
+  --ink-nav:     rgba(237, 235, 230, .78);  /* header links at rest · 10.1:1 */
+  --accent-fill: #edebe6;  /* primary button fill */
+  --accent-ink:  #0b0c0d;  /* primary button text · 16.4:1 on the fill */
+
+  /* ---- colour: the GT tricolour — the only accent, used as the 36×8 flag before a label */
+  --gt-red:   #e2342b;
+  --gt-white: #e6e6ea;
+  --gt-blue:  #1f5fd0;
+
+  /* ---- colour: chapter colours (one chapter each, never in the interface) */
+  --livery:   #5a9fc7;  /* the #76 chapter ground; navy text on it · 5.6:1 */
+  --navy:     #0d2236;  /* text on the livery blue */
+  --lm-blue:  #1869d2;  /* Le Mans: the lit fact · 3.7:1, large type only */
+  --road:     #e9cf2a;  /* "to verify" plates in review builds only */
+
+  /* ---- type: one face, Archivo (variable: wdth 62–125, wght 100–900), two voices */
+  --f:            "Archivo", system-ui, sans-serif;
+  --f-display:    var(--f);
+  --w-display:    640;   /* display voice weight */
+  --display-wdth: 74;    /* display voice width; the text voice is wdth 100 */
+  --f-wordmark:   "Cinzel", Georgia, serif;   /* the LAKE FOREST wordmark only */
+
+  /* ---- type roles: size · leading · tracking. Set a role, never a size by hand */
+  --t-d1: clamp(64px, 9vw, 148px);   --lh-d1: .9;   --ls-d1: -.02em;    /* D1 — the page's one peak (hero) */
+  --t-d2: clamp(44px, 5.4vw, 88px);  --lh-d2: .95;  --ls-d2: -.015em;   /* D2 — h1, chapter openers */
+  --t-d3: clamp(36px, 4vw, 60px);    --lh-d3: 1;    --ls-d3: -.012em;   /* D3 — section titles */
+  --t-h3: clamp(26px, 2.2vw, 34px);  --lh-h3: 1.05; --ls-h3: -.008em;   /* H3 — item titles */
+  --t-h4: clamp(22px, 1.7vw, 28px);  --lh-h4: 1.1;  --ls-h4: -.005em;   /* H4 — small titles */
+  --t-sub: clamp(20px, 1.9vw, 30px); --lh-sub: 1.15; --ls-sub: -.004em; /* sub-line: a separate statement under a title */
+  --t-statement: clamp(19px, calc(13.6px + .72vw), 26px); --lh-statement: 1.45;  /* a chapter's one paragraph, large */
+  --t-lead: clamp(19px, 1.45vw, 22px); --lh-lead: 1.45;
+  --t-body: 17px;      --lh-body: 1.55;
+  --t-body-sm: 15px;   --lh-body-sm: 1.5;
+  --t-caption: 14px;   --lh-caption: 1.45;   /* the floor: no functional text below 14px */
+  --t-label: 14px;     --w-label: 600;  --ls-label: .14em;  --lh-label: 1.25;   /* uppercase, short */
+  --t-control: 15px;   --w-control: 500;   /* buttons, inputs */
+  --t-nav: 17px;       --w-nav: 600;       /* header links */
+
+  /* ---- space: one 4-based scale. Gaps inside a group are smaller than gaps between groups */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px;  --s-5: 24px;  --s-6: 32px;
+  --s-7: 48px; --s-8: 64px; --s-9: 96px; --s-10: 128px; --s-11: 192px;
+
+  /* ---- layout */
+  --gutter: clamp(16px, 3.4vw, 48px);           /* page side margin */
+  --col: calc((100vw - 2 * var(--gutter)) / 12); /* one column of the 12-column grid */
+  --header-h: 80px;                              /* 72px below 900px */
+
+  /* ---- shape */
+  --r-media: 14px;   /* photographs in frames, panels, tiles */
+  --r-pill: 999px;   /* buttons, chips */
+
+  /* ---- motion */
+  --ease-out: cubic-bezier(.16, 1, .3, 1);   /* arrivals */
+  --d-fast: .25s;    /* hover, colour, border */
+  --d-base: .4s;     /* state changes, fades */
+  --d-arrive: 1.4s;  /* section heads and items sliding in */
+}
+
+/* ---- breakpoints (custom properties cannot hold media queries; these are the values)
+   ≤ 999px  tablet: one column, rails and pins off
+   ≤ 899px  header: phone menu replaces the links
+   ≤ 699px  phone: own layouts for the hero, the GT block and Le Mans
+   ≤ 599px  small phone: buttons and links stack where they must */
