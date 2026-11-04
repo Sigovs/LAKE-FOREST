@@ -1619,3 +1619,7 @@ html { overflow-x: clip; }
 /* v3 Family page, short like Contact and RPM: the hero, then the homepage's four-column generations */
 .fp-short { padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); }
 @media (max-width: 999px) { .fp-short { padding: var(--s-8) var(--gutter) var(--s-9); } }
+/* a landscape photograph keeps its own shape in the hero instead of being cut to a portrait */
+.cp-hero__pic--wide { width: min(100%, 620px); }
+.cp-hero__pic--wide img { aspect-ratio: 3 / 2; }
+@media (max-width: 999px) { .cp-hero__pic--wide { width: 100%; } }
