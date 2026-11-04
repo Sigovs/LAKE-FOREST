@@ -1753,3 +1753,23 @@ html { overflow-x: clip; }
   /* the photograph's credit moves off the image to a caption just under it */
   #ch-lemans .lm__credit { display: block; position: static; margin: var(--s-3) var(--gutter) 0; text-shadow: none; color: var(--mute); }
 }
+
+/* v3 history page on a phone: one column the full width of the page. A later desktop rule kept the 12-column grid,
+   so every chapter started at column 4 and the text sat pushed to the right */
+@media (max-width: 999px) {
+  body .hist__body { grid-template-columns: minmax(0, 1fr); }
+  body .hist__body > * { grid-column: 1 / -1; }
+  body .chap, body .chap:nth-of-type(even) { grid-template-columns: minmax(0, 1fr); }
+  body .chap > *, body .chap:nth-of-type(even) > * { grid-column: 1 / -1; }
+}
+
+/* v3 contact page: the details and the form read as two things — each opens with its own label, and the form sits
+   in its own panel with a title, so it is clear where it starts */
+.cp-record__t { margin: 0 0 var(--s-5); }
+.cp-form { padding: var(--s-7) var(--s-6); background: var(--ground-2); border: 1px solid rgba(237,235,230,.12); border-radius: 14px; }
+.cp-form__head { display: grid; gap: var(--s-3); margin-bottom: var(--s-2); }
+.cp-form__head .eyebrow { margin: 0; }
+.cp-form__t { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+  font-size: var(--t-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); color: var(--ink); }
+.cp-form__note { margin: 0; font-size: var(--t-body-sm); line-height: var(--lh-body-sm); color: var(--mute); }
+@media (max-width: 999px) { .cp-form { padding: var(--s-6) var(--s-5); } .cp-write { row-gap: var(--s-8); } }
