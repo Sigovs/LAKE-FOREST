@@ -1773,3 +1773,13 @@ html { overflow-x: clip; }
   font-size: var(--t-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); color: var(--ink); }
 .cp-form__note { margin: 0; font-size: var(--t-body-sm); line-height: var(--lh-body-sm); color: var(--mute); }
 @media (max-width: 999px) { .cp-form { padding: var(--s-6) var(--s-5); } .cp-write { row-gap: var(--s-8); } }
+
+/* v3 phone GT, final frame (1080×1920): room above the cars and room below them, both drawn in the file.
+   The frame shows whole — no crop, no fade — and the words sit in its lower room, from about half its height */
+@media (max-width: 699px) {
+  #gt[data-static-phone] .gt__phone { margin-top: 0; -webkit-mask-image: none; mask-image: none; }
+  #gt[data-static-phone] .gt__top { margin-top: calc(100vw * 1920 / 1080 * -.5); }
+  #gt[data-static-phone] .gt__bottom { padding-bottom: var(--s-7); }
+  [data-history] { padding-bottom: 0; }
+  #ch-lfsc { padding-bottom: var(--s-6); }
+}
