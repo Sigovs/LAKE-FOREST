@@ -1783,3 +1783,5 @@ html { overflow-x: clip; }
   [data-history] { padding-bottom: 0; }
   #ch-lfsc { padding-bottom: var(--s-6); }
 }
+/* GT page hero on a phone: the words sit closer under the cars, not on the floor of the screen */
+@media (max-width: 999px) { .gp-hero:has(.gp-hero__img--cs) .gp-hero__words { padding-bottom: 22svh; } }
