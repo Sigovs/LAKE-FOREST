@@ -1623,3 +1623,45 @@ html { overflow-x: clip; }
 .cp-hero__pic--wide { width: min(100%, 620px); }
 .cp-hero__pic--wide img { aspect-ratio: 3 / 2; }
 @media (max-width: 999px) { .cp-hero__pic--wide { width: 100%; } }
+
+/* ================================================================ v3 MOBILE FIXES (4 Nov)
+   · the contact record and the form never grow past the screen: the long email address breaks, the grid
+     children may shrink below their content, the inputs take the column's width
+   · on a phone the Le Mans text no longer climbs back over the last facts
+   · captions and credits keep the 14px floor */
+.contact__head, .cp-record, .enquiry, .contact__record, .contact__record div, .contact__record dd, .field { min-width: 0; }
+.contact__record dd, .contact__record a { overflow-wrap: anywhere; }
+.field input, .field textarea { width: 100%; min-width: 0; box-sizing: border-box; }
+.gp-credit { font-size: var(--t-caption); }
+.lm__speed span { font-size: var(--t-caption); }
+@media (max-width: 999px) {
+  #ch-lemans .lm__text { margin-top: 0; padding-top: var(--s-8); }
+}
+
+/* ================================================================ v3 PHONE MENU (menu_v3.js)
+   Below 900px the header shows the crest and a Menu button; the button opens every page in one full-screen list */
+.nav__menu { display: none; }
+@media (max-width: 899px) {
+  .nav .nav__links { display: none; }
+  .nav__menu { display: inline-flex; align-items: center; gap: var(--s-3); margin-left: auto; min-height: 44px; padding: 0 var(--s-2);
+    background: none; border: 0; color: var(--ink); cursor: pointer; font: inherit;
+    font-size: var(--t-label); font-weight: var(--w-label); letter-spacing: var(--ls-label); text-transform: uppercase; position: relative; z-index: 61; }
+  .nav__menu-i { display: grid; gap: 6px; width: 22px; }
+  .nav__menu-i i { display: block; height: 2px; background: currentColor; transition: transform .3s ease; }
+  .is-menu .nav__menu-i i:first-child { transform: translateY(4px) rotate(45deg); }
+  .is-menu .nav__menu-i i:last-child { transform: translateY(-4px) rotate(-45deg); }
+  .nav__menu:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .pmenu { position: fixed; inset: 0; z-index: 60; display: grid; align-content: center; padding: 96px var(--gutter) var(--s-8);
+    background: var(--ground); opacity: 0; transition: opacity .35s ease; }
+  .pmenu.is-open { opacity: 1; }
+  .pmenu ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); }
+  .pmenu li { border-bottom: 1px solid rgba(237,235,230,.12); }
+  .pmenu a { display: block; padding: var(--s-4) 0; text-decoration: none; color: var(--ink-2);
+    font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+    font-size: var(--t-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); }
+  .pmenu a[aria-current="page"], .pmenu a:hover { color: var(--ink); }
+  .pmenu a:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; }
+  .is-menu .nav { z-index: 61; }
+}
+@media (prefers-reduced-motion: reduce) { .pmenu, .nav__menu-i i { transition: none; } }
+.pmenu[hidden] { display: none !important; }   /* closed means gone: it must never sit over the page and catch taps */
