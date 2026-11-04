@@ -1669,3 +1669,18 @@ html { overflow-x: clip; }
 /* v3 mobile: the #76 chapter fills the screen edge to edge. The chapters' phone padding (room for the rail) was
    insetting the stage, so its light pools showed as a paler box inside the blue */
 @media (max-width: 999px) { .ch.peak { padding: 0; } }
+
+/* v3 phone hero: two parts instead of words over the film. The film runs full width across the top, short enough
+   that the whole car is in frame; the words, the buttons and the controller sit below it on the ground, so
+   nothing covers the car. The film's lower edge sinks into the ground. */
+@media (max-width: 699px) {
+  .hero { height: auto; min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-start; }
+  .hero__photo { position: relative; inset: auto; width: 100%; height: auto; aspect-ratio: 4 / 3; margin-top: 72px; flex: none; }
+  .hero__video { object-position: 50% 50%; }
+  .hero__shade { position: absolute; inset: 72px 0 auto; height: calc(100vw * .75); top: 72px;
+    background: linear-gradient(180deg, rgba(11,12,13,0) 55%, var(--ground) 100%); }
+  .hero__grain { inset: 0 0 auto; height: calc(72px + 100vw * .75); }
+  .hero__copy { position: relative !important; inset: auto !important; left: auto; right: auto; bottom: auto !important; top: auto !important;
+    margin: calc(var(--s-5) * -1) var(--gutter) 0; max-width: none; }
+  .hero__ctrl { position: relative; inset: auto; left: auto; right: auto; bottom: auto; margin: var(--s-6) var(--gutter) var(--s-6); }
+}
