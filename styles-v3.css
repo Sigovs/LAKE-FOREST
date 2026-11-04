@@ -1573,3 +1573,45 @@ html { overflow-x: clip; }
 @keyframes cp-ring { from { transform: scale(.4); opacity: 1; } to { transform: scale(2.4); opacity: 0; } }
 .cp-map.is-awake .cp-map__pin { display: none; }   /* once the visitor pans, the page pin would no longer sit on the address */
 @media (prefers-reduced-motion: reduce) { .cp-map__pin span { animation: none; opacity: .6; } }
+
+/* ================================================================ v3 FAMILY PAGE
+   One row per generation: the roman numeral and the name large, the role as a label, the homepage text as a lead,
+   and a photograph on alternating sides (a dashed "Need new image" where the family has not sent one) */
+.fp-gens { display: grid; gap: var(--s-10); padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); }
+.fp-gen { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); column-gap: var(--s-8); align-items: center; }
+.fp-gen--flip { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+.fp-gen--flip .fp-gen__words { order: 2; }
+.fp-gen__words { display: grid; gap: var(--s-4); align-content: center; }
+.fp-gen__no { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+  font-size: var(--t-d3); line-height: 1; color: var(--tone); }
+.fp-gen__name { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+  font-size: var(--t-d2); line-height: var(--lh-d2); letter-spacing: var(--ls-d2); color: var(--ink); }
+.fp-gen__role { margin: 0; color: var(--mute); }
+.fp-gen__text { margin: var(--s-2) 0 0; max-width: 44ch; color: var(--ink-2); }
+.fp-gen__pic { margin: 0; display: grid; gap: var(--s-3); }
+.fp-gen__pic img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; border-radius: 14px; }
+.fp-gen__pic--need { aspect-ratio: 3 / 2; place-items: center; border: 1px dashed rgba(237,235,230,.3); border-radius: 14px; padding: var(--s-6); text-align: center; }
+.fp-gen__pic--need .need { display: grid; gap: var(--s-3); max-width: 34ch; font-size: var(--t-body-sm); line-height: var(--lh-body-sm); color: var(--mute); }
+.fp-gen__pic--need .need b { color: var(--ink-2); }
+.fpage .era { padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); }
+
+/* ================================================================ v3 RPM PAGE
+   The latest episode and the archive on the left, where to listen on the right */
+.rp-hero__lead { margin: var(--s-2) 0 0; max-width: 48ch; color: var(--ink-2); }
+.rp-listen { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 4fr); column-gap: var(--s-8); align-items: start;
+  padding: var(--s-9) calc(var(--gutter) + var(--col) * .5) var(--s-10); }
+.rp-eps { grid-column: auto; grid-row: auto; }
+.rp-where { display: grid; gap: var(--s-4); position: sticky; top: calc(80px + var(--s-6)); }
+.rp-where .eyebrow { margin: 0; }
+.rp-where__t { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
+  font-size: var(--t-sub); line-height: var(--lh-sub); color: var(--ink); text-wrap: balance; }
+.rp-where__pills { display: grid; justify-items: start; gap: var(--s-3); margin: var(--s-2) 0 0; }
+
+@media (max-width: 999px) {
+  .fp-gens { gap: var(--s-9); padding: var(--s-8) var(--gutter) var(--s-9); }
+  .fp-gen, .fp-gen--flip { grid-template-columns: 1fr; row-gap: var(--s-6); }
+  .fp-gen--flip .fp-gen__words { order: 0; }
+  .fpage .era { padding: var(--s-8) var(--gutter) var(--s-9); }
+  .rp-listen { grid-template-columns: 1fr; row-gap: var(--s-8); padding: var(--s-8) var(--gutter) var(--s-9); }
+  .rp-where { position: static; }
+}
