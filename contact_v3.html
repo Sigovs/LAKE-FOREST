@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact · Lake Forest Motor Sports</title>
+<meta name="description" content="Contact Lake Forest Motor Sports, by Mancuso: 924 Sherwood Dr., Lake Bluff, Illinois. Ask about the GT, the family's cars, or anything else.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22%3E%3Crect width=%2232%22 height=%2232%22 fill=%22%230b0c0d%22/%3E%3Ctext x=%2216%22 y=%2223%22 font-family=%22Arial%22 font-weight=%22900%22 font-size=%2218%22 fill=%22%23edebe6%22 text-anchor=%22middle%22%3EM%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=Cinzel:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/lenis@1.3.26/dist/lenis.css">
+<link rel="stylesheet" href="styles-v3.css?v=v3c">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body class="cpage">
+<a class="skip" href="#write">Skip to the form</a>
+<header class="nav" data-nav>
+  <a class="brand brand--crest" href="index_v3.html" aria-label="Lake Forest Motor Sports, by Mancuso — home"><img class="brand__crest" src="assets/img/final/crest-mark.png" width="198" height="240" alt=""><span class="brand__words"><span class="brand__name">Lake Forest</span><span class="brand__sub">Motor Sports</span><span class="brand__by">By Mancuso · An automotive family since&nbsp;1923</span></span></a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="index_v3.html#family">Family</a>
+    <a href="history_v3.html">History</a>
+    <a href="gt_v3.html">The GT</a>
+    <a href="index_v3.html#rpm-club">RPM Club</a>
+    <a href="contact_v3.html" aria-current="page">Contact</a>
+  </nav>
+</header>
+
+<main id="top">
+
+<!-- ================================================================ HERO · short, not a full screen: the words on the left,
+     one small photograph of the family on the right, and the hour it is in Lake Bluff right now -->
+<section class="cp-hero" aria-labelledby="h-contact">
+  <div class="cp-hero__words">
+    <p class="eyebrow" data-cp-step>Contact</p>
+    <h1 id="h-contact" class="cp-hero__title" data-cp-step>Talk to the&nbsp;family.<span class="hero__sub">About the GT, the family’s cars, or anything&nbsp;else.</span></h1>
+    <p class="cp-hero__clock" data-cp-step aria-live="off"><span class="cp-hero__dot" aria-hidden="true"></span><span data-cp-clock>Lake Bluff, Illinois</span></p>
+  </div>
+  <figure class="cp-hero__pic" data-cp-pic>
+    <img src="assets/img/final/father-son-garage-1200.jpg" width="1200" height="750" alt="Adam and Rick Mancuso, arm in arm, in race suits in a garage beside a white Ferrari race car, its door open.">
+    <figcaption class="caption">Adam and Rick Mancuso.</figcaption>
+  </figure>
+</section>
+
+<!-- ================================================================ WRITE · the record on the left, the form on the right -->
+<section class="cp-write" id="write" aria-label="Write to us" tabindex="-1">
+  <div class="cp-record">
+    <dl class="contact__record">
+      <div><dt>Address</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=924+Sherwood+Dr+Lake+Bluff+IL+60044" target="_blank" rel="noopener">924 Sherwood Dr.<br>Lake Bluff, IL 60044<span class="visually-hidden"> (opens Google Maps)</span></a></dd></div>
+      <div><dt>Email</dt><dd><a href="mailto:adam@LakeForestMotorsports.com">adam@LakeForestMotorsports.com</a></dd></div>
+      <div><dt>Contact</dt><dd>Adam Mancuso</dd></div>
+      <div><dt>On air</dt><dd><a href="https://www.rpmclub.com/" target="_blank" rel="noopener">RPM Club, AM 560<span class="visually-hidden"> (opens in a new tab)</span></a></dd></div>
+    </dl>
+  </div>
+  <form class="enquiry" novalidate>
+    <div class="field"><label for="f-name">Name</label><input id="f-name" name="name" type="text" autocomplete="name" required><p class="field__error" id="f-name-err">Please enter your name.</p></div>
+    <div class="field"><label for="f-email">Email</label><input id="f-email" name="email" type="email" autocomplete="email" required><p class="field__error" id="f-email-err">Please enter an email address we can reply to.</p></div>
+    <div class="field field--wide"><label for="f-phone">Phone <span class="opt">optional</span></label><input id="f-phone" name="phone" type="tel" autocomplete="tel"></div>
+    <fieldset class="field field--wide choices"><legend>About</legend>
+      <label class="choice"><input type="radio" name="topic" value="gt" checked><span>The GT</span></label>
+      <label class="choice"><input type="radio" name="topic" value="cars"><span>The family’s cars</span></label>
+      <label class="choice"><input type="radio" name="topic" value="other"><span>Something else</span></label>
+    </fieldset>
+    <div class="field field--wide"><label for="f-message">Message</label><textarea id="f-message" name="message" rows="4" required data-lenis-prevent></textarea><p class="field__error" id="f-message-err">Please write a short message.</p></div>
+    <div class="field--wide enquiry__actions"><button class="pill pill--fill" type="submit">Send enquiry</button><p class="enquiry__status" role="status" aria-live="polite"></p></div>
+  </form>
+</section>
+
+<!-- ================================================================ FIND US · the map, full width, in the page's dark.
+     It stays still until clicked, so the page scrolls past it freely; the address card sits over it -->
+<section class="cp-map" aria-labelledby="h-find" data-cp-map>
+  <h2 id="h-find" class="visually-hidden">Find us</h2>
+  <div class="cp-map__frame" data-lenis-prevent>
+    <iframe title="Map: 924 Sherwood Dr., Lake Bluff, Illinois" src="https://maps.google.com/maps?q=924+Sherwood+Dr,+Lake+Bluff,+IL+60044&amp;z=14&amp;output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    <span class="cp-map__pin" aria-hidden="true"><span></span></span>
+    <button class="cp-map__wake" type="button" data-cp-wake>Click to move the map</button>
+  </div>
+  <div class="cp-map__card">
+    <p class="eyebrow">Find us</p>
+    <p class="cp-map__addr">924 Sherwood Dr.<br>Lake Bluff, IL 60044</p>
+    <p class="pills"><a class="pill pill--fill" href="https://www.google.com/maps/dir/?api=1&amp;destination=924+Sherwood+Dr+Lake+Bluff+IL+60044" target="_blank" rel="noopener">Get directions<span class="visually-hidden"> (opens Google Maps)</span></a></p>
+  </div>
+</section>
+
+</main>
+
+<footer class="foot">
+  <nav class="foot__nav" aria-label="Footer">
+    <a href="index_v3.html#family">Family</a><a href="history_v3.html">History</a><a href="gt_v3.html">The GT</a><a href="index_v3.html#rpm-club">RPM Club</a><a href="contact_v3.html">Contact</a>
+  </nav>
+  <div class="foot__sign">
+    <img class="foot__crest" src="assets/img/final/crest-full.png" width="392" height="520" alt="The Mancuso family crest">
+    <div>
+      <p class="foot__lfms">Lake Forest<br>Motor Sports</p>
+      <p class="foot__by">By Mancuso · An automotive family since&nbsp;1923</p>
+    </div>
+  </div>
+  <div class="foot__base">
+    <p class="caption foot__note">Prototype v3, November 2026: the form is not connected yet. Map data © Google.</p>
+    <p class="caption foot__powered">Powered by All Auto Network</p>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.15.0/gsap.min.js"></script>
+<script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
+<script src="form.js?v=final1"></script>
+<script>
+  /* Contact page: Lenis (off under reduced motion), the solid nav, the Lake Bluff clock, the words in a side staircase,
+     and the map that wakes on a click */
+  (() => {
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const nav = document.querySelector('[data-nav]');
+    const solid = (y) => { nav.classList.toggle('is-solid', y > 40); nav.classList.toggle('is-small', y > 24); };
+
+    /* the hour in Lake Bluff, so a visitor knows whether the family is up */
+    const clock = document.querySelector('[data-cp-clock]');
+    const tick = () => { const t = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' }).format(new Date());
+      clock.textContent = `It’s ${t} in Lake Bluff, Illinois`; };
+    tick(); setInterval(tick, 20000);
+
+    /* the map ignores the pointer until it is clicked, then gives it back when the pointer leaves */
+    const map = document.querySelector('[data-cp-map]'), wake = document.querySelector('[data-cp-wake]');
+    wake.addEventListener('click', () => map.classList.add('is-awake'));
+    map.addEventListener('pointerleave', () => map.classList.remove('is-awake'));
+
+    if (reduce || !window.gsap || !window.Lenis) { addEventListener('scroll', () => solid(scrollY), { passive: true }); solid(scrollY); return; }
+    const lenis = new Lenis({ autoRaf: false, anchors: { offset: -96 }, lerp: 0.1 });
+    window.lenis = lenis;
+    lenis.on('scroll', (e) => solid(e.scroll));
+    gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
+
+    gsap.timeline({ defaults: { ease: 'power3.out', duration: 1.6 }, delay: 0.1 })
+      .from('[data-cp-step]', { x: -140, autoAlpha: 0, stagger: 0.18 })
+      .from('[data-cp-pic]', { x: 120, autoAlpha: 0, duration: 1.8 }, 0.25)
+      .from('[data-cp-pic] img', { scale: 1.18, duration: 2.4, ease: 'expo.out' }, 0.25);
+  })();
+</script>
+</body>
+</html>
