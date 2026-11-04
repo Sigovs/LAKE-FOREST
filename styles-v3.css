@@ -1525,11 +1525,10 @@ html { overflow-x: clip; }
 .cp-hero__title { margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
   font-size: var(--t-d1); line-height: var(--lh-d1); letter-spacing: var(--ls-d1); color: var(--ink); text-wrap: balance; }
 .cp-hero__title .hero__sub { margin-top: var(--s-5); color: var(--tone); }
+/* the hour is a sentence, so it reads in sentence case at body-sm, not as an uppercase label; the dot is still */
 .cp-hero__clock { display: flex; align-items: center; gap: var(--s-3); margin: var(--s-2) 0 0;
-  font-size: var(--t-label); font-weight: var(--w-label); letter-spacing: var(--ls-label); line-height: var(--lh-label); text-transform: uppercase; color: var(--ink-2);
-  font-variant-numeric: tabular-nums; }
-.cp-hero__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gt-red, #e2342b); animation: cp-blink 2.4s ease-in-out infinite; }
-@keyframes cp-blink { 50% { opacity: .25; } }
+  font-size: var(--t-body-sm); line-height: var(--lh-body-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.cp-hero__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gt-red, #e2342b); }
 .cp-hero__pic { margin: 0; justify-self: end; width: min(100%, 420px); display: grid; gap: var(--s-3); }
 .cp-hero__pic img { display: block; width: 100%; aspect-ratio: 4 / 5; object-fit: cover; object-position: 46% 40%; border-radius: 14px; filter: grayscale(.25); }
 .cp-hero__pic figcaption { margin: 0; }
@@ -1564,7 +1563,6 @@ html { overflow-x: clip; }
   .cp-map { height: 70vh; }
   .cp-map__card { left: var(--gutter); right: var(--gutter); bottom: var(--s-6); max-width: none; }
 }
-@media (prefers-reduced-motion: reduce) { .cp-hero__dot { animation: none; } }
 .cp-write .enquiry { grid-column: auto; }
 /* the frame is taller than the band and centred on it, so Google's own corner card falls outside while the
    address stays at the centre — where the page sets its own pin: a red dot with a slow ring */
