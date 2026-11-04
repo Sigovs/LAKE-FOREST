@@ -1685,23 +1685,17 @@ html { overflow-x: clip; }
   .hero__ctrl { position: relative; inset: auto; left: auto; right: auto; bottom: auto; margin: var(--s-6) var(--gutter) var(--s-6); }
 }
 
-/* v3 phone GT: a still photograph. The lit frame sits in the flow at the top, the words below it; the lamps,
-   the beams, the torch and the dust stay off, and nothing is pinned */
+/* v3 phone GT: a still photograph made for the phone (9:16), with room left at its foot for the words.
+   The desktop stage — lamps, beams, torch, dust — stays off, nothing is pinned, and the words sit on the frame */
+.gt__phone { display: none; }
 @media (max-width: 699px) {
-  #gt[data-static-phone] { display: block; min-height: 0; padding: calc(72px + var(--s-6)) 0 var(--s-9); }
+  #gt[data-static-phone] { display: block; min-height: 0; padding: 0; position: relative; }
   #gt[data-static-phone]::after { display: none; }
-  #gt[data-static-phone] .gt__stage--photo { position: relative; left: auto; top: auto; transform: none !important; width: 100%; aspect-ratio: 16 / 9; }
-  #gt[data-static-phone] .gt__dark, #gt[data-static-phone] .gt__rig, #gt[data-static-phone] .gt__torch, #gt[data-static-phone] .gt__dust { display: none; }
-  #gt[data-static-phone] .gt__lit { -webkit-mask-image: none; mask-image: none; }
-  #gt[data-static-phone] .gt__lit img:not(.gt__mark) { object-fit: cover; }
-  #gt[data-static-phone] .gt__top, #gt[data-static-phone] .gt__bottom { margin: 0 var(--gutter); }
-  #gt[data-static-phone] .gt__top { margin-top: var(--s-6); }
-  #gt[data-static-phone] .gt__bottom { margin-top: var(--s-5); }
-}
-@media (max-width: 699px) {
-  /* closer in: the frame's dark margins go, the two cars fill the width; full brightness, the mark sized to them */
-  #gt[data-static-phone] .gt__stage--photo { width: 128%; margin-left: -14%; aspect-ratio: 16 / 9; }
-  #gt[data-static-phone] .gt__lit img:not(.gt__mark) { filter: none; }
-  #gt[data-static-phone] .gt__stage--photo .gt__mark--cs { width: 12%; top: 26%; }
-  #gt[data-static-phone] { overflow: hidden; padding-top: 72px; }
+  #gt[data-static-phone] .gt__stage, #gt[data-static-phone] .gt__dust { display: none; }
+  #gt[data-static-phone] .gt__phone { display: block; width: 100%; height: auto; }
+  /* the words follow the picture in the flow and are drawn up onto its empty lower part (the frame is 16:9 tall
+     of its width; the cars end above 58%), so they never overflow on a short phone */
+  #gt[data-static-phone] .gt__top, #gt[data-static-phone] .gt__bottom { position: relative; z-index: 1; margin: 0 var(--gutter); }
+  #gt[data-static-phone] .gt__top { margin-top: calc(100vw * 16 / 9 * -.38); }
+  #gt[data-static-phone] .gt__bottom { margin-top: var(--s-5); padding-bottom: var(--s-9); }
 }
