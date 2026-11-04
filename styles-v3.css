@@ -1729,3 +1729,27 @@ html { overflow-x: clip; }
 }
 .hero__dot:focus-visible { outline: none; }
 .hero__dot:focus-visible .hero__dot-t { text-decoration: underline; text-underline-offset: 4px; }
+
+/* v3 phone Le Mans: the photograph on top with nothing written on it, then the six facts as one list — one row
+   each, the fact's word on the left, its line on the right, a hairline between rows */
+@media (max-width: 699px) {
+  #ch-lemans .lm__title, #ch-lemans .lm__down, #ch-lemans .lm__speed, #ch-lemans .lm__credit { display: none; }
+  #ch-lemans .facts { display: grid; grid-template-columns: 1fr; gap: 0; padding: var(--s-6) var(--gutter) 0; }
+  #ch-lemans .facts::after { display: none; }
+  #ch-lemans .fact { padding: var(--s-4) 0; border-top: 1px solid rgba(237,235,230,.14); }
+  #ch-lemans .fact:last-child { border-bottom: 1px solid rgba(237,235,230,.14); }
+  #ch-lemans .fact__line { display: none; }
+  #ch-lemans .fact p { display: grid; grid-template-columns: 112px minmax(0, 1fr); column-gap: var(--s-4); align-items: baseline;
+    max-width: none; margin: 0; font-size: var(--t-body-sm); line-height: var(--lh-body-sm); text-shadow: none; }
+  #ch-lemans .fact b { margin: 0; font-size: 22px; line-height: 1.1; }
+}
+@media (max-width: 699px) {
+  /* no empty band above the photograph, and the photograph at its own brightness (the desktop shade is for words on it) */
+  .ch.lm { padding-top: 72px; }
+  #ch-lemans .lm__scene { padding-top: 0; }
+  #ch-lemans .lm__photo::after { display: none; }
+}
+@media (max-width: 699px) {
+  /* the photograph's credit moves off the image to a caption just under it */
+  #ch-lemans .lm__credit { display: block; position: static; margin: var(--s-3) var(--gutter) 0; text-shadow: none; color: var(--mute); }
+}
