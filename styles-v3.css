@@ -1696,7 +1696,9 @@ html { overflow-x: clip; }
   /* the words follow the picture in the flow and are drawn up onto its empty lower part (the frame is 16:9 tall
      of its width; the cars end above 58%), so they never overflow on a short phone */
   #gt[data-static-phone] .gt__top, #gt[data-static-phone] .gt__bottom { position: relative; z-index: 1; margin: 0 var(--gutter); }
-  #gt[data-static-phone] .gt__top { margin-top: calc(100vw * 16 / 9 * -.38); }
+  #gt[data-static-phone] .gt__top { margin-top: calc(100vw * 1518 / 1080 * -.44); }   /* the cars end at about 50% of the frame */
+  /* no dead band between the Lake Forest block and the GT: the block's foot is shorter on a phone */
+  #ch-lfsc { padding-bottom: var(--s-6); }
   #gt[data-static-phone] .gt__bottom { margin-top: var(--s-5); padding-bottom: var(--s-9); }
 }
 
@@ -1705,4 +1707,14 @@ html { overflow-x: clip; }
 @media (max-width: 999px) {
   .ch.lm { padding-left: 0; padding-right: 0; }
   #ch-lemans .lm__text { background: var(--ground) !important; padding-left: var(--gutter); padding-right: var(--gutter); }
+}
+@media (max-width: 699px) {
+  /* the history wrapper's 128px foot and the frame's own dark top were stacking into a dead band above the GT */
+  [data-history] { padding-bottom: 0; }
+  #ch-lfsc { padding-bottom: var(--s-8); }
+  #gt[data-static-phone] { overflow: hidden; }
+  #gt[data-static-phone] .gt__phone { margin-top: calc(100vw * 1518 / 1080 * -.16); }   /* the empty top sixth of the frame */
+}
+@media (max-width: 699px) {
+  #gt[data-static-phone] .gt__phone { -webkit-mask-image: linear-gradient(180deg, transparent 0, #000 22%); mask-image: linear-gradient(180deg, transparent 0, #000 22%); }
 }
