@@ -1785,3 +1785,13 @@ html { overflow-x: clip; }
 }
 /* GT page hero on a phone: the words sit closer under the cars, not on the floor of the screen */
 @media (max-width: 999px) { .gp-hero:has(.gp-hero__img--cs) .gp-hero__words { padding-bottom: 22svh; } }
+
+/* v3 phone hero: the film runs up under the header, so the crest and the menu sit on the picture together
+   instead of the crest touching its top edge; a soft dark band at the top keeps both readable */
+@media (max-width: 699px) {
+  .hero__photo { margin-top: 0; aspect-ratio: auto; height: calc(100vw * .75 + 72px); }
+  .hero__shade { inset: 0 0 auto; top: 0; height: calc(100vw * .75 + 72px);
+    background: linear-gradient(180deg, rgba(11,12,13,.75) 0, rgba(11,12,13,0) 96px, rgba(11,12,13,0) 60%, var(--ground) 100%); }
+  .hero__grain { height: calc(100vw * .75 + 72px); }
+  .nav:not(.is-solid) { background: transparent; }
+}
