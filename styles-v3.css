@@ -1699,3 +1699,10 @@ html { overflow-x: clip; }
   #gt[data-static-phone] .gt__top { margin-top: calc(100vw * 16 / 9 * -.38); }
   #gt[data-static-phone] .gt__bottom { margin-top: var(--s-5); padding-bottom: var(--s-9); }
 }
+
+/* v3 below 1000px: the Le Mans chapter, like the #76, runs edge to edge, and its text block takes the page
+   ground, so neither shows as a box inside the page */
+@media (max-width: 999px) {
+  .ch.lm { padding-left: 0; padding-right: 0; }
+  #ch-lemans .lm__text { background: var(--ground) !important; padding-left: var(--gutter); padding-right: var(--gutter); }
+}
