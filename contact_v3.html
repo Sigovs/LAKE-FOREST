@@ -29,12 +29,11 @@
 <main id="top">
 
 <!-- ================================================================ HERO · short, not a full screen: the words on the left,
-     one small photograph of the family on the right, and the hour it is in Lake Bluff right now -->
+     one small photograph of the family on the right -->
 <section class="cp-hero" aria-labelledby="h-contact">
   <div class="cp-hero__words">
     <p class="eyebrow" data-cp-step>Contact</p>
     <h1 id="h-contact" class="cp-hero__title" data-cp-step>Talk to the&nbsp;family.<span class="hero__sub">About the GT, the family’s cars, or anything&nbsp;else.</span></h1>
-    <p class="cp-hero__clock" data-cp-step aria-live="off"><span class="cp-hero__dot" aria-hidden="true"></span><span data-cp-clock>Lake Bluff, Illinois</span></p>
   </div>
   <figure class="cp-hero__pic" data-cp-pic>
     <img src="assets/img/final/father-son-garage-1200.jpg" width="1200" height="750" alt="Adam and Rick Mancuso, arm in arm, in race suits in a garage beside a white Ferrari race car, its door open.">
@@ -105,18 +104,12 @@
 <script src="https://unpkg.com/lenis@1.3.26/dist/lenis.min.js"></script>
 <script src="form.js?v=final1"></script>
 <script>
-  /* Contact page: Lenis (off under reduced motion), the solid nav, the Lake Bluff clock, the words in a side staircase,
+  /* Contact page: Lenis (off under reduced motion), the solid nav, the words in a side staircase,
      and the map that wakes on a click */
   (() => {
     const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const nav = document.querySelector('[data-nav]');
     const solid = (y) => { nav.classList.toggle('is-solid', y > 40); nav.classList.toggle('is-small', y > 24); };
-
-    /* the hour in Lake Bluff, so a visitor knows whether the family is up */
-    const clock = document.querySelector('[data-cp-clock]');
-    const tick = () => { const t = new Intl.DateTimeFormat('en-US', { timeZone: 'America/Chicago', hour: 'numeric', minute: '2-digit' }).format(new Date());
-      clock.textContent = `It’s ${t} in Lake Bluff, Illinois`; };
-    tick(); setInterval(tick, 20000);
 
     /* the map ignores the pointer until it is clicked, then gives it back when the pointer leaves */
     const map = document.querySelector('[data-cp-map]'), wake = document.querySelector('[data-cp-wake]');
