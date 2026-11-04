@@ -33,3 +33,7 @@ from client/
 # client and working source folders (local only)
 ______NOV 2026 UPDATES client/
 _______GT TRASFORM/
+
+# developer export (built locally)
+handoff_v3/
+LFMS-v3-frontend.zip
