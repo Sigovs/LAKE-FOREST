@@ -309,7 +309,7 @@ to the facts of the race; then a chapter numeral, two columns and a strip of the
 
 <!-- ================================================================ THE GT · next chapter
 The car stays under its cover: no photograph of the GT has been released. -->
-<section class="gt" id="gt" data-chapter="V" data-title="The GT" data-where="Next · The GT" tabindex="-1" aria-labelledby="h-gt" data-gt>
+<section class="gt" id="gt" data-static-phone data-chapter="V" data-title="The GT" data-where="Next · The GT" tabindex="-1" aria-labelledby="h-gt" data-gt>
   <!-- the stage lights up on scroll: a dimmed frame below, the lit frame above it, revealed from each lamp outward -->
   <!-- v2: no generated car. Two lamps (drawn in CSS) strike on the scroll and light the GT mark from the family's own film -->
   <!-- v3: the family's own frame, "GT coming soon": the GT mark between the No. 48 and the black 441, its top and
@@ -444,7 +444,7 @@ The car stays under its cover: no photograph of the GT has been released. -->
 <script src="player.js?v=final1"></script>
 <script src="zoom.js?v=v2a"></script>
 <script src="micro.js?v=final1"></script>
-<script src="motion.js?v=v3b"></script>
+<script src="motion.js?v=v3c"></script>
 <script>
   /* v3 GT: a hand torch. With a mouse, the pointer carries a soft pool of light over the dim warehouse, so the
      visitor can look around the cars; touch screens keep the lamps alone */
@@ -503,7 +503,7 @@ The car stays under its cover: no photograph of the GT has been released. -->
      fainter in the dark; only runs while the section is on screen; off under reduced motion */
   (() => {
     const c = document.querySelector('[data-gt-dust]');
-    if (!c || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!c || innerWidth < 700 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const ctx = c.getContext('2d'), N = innerWidth < 700 ? 300 : 800;
     let w, h, dpr, ps = [], run = false, raf;
     const size = () => { dpr = Math.min(devicePixelRatio || 1, 2); w = c.clientWidth; h = c.clientHeight;

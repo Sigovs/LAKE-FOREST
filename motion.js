@@ -314,6 +314,9 @@
   /* the stage lights up with the scroll. The stage holds (pinned) on a dark frame; the left lamp strikes and
      its beam opens down to the car, then the right one; the words arrive once the car is lit, then it releases */
   const gtStage = q('[data-gt-stage]');
+  /* v3: on a phone the GT block is a still photograph (data-static-phone): no pin, no lamps, nothing to wait for */
+  const gtStill = gtStage && innerWidth < 700 && gtStage.closest('[data-static-phone]');
+  if (gtStage && !gtStill) {
   gsap.set(gtStage, { '--la': '-10%', '--lb': '-10%' });   /* below zero: the soft edge too stays dark */
   gsap.timeline({ defaults: { ease: 'none' },
     scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 1.2 } })   /* restored (Alex, 21 Oct): the stage holds while the lamps strike. No anticipatePin: with Lenis it pinned a frame early and the stage jumped up and back (v2) */
@@ -325,6 +328,7 @@
     .fromTo('.gt__dark', { filter: 'brightness(0.16) contrast(1.05)' }, { filter: 'brightness(0.3) contrast(1.05)', duration: 0.5 }, 0.38)
     .fromTo('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72)
     .to({}, { duration: 0.2 }, 1.2);                                                                   /* hold lit, then release */
+  }
 
   /* fonts and images change heights: keep the triggers honest */
   if (document.fonts) document.fonts.ready.then(() => ScrollTrigger.refresh());
