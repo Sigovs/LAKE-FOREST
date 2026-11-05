@@ -53,7 +53,7 @@ python3 -m http.server 8000
 
 ## Read next
 
-1. `docs/TODO.md`: the four things to finish before launch (the contact form first).
+1. `docs/TODO.md`: the three things to finish before launch (the contact form first).
 2. `design-system/README.md`: the tokens and the rules.
 3. `docs/DEVELOPMENT.md`: how the code is organised and what must not break.
 

@@ -47,6 +47,11 @@ C = {
     'foot': grab(idx, r'<footer class="foot">.*?</footer>'),
 }
 C = {k: rebase(v).replace(' id="ch-lola"', '') for k, v in C.items()}
+# the header as it sits once the page scrolls: no motion script runs here, and the top-of-page state scales the logo 1.7x
+C['header'] = C['header'].replace('<header class="nav" data-nav>', '<header class="nav is-solid is-small">')
+# and the Menu button js/menu.js adds on the site, drawn statically (it only shows below 900px)
+C['header'] = C['header'].replace('</header>', '  <button class="nav__menu" type="button" aria-expanded="false" tabindex="-1"><span class="nav__menu-t">Menu</span>'
+                                  '<span class="nav__menu-i" aria-hidden="true"><i></i><i></i></span></button>\n</header>')
 
 COLOURS = [
     ('Surface', [
@@ -142,7 +147,7 @@ PAGE = f'''<!doctype html>
   .ds-top h1 span {{ display: block; color: var(--tone); }}
   .ds-index {{ display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-5); margin: 0; padding: 0; list-style: none; }}
   .ds-index a {{ color: var(--ink-2); text-underline-offset: 4px; font-size: var(--t-body-sm); }}
-  .ds-sec {{ padding: var(--s-9) 0 0; display: grid; gap: var(--s-6); }}
+  .ds-sec {{ padding: var(--s-9) 0 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--s-6); }}   /* never wider than the page, whatever a specimen holds */
   .ds-sec > h2 {{ margin: 0; font-family: var(--f-display); font-weight: var(--w-display); font-variation-settings: "wdth" var(--display-wdth);
     font-size: var(--t-d3); line-height: var(--lh-d3); letter-spacing: var(--ls-d3); }}
   .ds-sec > p, .ds-note {{ margin: 0; max-width: 68ch; color: var(--ink-2); font-size: var(--t-body); line-height: var(--lh-body); }}
@@ -165,7 +170,7 @@ PAGE = f'''<!doctype html>
   .ds-table th, .ds-table td {{ text-align: left; padding: var(--s-3) var(--s-4) var(--s-3) 0; border-top: 1px solid var(--rule); vertical-align: top; }}
   .ds-table th {{ color: var(--mute); font-weight: var(--w-label); }}
   .ds-stage {{ position: relative; padding: var(--s-7) var(--s-6); background: var(--ground-2); border: 1px solid var(--rule); border-radius: var(--r-media); }}
-  .ds-stage--flush {{ padding: 0; overflow: hidden; }}
+  .ds-stage.ds-stage--flush {{ padding: 0; overflow: hidden; }}
   .ds-row {{ display: flex; flex-wrap: wrap; gap: var(--s-5); align-items: center; }}
   .ds-cap {{ margin: var(--s-3) 0 0; color: var(--mute); font-size: var(--t-caption); line-height: var(--lh-caption); }}
   .ds-grid2 {{ display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: var(--s-6); }}
@@ -272,7 +277,8 @@ PAGE = f'''<!doctype html>
 
   <h3 class="ds-h">Header</h3>
   <div class="ds-stage ds-stage--flush">{C['header']}</div>
-  <p class="ds-note">Fixed, 80px, transparent over the hero and solid once the page scrolls. Below 900px the links become a Menu button
+  <p class="ds-note">Fixed, 80px, transparent over the hero and solid once the page scrolls, shown here in that scrolled state. At the top
+  of the page the logo stands 1.7× larger over the hero and settles to this size on scroll. Below 900px the links become a Menu button
   that opens every page full-screen (<code>js/menu.js</code>).</p>
 
   <h3 class="ds-h">Buttons and links</h3>
@@ -322,7 +328,7 @@ PAGE = f'''<!doctype html>
     <li class="dont"><b>Don’t</b><p>Set functional text below 14px, or long reading text in the display voice.</p></li>
     <li class="dont"><b>Don’t</b><p>Use the tricolour anywhere but the label flag, or add a new hue to the interface.</p></li>
     <li class="dont"><b>Don’t</b><p>Put words over a car on a phone: the picture goes first, the words below it.</p></li>
-    <li class="dont"><b>Don’t</b><p>Add a fact without a source, or present a concept image as a photograph.</p></li>
+    <li class="dont"><b>Don’t</b><p>Add a fact without a source.</p></li>
   </ul>
 </section>
 

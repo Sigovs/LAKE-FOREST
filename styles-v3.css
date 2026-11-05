@@ -1445,6 +1445,11 @@ html { overflow-x: clip; }
 .gp-hero:has(.gp-hero__img--cs)::before {
   background: linear-gradient(180deg, rgba(11,12,13,.55) 0, rgba(11,12,13,0) 150px), linear-gradient(0deg, var(--ground) 0%, rgba(11,12,13,.6) 22%, rgba(11,12,13,0) 40%); }
 .gp-hero:has(.gp-hero__img--cs) .gp-hero__words { padding-bottom: clamp(48px, 9vh, 112px); }
+/* on a landscape screen the cars end at about 53–55% of the hero's height whatever its proportion (the frame covers it at
+   object-position 42%), so the words hang from that line, just under the cars, instead of sitting on the floor of the screen */
+@media (min-width: 1000px) {
+  .gp-hero:has(.gp-hero__img--cs) .gp-hero__words { position: absolute; inset: calc(54% + clamp(24px, 4vh, 48px)) 0 auto; padding: 0 var(--gutter); }
+}
 /* on a portrait screen the frame is not cropped to the height: it is set wide enough for both cars, near the top,
    and the ground colour of its own edges fills the rest */
 @media (max-width: 999px) { .gp-hero__img--cs { inset: auto; top: 12%; left: 50%; width: 175vw; max-width: none; height: auto; transform: translateX(-50%); } }

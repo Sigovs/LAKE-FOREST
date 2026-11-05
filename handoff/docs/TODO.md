@@ -22,15 +22,6 @@
   hand, from the show's public feed (https://omny.fm/shows/rpm-club).
 - Either update them by hand, or pull the feed at build time.
 
-## 4. GT imagery (waiting on the client)
-
-- These are AI concept images, not photographs of a build:
-  - the No. 48 → 441 hero clip;
-  - the GT "coming soon" frames;
-  - the Le Mans animation.
-- Replace them when the client's OUTLAW renders and GT photography arrive. `docs/ASSETS.md` lists which files they
-  are.
-
 ## Also check
 
 - The `<title>` and `<meta name="description">` of each page. They are written, but have not been reviewed for SEO.

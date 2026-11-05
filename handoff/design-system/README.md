@@ -101,4 +101,4 @@ second line that is a separate statement, such as a place, a descriptor or a sta
 - Set functional text below 14px, or long reading text in the display voice.
 - Use the tricolour anywhere except the label flag, or add a new hue.
 - Put words over a car on a phone. The picture goes first, then the words.
-- Add a fact without a source, or present a concept image as a photograph.
+- Add a fact without a source.
