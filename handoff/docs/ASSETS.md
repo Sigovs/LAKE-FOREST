@@ -44,7 +44,7 @@ Credits printed on the pages stay with their photographs.
 | `assets/img/mancuso-truck.jpg` | 2048×1536 | 199 KB | history.html, index.html | Family archive (supplied by the client): the Mancuso Chevrolet transporter |
 | `assets/img/rick-letter.jpg` | 619×800 | 67 KB | history.html | Family archive (supplied by the client): a letter on the dealership’s paper, signed by Rick |
 | `assets/img/rpm-glow.svg` | vector | 1 KB | css/history.css, css/styles.css | Drawn light shape behind the RPM hosts (from the Figma file) |
-| `assets/img/rpm-yellow-vette.jpg` | 1123×1400 | 160 KB | index.html, rpm.html | RPM Club: Rick and Rob Mancuso (supplied by the client) |
+| `assets/img/rpm-studio.jpg` | 576×1024 | 167 KB | index.html, rpm.html | RPM Club: Rob and Rick Mancuso in the studio, from the show’s own website (rpmclub.com, rpm-studio-mobile.jpg), as published |
 | `assets/img/skokie-sign.jpg` | 1672×940 | 361 KB | history.html, index.html | Family archive (supplied by the client): the “OK Used Cars — Mancuso Chevrolet” roadside sign |
 | `assets/img/spirit-today-center.jpg` | 1920×1080 | 253 KB | history.html, index.html | The Spirit of Le Mans 76 Corvette today |
 | `assets/img/yenko-deuce.jpg` | 770×932 | 155 KB | history.html | Family archive (supplied by the client): a Yenko “Deuce” flyer stamped by the dealership |

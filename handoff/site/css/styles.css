@@ -1488,9 +1488,12 @@ html { overflow-x: clip; }
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.018' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .3  0 0 0 0 .3  0 0 0 0 .3  0 0 0 1.6 -.3'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23n)'/%3E%3C/svg%3E"); }
 .gt__torch img { filter: brightness(1.9) contrast(1.05); }
 
-/* v3 homepage GT, darker: the room is a dim warehouse; the lamps are the light, not the frame */
-.gt__stage--photo .gt__dark img { filter: brightness(.55); }
-.gt__stage--photo .gt__lit img { filter: brightness(.68) contrast(1.08); }
+/* v3 homepage GT: the room is a dim warehouse and the lamps are the light, but the cars read from the start
+   (client, 10 Nov: "lighter, so you can see it, with the spotlights"; then "lighter still"): the room at about
+   three quarters of the frame's brightness, the lamps' pools above it. The GT mark keeps its own drop shadow, undimmed */
+.gt__stage--photo .gt__dark { filter: brightness(1) contrast(1.05); }
+.gt__stage--photo .gt__dark img { filter: brightness(.72); }
+.gt__stage--photo .gt__lit img:not(.gt__mark) { filter: brightness(1.2) contrast(1.08); }
 
 /* v3 homepage GT, aiming: while the pointer steers the lamps, the photograph is lit only inside the two pools
    where the beams land (positions and sizes set by the script), each as bright as its distance allows */

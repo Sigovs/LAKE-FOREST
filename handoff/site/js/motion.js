@@ -316,18 +316,21 @@
   const gtStage = q('[data-gt-stage]');
   /* v3: on a phone the GT block is a still photograph (data-static-phone): no pin, no lamps, nothing to wait for */
   const gtStill = gtStage && innerWidth < 700 && gtStage.closest('[data-static-phone]');
+  /* v3 photo stage (client, 10 Nov): the words are there the moment the section arrives, and the warehouse is
+     already visible; the lamps add their pools of light on top instead of opening the frame out of black */
+  const gtOpen = gtStage && gtStage.classList.contains('gt__stage--photo');
   if (gtStage && !gtStill) {
   gsap.set(gtStage, { '--la': '-10%', '--lb': '-10%' });   /* below zero: the soft edge too stays dark */
-  gsap.timeline({ defaults: { ease: 'none' },
+  const gtTl = gsap.timeline({ defaults: { ease: 'none' },
     scrollTrigger: { trigger: '[data-gt]', start: 'top top', end: '+=140%', pin: true, scrub: 1.2 } })   /* restored (Alex, 21 Oct): the stage holds while the lamps strike. No anticipatePin: with Lenis it pinned a frame early and the stage jumped up and back (v2) */
     .to({}, { duration: 0.08 }, 0)                                                                     /* dark, a beat */
     .to(gtStage, { '--la': '2%', duration: 0.05, ease: 'power4.out' }, 0.08)                           /* the left lamp strikes */
     .to(gtStage, { '--la': '100%', duration: 0.5, ease: 'power1.inOut' }, 0.16)                        /* its beam opens */
     .to(gtStage, { '--lb': '2%', duration: 0.05, ease: 'power4.out' }, 0.3)                            /* the right lamp */
     .to(gtStage, { '--lb': '100%', duration: 0.5, ease: 'power1.inOut' }, 0.38)
-    .fromTo('.gt__dark', { filter: 'brightness(0.16) contrast(1.05)' }, { filter: 'brightness(0.3) contrast(1.05)', duration: 0.5 }, 0.38)
-    .fromTo('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72)
+    .fromTo('.gt__dark', { filter: `brightness(${gtOpen ? 1 : 0.16}) contrast(1.05)` }, { filter: `brightness(${gtOpen ? 1.05 : 0.3}) contrast(1.05)`, duration: 0.5 }, 0.38)
     .to({}, { duration: 0.2 }, 1.2);                                                                   /* hold lit, then release */
+  if (!gtOpen) gtTl.fromTo('.gt__top > *, .gt__bottom > *', { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72);
   }
 
   /* fonts and images change heights: keep the triggers honest */

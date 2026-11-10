@@ -51,7 +51,7 @@ ORIGIN = {
     'mancuso-truck.jpg': FAMILY + ': the Mancuso Chevrolet transporter',
     'rick-letter.jpg': FAMILY + ': a letter on the dealership’s paper, signed by Rick',
     'rpm-glow.svg': 'Drawn light shape behind the RPM hosts (from the Figma file)',
-    'rpm-yellow-vette.jpg': 'RPM Club: Rick and Rob Mancuso (supplied by the client)',
+    'rpm-studio.jpg': 'RPM Club: Rob and Rick Mancuso in the studio, from the show’s own website (rpmclub.com, rpm-studio-mobile.jpg), as published',
     'skokie-sign.jpg': FAMILY + ': the “OK Used Cars — Mancuso Chevrolet” roadside sign',
     'spirit-today-center.jpg': 'The Spirit of Le Mans 76 Corvette today',
     'yenko-deuce.jpg': FAMILY + ': a Yenko “Deuce” flyer stamped by the dealership',
