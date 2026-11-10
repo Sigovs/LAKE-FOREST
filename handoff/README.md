@@ -51,6 +51,11 @@ python3 -m http.server 8000
 # open http://localhost:8000/
 ```
 
+## Changes after launch
+
+The live site was built from this folder as it stood on 4 November 2026. Each later change is a package in
+[`changes/`](changes/): what to replace on the live theme, and where.
+
 ## Read next
 
 1. `docs/TODO.md`: the three things to finish before launch (the contact form first).
