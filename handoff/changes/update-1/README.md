@@ -1,136 +1,165 @@
-# Update 1 · changes to the live site
+# Update 1 · changes to www.lakeforestmotorsports.com
 
-**For:** www.lakeforestmotorsports.com, built from this handoff as it stood on 4 November 2026.
-**Reference build with every change below:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
+**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction and is in the client preview. Apply when all three are approved.
+**Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
+**Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
+**This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
 
-| # | Page | Change | What you touch |
-|---|---|---|---|
-| 1 | `/` | Hero film: black and white lasts longer | two video files and their cache version |
-| 2 | `/` (desktop) | GT block: the words show at once, and the picture is lighter | `aan-home.js` (two lines), `style.css` (three rules) |
-| 3 | `/` and `/rpm/` | RPM Club: the studio picture from rpmclub.com replaces the yellow-Corvette photograph | one new image, two `<img>` tags |
-
-After applying, bump the versions on `style.css` and `aan-home.js`, and purge the page cache or CDN if you have one.
+This file is written so it can be handed to an AI coding agent (Claude or similar) as is. Every change below gives the exact file,
+the exact text before and after, the files to download, and how to check it. Before and after were checked against the live site
+on 11 November 2026.
 
 ---
 
-## 1. Homepage hero film: black and white lasts longer
+## Instructions for the agent
 
-The opening of the hero film now stays black and white until 3.0 s and is in full colour by 3.8 s. Before, it was black
-and white until 1.6 s. Only the grade changes. The length (40.04 s), the frame rate, the size, the poster and the 10 s
-point where the second slide starts are all as before, so there are **no code changes**.
+You are updating the WordPress theme `aanWordpress` of www.lakeforestmotorsports.com. Apply the three changes below, in order.
 
-![Hero, before and after, 0–4.5 s](images/01-hero-before-after.jpg)
+Rules:
+- Change only what is listed. Do not reformat, rename or refactor anything else.
+- `assets/css/style.css` may be minified. Match each rule by its selector and edit it in place, in the same style as the file.
+- If a "before" text is not found exactly, stop and report it. Do not guess.
+- Download the files from the URLs given. Do not re-encode, resize or rename them.
+- When done, bump the version query of `assets/css/style.css` and `assets/js/aan-home.js` in the theme's enqueue, and purge any
+  page cache or CDN.
+- Report each change as done or not done, and the result of each check.
 
-**Replace** these files with the ones in `videos/`, keeping the same names:
+| # | Page | Change | Files touched |
+|---|---|---|---|
+| 1 | `/` | Hero film: the coloured No. 48 stays longer before it turns into the black 441 | `videos/hero-v3.mp4`, `videos/hero-v3-mobile.mp4`, the homepage hero `<video>` |
+| 2 | `/` (desktop) | GT block: the words show at once, and the picture is lighter | `assets/js/aan-home.js`, `assets/css/style.css` |
+| 3 | `/` and `/rpm/` | RPM Club: the studio picture replaces the yellow-Corvette photograph | `images/mockup/rpm-studio.jpg` (new), the RPM `<img>` on both pages |
 
-| File | Size | Replaces on the server |
+---
+
+## 1. Homepage hero film: the colour stays longer
+
+The concept film opens with the No. 48 race car in black and white, colours it, and then turns it into the black 441 street car.
+In the new film the colour arrives sooner: full colour from about 2.1 s, where it used to be about 2.8 s. The coloured No. 48 is now on
+screen about twice as long before it turns black. Only the grade changes. The length (40.04 s), the frame rate, the size, the poster
+and the 10 s point where the second slide starts are all as before, so **no code changes**.
+
+![Hero, before and after, 1.5–3.25 s](images/01-hero-before-after.jpg)
+
+**1a. Replace two files.** Download them and overwrite these files on the server, keeping the same names:
+
+| Download | Size | Overwrite |
 |---|---|---|
-| `videos/hero-v3.mp4` | 1280×720 · 9.3 MB | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
-| `videos/hero-v3-mobile.mp4` | 720×406 · 2.7 MB | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,728,382 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,744,308 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
 
-**Bust the cache (required).** The server sends these files with `Cache-Control: max-age=31536000`, so returning visitors
-would keep the old film for up to a year. In the homepage `<video id="home-video">`, add `?v=2` to both sources:
+**1b. Bust the cache (required).** The server sends these videos with `Cache-Control: max-age=31536000`, so without a new URL
+returning visitors would keep the old film for up to a year. In the homepage hero `<video id="home-video">`, add `?v=2` to both sources.
 
+Before:
 ```html
-<source src="…/aanWordpress/videos/hero-v3-mobile.mp4?v=2" type="video/mp4" media="(max-width: 699px)" />
+<source src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4" type="video/mp4" media="(max-width: 699px)" />
+<source src="/wp-content/themes/aanWordpress/videos/hero-v3.mp4" type="video/mp4" />
+```
+After:
+```html
+<source src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4?v=2" type="video/mp4" media="(max-width: 699px)" />
 <source src="/wp-content/themes/aanWordpress/videos/hero-v3.mp4?v=2" type="video/mp4" />
 ```
 
-**Check:** the No. 48 race car is black and white for about 3 seconds, then the colour comes in as it turns into the black
-441. The same below 700px. The "The GT" / "Since 1923" controller still switches at 10 s.
+**Check:**
+- `curl -sI <video URL>?v=2` returns `Content-Length: 9728382` (desktop) and `2744308` (mobile).
+- In a private window: the No. 48 is black and white for about 1.6 s, in full colour from about 2 s, then turns into the black 441
+  at about 3 s. The same below 700px.
+- The "The GT" / "Since 1923" controller still switches at 10 s.
 
 ---
 
 ## 2. Homepage GT block: words at once, a lighter picture
 
-This is the "A tribute to the Chevrolet Corvette" block (`#gt`), on desktop only. On a phone it is a still picture and does not
-change.
+This is the "A tribute to the Chevrolet Corvette" block (`#gt`), on desktop only. On a phone (below 700px) it is a still picture and
+does not change.
 
-- **The words are there when you arrive.** "A tribute to the Chevrolet Corvette", the lead line, "Launching soon" and the
-  two buttons used to fade in near the end of the pinned scroll. Now they are visible from the start.
-- **The picture is lighter.** The two cars and the GT mark are visible from the start. The two lamps still strike on the
-  scroll and add their pools of light. The beams, the pointer torch and the dust are unchanged.
+- **The words are there on arrival.** "A tribute to the Chevrolet Corvette", the lead line, "Launching soon" and the two buttons used
+  to fade in near the end of the pinned scroll. Now they are visible from the start.
+- **The picture is lighter.** The two cars and the GT mark are visible from the start. The two lamps still strike on the scroll and
+  add their pools of light. The beams, the pointer torch and the dust are unchanged.
 - The pin, its length and the lamp timing are unchanged.
 
 ![GT block, before and after, 1440 px](images/02-gt-before-after.jpg)
 
-**JavaScript: `assets/js/aan-home.js`, in the GT timeline (around lines 357–370).**
+**2a. JavaScript: `assets/js/aan-home.js`, the GT timeline (lines 368–369 on 11 Nov 2026).**
 
-Change the brightness of the warehouse layer:
-
+Replace this line:
 ```js
-// before
-.fromTo(q('.gt__dark'), { filter: 'brightness(0.16) contrast(1.05)' }, { filter: 'brightness(0.3) contrast(1.05)', duration: 0.5 }, 0.38)
-// after
-.fromTo(q('.gt__dark'), { filter: 'brightness(1) contrast(1.05)' }, { filter: 'brightness(1.05) contrast(1.05)', duration: 0.5 }, 0.38)
+      .fromTo(q('.gt__dark'), { filter: 'brightness(0.16) contrast(1.05)' }, { filter: 'brightness(0.3) contrast(1.05)', duration: 0.5 }, 0.38)
 ```
-
-Delete the line that fades the words in. Keep the rest of the timeline, including the closing `.to({}, { duration: 0.2 }, 1.2)`:
-
+with:
 ```js
-// delete
-.fromTo(qa('.gt__top > *, .gt__bottom > *'), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72)
+      .fromTo(q('.gt__dark'), { filter: 'brightness(1) contrast(1.05)' }, { filter: 'brightness(1.05) contrast(1.05)', duration: 0.5 }, 0.38)
 ```
 
-**CSS: `assets/css/style.css`.** Replace these three rules:
-
-```css
-/* before */
-.gt__dark { filter: brightness(.16) contrast(1.05); }
-.gt__stage--photo .gt__dark img { filter: brightness(.55); }
-.gt__stage--photo .gt__lit img { filter: brightness(.68) contrast(1.08); }
+Delete this line completely:
+```js
+      .fromTo(qa('.gt__top > *, .gt__bottom > *'), { autoAlpha: 0, y: 12 }, { autoAlpha: 1, y: 0, duration: 0.3, stagger: 0.04, ease: 'power1.out' }, 0.72)
 ```
+Keep the rest of the timeline as it is, including the line that follows, `.to({}, { duration: 0.2 }, 1.2)`. Check that the
+chain still ends with a semicolon.
 
-with these:
+**2b. CSS: `assets/css/style.css`.** Change three rules. Here they are as they appear in the live (minified) file.
 
-```css
-/* after */
-.gt__dark { filter: brightness(1) contrast(1.05); }
-.gt__stage--photo .gt__dark img { filter: brightness(.72); }
-.gt__stage--photo .gt__lit img:not(.gt__mark) { filter: brightness(1.2) contrast(1.08); }
-```
+| Before | After |
+|---|---|
+| `.gt__dark{filter:brightness(0.16) contrast(1.05)}` | `.gt__dark{filter:brightness(1) contrast(1.05)}` |
+| `.gt__stage--photo .gt__dark img{filter:brightness(0.55)}` | `.gt__stage--photo .gt__dark img{filter:brightness(0.72)}` |
+| `.gt__stage--photo .gt__lit img{filter:brightness(0.68) contrast(1.08)}` | `.gt__stage--photo .gt__lit img:not(.gt__mark){filter:brightness(1.2) contrast(1.08)}` |
 
-The `:not(.gt__mark)` matters. The old rule also dimmed the GT mark, which is why the mark looked grey. The mark now keeps
-its own rule, which is already in the file: `.gt__stage--photo .gt__mark--cs { … filter: drop-shadow(…) }`.
+The `:not(.gt__mark)` in the third rule matters. The old rule also dimmed the GT logo above the cars, which is why it looked grey.
+The logo keeps its own rule, which is already in the file and must not change: `.gt__stage--photo .gt__mark--cs{…filter:drop-shadow(…)…}`.
 
-**Check, on a desktop at 1440 or 1920:**
-- On reaching the block, the cars, the GT mark and all the words are visible while the lamps are still dark.
+**Check, on a desktop at 1440 or 1920 wide:**
+- On reaching the block, the cars, the GT logo and all the words are visible, and the two lamps are still dark.
 - Scrolling on, the left lamp strikes, then the right one, and the cars brighten in their pools. Then the block releases.
 - With the mouse over the block, the torch and the lamps still follow it.
-- Below 700px, nothing changes.
+- The console shows no errors. Below 700px, nothing changes.
 
 ---
 
-## 3. RPM Club: the studio picture from rpmclub.com replaces the yellow-Corvette photograph
+## 3. RPM Club: the studio picture replaces the yellow-Corvette photograph
 
-The client does not want the photograph of Rob and Rick on the yellow Corvette. It is replaced by the studio picture from
-the show's own website (rpmclub.com): both hosts at their microphones under the RPM Club sign. This is on the homepage RPM
-Club block and on the RPM Club page hero. The layout does not change, only the image.
+The client does not want the photograph of Rob and Rick on the yellow Corvette. It is replaced by the studio picture from the
+show's own website (rpmclub.com): both hosts at their microphones under the RPM Club sign. This applies to the homepage RPM Club
+block and the RPM Club page hero. The layout does not change, only the image.
 
 ![RPM Club block, before and after](images/03-rpm-before-after.jpg)
 
-**Add** `images/rpm-studio.jpg` (576×1024, 167 KB, as published on rpmclub.com as `rpm-studio-mobile.jpg`) to
-`wp-content/themes/aanWordpress/images/mockup/`.
+**3a. Add one file.** Download it and save it as `wp-content/themes/aanWordpress/images/mockup/rpm-studio.jpg`:
 
-**Homepage `/`, the RPM Club block (`.rpm__photo`).** Replace the `<img>`:
+| Download | Size |
+|---|---|
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/images/rpm-studio.jpg | 576×1024 · 170,955 bytes (the show's own `rpm-studio-mobile.jpg`) |
 
+**3b. Homepage `/`, the RPM Club block (`<figure class="rpm__photo">`).** Replace the `<img>`.
+
+Before:
 ```html
-<!-- before -->
-<img src="…/images/mockup/rpm-yellow-vette.jpg" width="1123" height="1400" loading="lazy" alt="Rob and Rick Mancuso in white shirts, …">
-<!-- after -->
-<img src="…/images/mockup/rpm-studio.jpg?v=2" width="576" height="1024" style="object-position: 50% 42%" loading="lazy"
-     alt="Rob and Rick Mancuso at their microphones in the RPM Club studio, under the RPM Club sign.">
+    <img loading="lazy" src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/images/mockup/rpm-yellow-vette.jpg" width="1123" height="1400" loading="lazy"
+         alt="Rob and Rick Mancuso in white shirts, sitting on the nose of a yellow Corvette in a service bay, laughing.">
+```
+After:
+```html
+    <img loading="lazy" src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/images/mockup/rpm-studio.jpg?v=1" width="576" height="1024" style="object-position: 50% 42%"
+         alt="Rob and Rick Mancuso at their microphones in the RPM Club studio, under the RPM Club sign.">
 ```
 
-**RPM Club page `/rpm/`, the hero picture (`.cp-hero__pic`).** Replace the `<img>` the same way and keep `fetchpriority="high"`.
-The caption "Rob and Rick Mancuso, the hosts." stays:
+**3c. RPM Club page `/rpm/`, the hero picture (`<figure class="cp-hero__pic">`).** Replace the `<img>`, and keep its
+`<figcaption>` ("Rob and Rick Mancuso, the hosts.").
 
+Before:
 ```html
-<img fetchpriority="high" src="…/images/mockup/rpm-studio.jpg?v=2" width="576" height="1024" style="object-position: 50% 42%"
-     alt="Rob and Rick Mancuso at their microphones in the RPM Club studio, under the RPM Club sign.">
+<img fetchpriority="high" src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/images/mockup/rpm-yellow-vette.jpg" width="1123" height="1400" style="object-position: 50% 45%" alt="Rob and Rick Mancuso in white shirts, sitting on the nose of a yellow Corvette in a service bay, laughing.">
+```
+After:
+```html
+<img fetchpriority="high" src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/images/mockup/rpm-studio.jpg?v=1" width="576" height="1024" style="object-position: 50% 42%" alt="Rob and Rick Mancuso at their microphones in the RPM Club studio, under the RPM Club sign.">
 ```
 
-No CSS changes: both slots already crop to their portrait frame (`object-fit: cover`), and the `object-position` keeps the sign and
-both hosts in it. You can delete `rpm-yellow-vette.jpg` from the theme once both pages are updated.
+No CSS changes: both slots already crop to a portrait frame (`object-fit: cover`), and the `object-position` keeps the sign and
+both hosts in it. Once both pages are updated, `rpm-yellow-vette.jpg` is no longer used.
 
-**Check:** on the homepage and on `/rpm/`, the RPM CLUB sign and both hosts are in the frame, at desktop and on a phone.
+**Check:** on `/` and on `/rpm/`, at desktop and on a phone, the RPM CLUB sign and both hosts are in the frame, with nothing cut off.

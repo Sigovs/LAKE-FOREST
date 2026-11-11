@@ -55,7 +55,7 @@ ORIGIN = {
     'skokie-sign.jpg': FAMILY + ': the “OK Used Cars — Mancuso Chevrolet” roadside sign',
     'spirit-today-center.jpg': 'The Spirit of Le Mans 76 Corvette today',
     'yenko-deuce.jpg': FAMILY + ': a Yenko “Deuce” flyer stamped by the dealership',
-    'hero-v3.mp4': '0–10 s the No. 48 → 441 film (black and white for the first 3 s, colour from 3.8 s), then 30 s of Buzz Fyhrie’s 1977 Road America film',
+    'hero-v3.mp4': '0–10 s the No. 48 → 441 film (black and white for the first 1.6 s, in full colour from 2.1 s), then 30 s of Buzz Fyhrie’s 1977 Road America film',
     'hero-v3-mobile.mp4': 'Phone copy of hero-v3.mp4 (720px)',
     'lemans-76.mp4': 'The 1976 Le Mans photograph by Albert Lamberts, animated; number shown as 76. All-intra encode for scroll scrubbing',
 }
