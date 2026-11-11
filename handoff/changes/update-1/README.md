@@ -1,12 +1,12 @@
 # Update 1 · changes to www.lakeforestmotorsports.com
 
-**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction (the hero films in this folder were last replaced on 11 November; see 1c if you downloaded them earlier); 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
+**Status:** final, approved by the client on 11 November 2026. Apply all five changes.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
 
 This file is written so it can be handed to an AI coding agent (Claude or similar) as is. Every change below gives the exact file,
-the exact text before and after, the files to download, and how to check it. Before and after were checked against the live site
+the exact text before and after, the files to download, and how to check it. Every "before" was checked against the live site
 on 11 November 2026.
 
 ---
@@ -64,14 +64,6 @@ After:
 <source src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4?v=2" type="video/mp4" media="(max-width: 699px)" />
 <source src="/wp-content/themes/aanWordpress/videos/hero-v3.mp4?v=2" type="video/mp4" />
 ```
-
-**1c. Only if the hero films were already installed from an earlier download of this folder.** The two films here were replaced
-more than once on 11 November. Check the live file: `curl -sI https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3.mp4`.
-- `Content-Length: 9689496`: the original film is still there. Do 1a and 1b as written.
-- `Content-Length: 9738527`: the current film is already installed. Nothing to do.
-- Any other size (for example `9742359`, `9728409` or `9747712`): an earlier version is installed. Do 1a again, and in 1b raise the
-  `?v=` on both sources one step above what the live page has now (`?v=3` if it has `?v=2`, `?v=4` if it has `?v=3`), so that
-  visitors who already cached the earlier film get the new one. The checks below then apply to that `?v=`.
 
 **Check:**
 - `curl -sI <video URL>?v=2` returns `Content-Length: 9738527` (desktop) and `2824467` (mobile).
@@ -201,7 +193,7 @@ the same column, never wider than the file itself (576px). Below 1000px nothing 
 
 ## 5. RPM Club and Contact: the History page's background
 
-The History page (`/history/`) has a background of its own: one fixed layer of grey, uneven light with a fine grain,
+The History page (`/history/`) has a background of its own: two fixed layers of grey, uneven light with a fine grain,
 behind the whole page, which the content scrolls over (the `.hist::before` / `.hist::after` rules in `style.css`).
 The same layer now goes on the RPM Club page and the Contact page, with the same values. Nothing else on those
 pages changes.
@@ -214,7 +206,7 @@ already adds to `<body>` (`page-template-template-rpm`, `page-template-template-
 .page-template-template-rpm,.page-template-template-contact{--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 -.35'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");background:#0b0c0d;isolation:isolate}
 .page-template-template-rpm::before,.page-template-template-rpm::after,.page-template-template-contact::before,.page-template-template-contact::after{content:"";position:fixed;z-index:-1;pointer-events:none;-webkit-mask-image:var(--grain);mask-image:var(--grain);-webkit-mask-size:220px 220px;mask-size:220px 220px}
 .page-template-template-rpm::before,.page-template-template-contact::before{left:-14%;top:8%;width:104%;height:120vh;transform:rotate(-6deg);opacity:.62;background:url("/wp-content/themes/aanWordpress/images/mockup/rpm-glow.svg") center/100% 100% no-repeat}
-.page-template-template-rpm::after,.page-template-template-contact::after{content:"";position:fixed;z-index:-1;pointer-events:none;-webkit-mask-image:var(--grain);mask-image:var(--grain);-webkit-mask-size:220px 220px;mask-size:220px 220px}
+.page-template-template-rpm::after,.page-template-template-contact::after{right:-8%;top:30vh;width:48%;height:70vh;filter:blur(8px);background:radial-gradient(38% 34% at 46% 50%, rgba(237, 235, 230, 0.11), transparent 72%),radial-gradient(24% 30% at 64% 38%, rgba(237, 235, 230, 0.08), transparent 70%)}
 ```
 
 If the theme's page templates have other names, use the `page-template-…` classes that WordPress prints on the

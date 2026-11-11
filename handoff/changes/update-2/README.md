@@ -1,7 +1,6 @@
 # Update 2 · the Gallery page on www.lakeforestmotorsports.com
 
-**Status:** built and in the client preview (11 November 2026). The client may still ask for small changes to the gallery;
-they will be added here.
+**Status:** final (11 November 2026). The client wants it after update 1: apply update 1 first.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build:** https://sigovs.github.io/LAKE-FOREST/handoff/site/gallery.html (the page as it must look and behave)
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-2
