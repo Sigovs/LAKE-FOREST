@@ -90,7 +90,9 @@ them. Write it here: the business goal, the audience, what must not change._
 - **After launch (10 Nov 2026, Alex).** The live site (www.lakeforestmotorsports.com, AAN WordPress) was built from tag `live-2026-11`.
   Edits go into the v3 files as before. They are handed to the devs as **one combined package per round**
   (`handoff/changes/update-N/`), never one per change, and only once the client approves the preview. Packages are written so the devs can hand them to an AI agent as they are: exact
-  before/after against the live code, raw download URLs and checks. Update 1: GT and RPM approved. The hero was revised on 11 Nov:
+  before/after against the live code, raw download URLs and checks. Update 1 final and handed over on 11 Nov (5b9b6b9); update 2, the Gallery, final, applied after it. Before
+  a package goes out, re-check every "before" on live, and copy every live rule with a selector, not the first match (change 5
+  first copied a duplicate `.hist::after`). The hero was revised on 11 Nov:
   the client's first note ("black lasts longer") was a mix-up for "the colour stays longer before the black car".
 - **Hero film (11 Nov 2026, Alex).** Never retime the film: a slow-motion hold on the coloured No. 48 was **rejected** ("the
   slowing shows"), and an earlier saturation boost that pulsed read as "the video stutters". Current: `tools/colour-hero.py`
