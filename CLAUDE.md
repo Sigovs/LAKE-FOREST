@@ -94,7 +94,7 @@ them. Write it here: the business goal, the audience, what must not change._
   the client's first note ("black lasts longer") was a mix-up for "the colour stays longer before the black car".
 - **Hero film (11 Nov 2026, Alex).** Never retime the film: a slow-motion hold on the coloured No. 48 was **rejected** ("the
   slowing shows"), and an earlier saturation boost that pulsed read as "the video stutters". Current: `tools/colour-hero.py`
-  carries the colour back onto the B&W frames along the optical flow (own speed, full colour ~1.3–2.6 s). After any change to the
+  carries the colour back onto the B&W frames along the optical flow (own speed, full colour ~0.7–2.6 s at the client's request, B&W only to 0.2 s). After any change to the
   film, check per frame that saturation rises monotonically and that motion (YDIF) matches the original.
 - **Gallery (11 Nov 2026, Alex).** `gallery_v3.html`: the family's photo archive, which the client will keep filling in the CMS. It is
   **its own header item after History, not a dropdown** (a History dropdown was built and rejected). Captions stay neutral: only what

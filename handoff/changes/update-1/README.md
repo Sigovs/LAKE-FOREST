@@ -1,6 +1,6 @@
 # Update 1 · changes to www.lakeforestmotorsports.com
 
-**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction (the hero films in this folder were replaced the same day; see 1c if you downloaded them earlier); 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
+**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction (the hero films in this folder were last replaced on 11 November; see 1c if you downloaded them earlier); 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
@@ -38,8 +38,8 @@ Rules:
 
 The concept film opens with the No. 48 race car in black and white, colours it, and then turns it into the black 441 street car.
 The client asked to hold the colour on the No. 48 longer before it fades into the new car. In the new film the No. 48 takes its
-colour sooner, at about 1–1.4 s, so it is in full colour from about 1.3 s to about 2.6 s (it used to be about 0.6 s), and then turns
-into the 441 exactly as before. The film plays at its own speed throughout: nothing is slowed down or sped up. The length (40.04 s),
+colour almost at once, between about 0.2 and 0.7 s, so it is in full colour from about 0.7 s to about 2.6 s (it used to be about
+0.6 s), and then turns into the 441 exactly as before. The film plays at its own speed throughout: nothing is slowed down or sped up. The length (40.04 s),
 the frame rate, the size, the poster and the 10 s point where the second slide starts are all as before, so **no code changes**.
 
 ![Hero, before and after, 0.5–5 s](images/01-hero-before-after.jpg)
@@ -48,8 +48,8 @@ the frame rate, the size, the poster and the 10 s point where the second slide s
 
 | Download | Size | Overwrite |
 |---|---|---|
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,742,359 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,824,241 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,738,527 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,824,467 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
 
 **1b. Bust the cache (required).** The server sends these videos with `Cache-Control: max-age=31536000`, so without a new URL
 returning visitors would keep the old film for up to a year. In the homepage hero `<video id="home-video">`, add `?v=2` to both sources.
@@ -66,15 +66,16 @@ After:
 ```
 
 **1c. Only if the hero films were already installed from an earlier download of this folder.** The two films here were replaced
-on 11 November. Check the live file: `curl -sI https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3.mp4`.
+more than once on 11 November. Check the live file: `curl -sI https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3.mp4`.
 - `Content-Length: 9689496`: the original film is still there. Do 1a and 1b as written.
-- `Content-Length: 9742359`: the current film is already installed. Nothing to do.
-- Any other size (for example `9728409` or `9747712`): an earlier version is installed. Do 1a again, and in 1b use `?v=3` instead of
-  `?v=2` on both sources, so that visitors who already cached `?v=2` get the new film. The checks below then apply to `?v=3`.
+- `Content-Length: 9738527`: the current film is already installed. Nothing to do.
+- Any other size (for example `9742359`, `9728409` or `9747712`): an earlier version is installed. Do 1a again, and in 1b raise the
+  `?v=` on both sources one step above what the live page has now (`?v=3` if it has `?v=2`, `?v=4` if it has `?v=3`), so that
+  visitors who already cached the earlier film get the new one. The checks below then apply to that `?v=`.
 
 **Check:**
-- `curl -sI <video URL>?v=2` returns `Content-Length: 9742359` (desktop) and `2824241` (mobile).
-- In a private window: the No. 48 is black and white for about 1 s, in full colour from about 1.3 s to about 2.6 s, then turns
+- `curl -sI <video URL>?v=2` returns `Content-Length: 9738527` (desktop) and `2824467` (mobile).
+- In a private window: the No. 48 is black and white only for a moment, in full colour from about 0.7 s to about 2.6 s, then turns
   into the black 441 by about 3.5 s, at normal speed. The same below 700px.
 - The "The GT" / "Since 1923" controller still switches at 10 s.
 

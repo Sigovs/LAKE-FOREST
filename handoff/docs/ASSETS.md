@@ -50,7 +50,7 @@ Credits printed on the pages stay with their photographs.
 | `assets/img/spirit-today-center.jpg` | 1920×1080 | 253 KB | history.html, index.html | The Spirit of Le Mans 76 Corvette today |
 | `assets/img/yenko-deuce.jpg` | 770×932 | 155 KB | history.html | Family archive (supplied by the client): a Yenko “Deuce” flyer stamped by the dealership |
 | `assets/video/hero-v3-mobile.mp4` | 720x406 | 2.7 MB | index.html | Phone copy of hero-v3.mp4 (720px) |
-| `assets/video/hero-v3.mp4` | 1280x720 | 9.3 MB | index.html | 0–10 s the No. 48 → 441 film (black and white for the first 0.9 s, the No. 48 in full colour from 1.3 s, then it turns into the 441), then 30 s of Buzz Fyhrie’s 1977 Road America film |
+| `assets/video/hero-v3.mp4` | 1280x720 | 9.3 MB | index.html | 0–10 s the No. 48 → 441 film (black and white for the first 0.2 s, the No. 48 in full colour from 0.7 s, then it turns into the 441), then 30 s of Buzz Fyhrie’s 1977 Road America film |
 | `assets/video/lemans-76.mp4` | 1600x900 | 7.7 MB | index.html | The 1976 Le Mans photograph by Albert Lamberts, animated; number shown as 76. All-intra encode for scroll scrubbing |
 
 The source originals (full-resolution files, the client’s folders) are not part of the site and are kept outside

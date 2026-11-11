@@ -6,8 +6,8 @@ after, and the frames before 1.62 s are pure black and white. A slow-motion hold
 slowing shows). Instead the colour of the first fully coloured frame (2.125 s, after the regrade-hero.py grade) is
 carried back onto the black-and-white frames along the optical flow, so the shot keeps its own speed and timing:
 
-  0-0.9 s black and white (as before) · 0.9-1.4 s the colour comes in (smoothstep) · from 1.4 s full colour ·
-  ~2.65 s the morph, untouched · 10 s the 1977 film, untouched
+  0-0.2 s black and white · 0.2-0.7 s the colour comes in (smoothstep) · from 0.7 s full colour (the client,
+  11 Nov 2026: "full colour already at 0.7") · ~2.65 s the morph, untouched · 10 s the 1977 film, untouched
 
 Only chroma is carried; every frame keeps its own luma, so detail and light are the original's. The flow is taken in
 short hops (each frame is warped from an anchor at most HOP frames later, the anchor already coloured), because one long
@@ -25,7 +25,7 @@ size = sys.argv[6] if len(sys.argv) > 6 else None
 FPS, CLIP_FRAMES, W, H = 24, 240, 1280, 720
 T0, T1, CAP = 1.62, 2.12, 4.0                      # the grade of regrade-hero.py
 REF, HOP = 51, 12                                  # first fully coloured frame (2.125 s); flow hop in frames
-C0, C1 = 0.9, 1.4                                  # the colour comes in between these (s)
+C0, C1 = 0.2, 0.7                                  # the colour comes in between these (s)
 ff = ['ffmpeg', '-v', 'error', '-y']
 
 
