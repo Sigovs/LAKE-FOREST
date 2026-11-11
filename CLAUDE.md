@@ -98,6 +98,7 @@ them. Write it here: the business goal, the audience, what must not change._
   `tools/gallery-data.json` via `tools/prepare-gallery.py` (EXIF/GPS stripped, sRGB, 960 tile + 1600 view, light files).
   Category filter, **rejected:** a plain hairline list with counts ("1/10"); a title-scale typographic index ("much smaller");
   a photo popping up beside the cursor on hover. **Current:** a small one-line bar, sticky under the header, control-size words
-  with counts and a sliding 2px marker; it scrolls sideways when categories are added; a choice re-lays the grid with Flip.
+  with counts; **multi-select, no checkboxes** (each chosen category underlined, All or none = everything); it scrolls sideways
+  when categories are added; a change re-lays the grid with Flip. The gallery will most likely be a **WordPress page** the client fills.
 - **v2 (28 Oct 2026):** client notes go into `index_v2.html` / `history_v2.html` / `styles-v2.css`; the delivered v1 (tag
   `client-2026-10-21`) stays untouched. Shared JS changes must keep v1 working (e.g. `data-speed` falls back to 218).

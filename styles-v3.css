@@ -1814,7 +1814,7 @@ html { overflow-x: clip; }
 .gx-wrap { --gx-pad: calc(var(--gutter) + var(--col) * .5); padding: 0 var(--gx-pad) var(--s-10); }
 /* the category bar: small, one line, held under the header while the photographs scroll (sticky inside .gx-wrap, so it
    lets go at the end of the photographs). Any number of categories: past the width it scrolls sideways inside
-   itself, with a fade at the edge that has more. A 2px line marks the chosen one and slides to the next */
+   itself, with a fade at the edge that has more. Several categories can be on at once, each underlined */
 .gx-filter { display: none; }
 .js .gx-filter { display: block; position: sticky; top: 80px; z-index: 30; margin: 0 calc(var(--gx-pad) * -1) var(--s-6); padding: 0 var(--gx-pad);
   background: rgba(11, 12, 13, .9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(237,235,230,.12); }
@@ -1832,8 +1832,11 @@ html { overflow-x: clip; }
 .gx-filter button:hover, .gx-filter button[aria-pressed="true"] { color: #fff; }
 .gx-filter button[aria-pressed="true"] .gx-filter__n { color: var(--ink-2); }
 .gx-filter button:focus-visible { outline-offset: -2px; }
-.gx-filter__line { position: absolute; left: 0; bottom: 0; width: 1px; height: 2px; background: var(--ink); transform-origin: 0 0; transform: scaleX(0); pointer-events: none; }
-.gx-filter__line.is-ready { transition: transform .45s var(--ease-out); }
+/* several categories can be on at once: each one that is on carries its own 2px line, drawn in from the left */
+.gx-filter button { position: relative; }
+.gx-filter button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--ink);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform .4s var(--ease-out); }
+.gx-filter button[aria-pressed="true"]::after { transform: none; }
 .gx-wrap:focus { outline: none; }
 .gx { --row: 240px; display: flex; flex-wrap: wrap; gap: var(--s-7) var(--s-4); max-width: 1880px; margin: 0 auto; }
 .gx::after { content: ""; flex: 10000 1 0; }   /* the last row keeps the row height instead of stretching */
@@ -1862,7 +1865,7 @@ html { overflow-x: clip; }
   .gx__item { flex: 1 1 100%; }
   .gx::after { display: none; }
 }
-@media (prefers-reduced-motion: reduce) { .gx__open img, .gx-filter button, .gx-filter__n, .gx-filter__line { transition: none !important; } }
+@media (prefers-reduced-motion: reduce) { .gx__open img, .gx-filter button, .gx-filter button::after, .gx-filter__n { transition: none !important; } }
 
 /* the viewer: the photograph at most at its file's size, the caption and its place beneath */
 .gxl { padding: 0; border: 0; margin: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none;

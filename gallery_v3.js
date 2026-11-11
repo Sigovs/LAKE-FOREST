@@ -1,6 +1,6 @@
 /* v3 Gallery. The grid is plain HTML and CSS (justified rows, see styles-v3.css "GALLERY"); every photograph is a link
    to its large file, so the page works without this script. The script adds:
-   · the category filter (buttons with aria-pressed; the grid shows at most 40 at a time, then "Show more")
+   · the category filter: several categories at once (toggle buttons with aria-pressed); at most 40 photographs at a time, then "Show more"
    · the viewer: one <dialog> for every photograph, with previous / next (buttons, arrow keys, a swipe), the caption,
      the category and the position, a link of its own (#photo-<slug>), focus returned to the tile on close.
    It never shows a photograph larger than its file. Under reduced motion nothing animates. */
@@ -14,14 +14,17 @@
   document.querySelectorAll('[data-filter]').forEach((b) => { names[b.dataset.filter] = b.firstChild.textContent.trim(); });
   const status = document.querySelector('[data-gx-status]');
   const moreBox = document.querySelector('.gx-more'), moreBtn = document.querySelector('[data-gx-more]');
-  let current = 'all', shown = LIMIT;
+  const sel = new Set();   /* the chosen categories; empty means All */
+  let shown = LIMIT;
 
-  /* ---------------------------------------------------------------- filter: the index of categories.
-     A choice re-lays the grid with GSAP Flip: the photographs that stay glide to their new places, the ones that
-     go fade down, the ones that come fade up. Without Flip, or under reduced motion, the grid simply changes. */
+  /* ---------------------------------------------------------------- filter: several categories at once.
+     A category toggles on and off; the grid shows every photograph in any chosen category. "All", or switching off
+     the last one, shows everything again. Each change re-lays the grid with GSAP Flip: the photographs that stay
+     glide to their new places, the ones that go fade down, the ones that come fade up. Without Flip, or under reduced
+     motion, the grid simply changes. */
   const flip = !reduce && window.gsap && window.Flip;
   if (flip) gsap.registerPlugin(Flip);
-  const inCat = (li) => current === 'all' || li.dataset.cat === current;
+  const inCat = (li) => !sel.size || sel.has(li.dataset.cat);
   const visible = () => items.filter((li) => !li.hidden);
   const apply = (animate) => {
     const state = animate && flip ? Flip.getState(items) : null;
@@ -30,7 +33,7 @@
     match.slice(0, shown).forEach((li) => { li.hidden = false; });
     const rest = match.length - Math.min(shown, match.length);
     if (moreBox) { moreBox.hidden = rest <= 0; moreBtn.textContent = `Show more photographs (${rest})`; }
-    if (status) status.textContent = `${match.length} photograph${match.length === 1 ? '' : 's'}${current === 'all' ? '' : `: ${names[current]}`}`;
+    if (status) status.textContent = `${match.length} photograph${match.length === 1 ? '' : 's'}${sel.size ? `: ${[...sel].map((k) => names[k]).join(', ')}` : ''}`;
     if (state) {
       Flip.from(state, {
         duration: 0.8, ease: 'power3.inOut', absolute: true, scale: true,
@@ -40,33 +43,33 @@
       });
     } else if (window.ScrollTrigger) ScrollTrigger.refresh();
   };
-  /* the bar (sticky in CSS): a 2px line under the chosen category, and a sideways scroll inside the bar once the
-     categories outgrow it, with a fade on the side that has more */
+
+  /* the bar (sticky in CSS): every chosen category is underlined by its own 2px line; past its width the bar scrolls
+     sideways inside itself, with a fade on the side that has more */
   const bar = document.querySelector('.gx-filter'), track = bar && bar.querySelector('.gx-filter__track');
-  const line = bar && bar.querySelector('.gx-filter__line'), wrap = document.querySelector('.gx-wrap');
+  const wrap = document.querySelector('.gx-wrap');
   const edges = () => {
     if (!track) return;
     const over = track.scrollWidth > track.clientWidth + 1;
     track.classList.toggle('is-over-l', over && track.scrollLeft > 2);
     track.classList.toggle('is-over-r', over && track.scrollLeft + track.clientWidth < track.scrollWidth - 2);
   };
-  const mark = () => {
-    const b = bar && bar.querySelector('[aria-pressed="true"]');
-    if (!b || !line) return;
-    line.style.transform = `translateX(${b.offsetLeft}px) scaleX(${b.offsetWidth})`;
-  };
-  if (bar) {
-    mark(); edges();
-    if (document.fonts) document.fonts.ready.then(() => { mark(); edges(); requestAnimationFrame(() => line && line.classList.add('is-ready')); });
+  if (track) {
+    edges();
+    if (document.fonts) document.fonts.ready.then(edges);
     track.addEventListener('scroll', edges, { passive: true });
-    addEventListener('resize', () => { mark(); edges(); });
+    addEventListener('resize', edges);
   }
 
-  document.querySelectorAll('[data-filter]').forEach((b) => b.addEventListener('click', () => {
-    if (b.getAttribute('aria-pressed') === 'true') return;
-    document.querySelectorAll('[data-filter]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
-    current = b.dataset.filter; shown = LIMIT; apply(true); mark();
-    /* the chosen category scrolls into the bar's view; and if the visitor is deep in the photographs, the page
+  const buttons = [...document.querySelectorAll('[data-filter]')];
+  const press = () => buttons.forEach((o) => o.setAttribute('aria-pressed', String(o.dataset.filter === 'all' ? !sel.size : sel.has(o.dataset.filter))));
+  buttons.forEach((b) => b.addEventListener('click', () => {
+    const k = b.dataset.filter;
+    if (k === 'all') { if (!sel.size) return; sel.clear(); }
+    else if (sel.has(k)) sel.delete(k); else sel.add(k);
+    if (sel.size && sel.size === buttons.length - 1) sel.clear();   /* every category chosen is the same as All */
+    press(); shown = LIMIT; apply(true);
+    /* the clicked category scrolls into the bar's view; and if the visitor is deep in the photographs, the page
        returns to the top of the grid, so the new set starts right under the bar */
     if (track) track.scrollTo({ left: Math.max(0, b.offsetLeft - 56), behavior: reduce ? 'auto' : 'smooth' });
     if (wrap && wrap.getBoundingClientRect().top < 0) {
