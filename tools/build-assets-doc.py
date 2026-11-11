@@ -55,7 +55,7 @@ ORIGIN = {
     'skokie-sign.jpg': FAMILY + ': the “OK Used Cars — Mancuso Chevrolet” roadside sign',
     'spirit-today-center.jpg': 'The Spirit of Le Mans 76 Corvette today',
     'yenko-deuce.jpg': FAMILY + ': a Yenko “Deuce” flyer stamped by the dealership',
-    'hero-v3.mp4': '0–10 s the No. 48 → 441 film (black and white for the first 1.6 s, in full colour from 2.1 s), then 30 s of Buzz Fyhrie’s 1977 Road America film',
+    'hero-v3.mp4': '0–10 s the No. 48 → 441 film (black and white for the first 1.3 s; the coloured No. 48 held, slowed, from 1.8 to 3.6 s, then it turns into the 441), then 30 s of Buzz Fyhrie’s 1977 Road America film',
     'hero-v3-mobile.mp4': 'Phone copy of hero-v3.mp4 (720px)',
     'lemans-76.mp4': 'The 1976 Le Mans photograph by Albert Lamberts, animated; number shown as 76. All-intra encode for scroll scrubbing',
 }
@@ -68,6 +68,12 @@ def dims(path):
         return out[0] if out else ''
     if path.endswith('.svg'):
         return 'vector'
+    try:                                           # Pillow where it is installed (Windows), sips on macOS
+        from PIL import Image
+        with Image.open(path) as im:
+            return f'{im.width}×{im.height}'
+    except ImportError:
+        pass
     out = subprocess.run(['sips', '-g', 'pixelWidth', '-g', 'pixelHeight', path], capture_output=True, text=True).stdout
     w = h = ''
     for line in out.splitlines():
@@ -82,8 +88,14 @@ pages = {p: open(p, encoding='utf-8').read() for p in glob.glob(os.path.join(SIT
 rows, missing = [], []
 for path in sorted(glob.glob(os.path.join(SITE, 'assets', '*', '*'))):
     name = os.path.basename(path)
-    rel = os.path.relpath(path, SITE)
-    used = sorted({os.path.relpath(p, SITE) for p, t in pages.items() if name in t})
+    rel = os.path.relpath(path, SITE).replace(os.sep, '/')
+    if os.path.isdir(path):                        # the gallery's photos: one row for the folder
+        files = glob.glob(os.path.join(path, '*'))
+        mb = sum(os.path.getsize(f) for f in files) / 1024 / 1024
+        rows.append(f'| `{rel}/` | {len(files)} files | {mb:.1f} MB | gallery.html | The family archive photos, '
+                    'built by tools/prepare-gallery.py from tools/gallery-data.json (960px tile + 1600px view, no metadata) |')
+        continue
+    used = sorted({os.path.relpath(p, SITE).replace(os.sep, '/') for p, t in pages.items() if name in t})
     kb = os.path.getsize(path) / 1024
     size = f'{kb / 1024:.1f} MB' if kb > 1024 else f'{kb:.0f} KB'
     origin = ORIGIN.get(name)

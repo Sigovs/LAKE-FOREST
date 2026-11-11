@@ -29,7 +29,7 @@ def rebase(html):
     """Point the copied markup at the site folder, one level up."""
     html = re.sub(r'((?:src|href|poster)=")(assets/|css/|js/)', r'\1../site/\2', html)
     html = re.sub(r'(srcset=")([^"]+)"', lambda m: m.group(1) + re.sub(r'(^|,\s*)assets/', r'\1../site/assets/', m.group(2)) + '"', html)
-    html = re.sub(r'href="((?:index|family|history|gt|rpm|contact)\.html[^"]*)"', r'href="../site/\1"', html)
+    html = re.sub(r'href="((?:index|family|history|gallery|gt|rpm|contact)\.html[^"]*)"', r'href="../site/\1"', html)
     return html
 
 

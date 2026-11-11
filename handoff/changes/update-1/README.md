@@ -37,18 +37,20 @@ Rules:
 ## 1. Homepage hero film: the colour stays longer
 
 The concept film opens with the No. 48 race car in black and white, colours it, and then turns it into the black 441 street car.
-In the new film the colour arrives sooner: full colour from about 2.1 s, where it used to be about 2.8 s. The colour comes in evenly, frame by frame (re-graded on 11 November so it no longer pulses on its way in). The coloured No. 48 is now on
-screen about twice as long before it turns black. Only the grade changes. The length (40.04 s), the frame rate, the size, the poster
-and the 10 s point where the second slide starts are all as before, so **no code changes**.
+The client asked to hold the colour on the No. 48 longer before it fades into the new car. In the new film the coloured No. 48 is
+held, in a gentle slow motion, from about 1.8 s to about 3.6 s (it used to be on screen in full colour for about 0.6 s), and then
+turns into the 441 as before. The colour comes in evenly. To keep the clip at 10 s, the black-and-white opening and the middle of the
+street shot run slightly faster. The length (40.04 s), the frame rate, the size, the poster and the 10 s point where the second
+slide starts are all as before, so **no code changes**.
 
-![Hero, before and after, 1.5–3.25 s](images/01-hero-before-after.jpg)
+![Hero, before and after, 0.5–5 s](images/01-hero-before-after.jpg)
 
 **1a. Replace two files.** Download them and overwrite these files on the server, keeping the same names:
 
 | Download | Size | Overwrite |
 |---|---|---|
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,728,409 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,744,230 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,747,712 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,828,643 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
 
 **1b. Bust the cache (required).** The server sends these videos with `Cache-Control: max-age=31536000`, so without a new URL
 returning visitors would keep the old film for up to a year. In the homepage hero `<video id="home-video">`, add `?v=2` to both sources.
@@ -65,9 +67,9 @@ After:
 ```
 
 **Check:**
-- `curl -sI <video URL>?v=2` returns `Content-Length: 9728409` (desktop) and `2744230` (mobile).
-- In a private window: the No. 48 is black and white for about 1.6 s, in full colour from about 2 s, then turns into the black 441
-  at about 3 s. The same below 700px.
+- `curl -sI <video URL>?v=2` returns `Content-Length: 9747712` (desktop) and `2828643` (mobile).
+- In a private window: the No. 48 is black and white for about 1.3 s, in full colour from about 1.8 s to about 3.6 s, then turns
+  into the black 441 by about 4.7 s. The same below 700px.
 - The "The GT" / "Since 1923" controller still switches at 10 s.
 
 ---

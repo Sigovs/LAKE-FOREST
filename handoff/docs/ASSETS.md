@@ -1,12 +1,12 @@
 # Assets
 
-Every image and video the site ships (46 files), the pages that use it, and where it came from.
+Every image and video the site ships (47 files), the pages that use it, and where it came from.
 Credits printed on the pages stay with their photographs.
 
 | File | Size (px) | Weight | Used on | Origin |
 |---|---|---|---|---|
-| `assets/brand/crest-full.png` | 392×520 | 280 KB | contact.html, family.html, gt.html, history.html, index.html, rpm.html | Family crest, from the client’s logo files |
-| `assets/brand/crest-mark.png` | 198×240 | 72 KB | contact.html, family.html, gt.html, history.html, index.html, rpm.html | Family crest mark, from the client’s logo files |
+| `assets/brand/crest-full.png` | 392×520 | 280 KB | contact.html, family.html, gallery.html, gt.html, history.html, index.html, rpm.html | Family crest, from the client’s logo files |
+| `assets/brand/crest-mark.png` | 198×240 | 72 KB | contact.html, family.html, gallery.html, gt.html, history.html, index.html, rpm.html | Family crest mark, from the client’s logo files |
 | `assets/brand/gt-mark.png` | 699×285 | 150 KB | index.html | The GT mark, from the family’s film “Introducing the GT” |
 | `assets/img/aston-009-007.jpg` | 2000×1500 | 348 KB | index.html | Family archive (supplied by the client): Aston Martin #009 and #007 |
 | `assets/img/autoweek-2005.jpg` | 917×1900 | 551 KB | history.html, index.html | AutoWeek, 14 March 2005 (press clipping, family archive) |
@@ -16,6 +16,7 @@ Credits printed on the pages stay with their photographs.
 | `assets/img/father-son-garage-1200.jpg` | 1200×750 | 173 KB | contact.html, index.html | Family archive (supplied by the client): Adam and Rick Mancuso (1200px copy) |
 | `assets/img/father-son-garage.jpg` | 2400×1500 | 565 KB | history.html, index.html | Family archive (supplied by the client): Adam and Rick Mancuso |
 | `assets/img/fra-noi-2005.jpg` | 1256×1318 | 515 KB | history.html | Fra Noi, February 2005 (press clipping, family archive) |
+| `assets/img/gallery/` | 46 files | 8.5 MB | gallery.html | The family archive photos, built by tools/prepare-gallery.py from tools/gallery-data.json (960px tile + 1600px view, no metadata) |
 | `assets/img/gt-c2-mancuso-37.jpg` | 2516×1534 | 819 KB | gt.html | Family archive (supplied by the client): the #37 Mancuso Chevrolet C2, restored |
 | `assets/img/gt-c3-greenwood.jpg` | 2516×1534 | 869 KB | gt.html | Family archive (supplied by the client): a Greenwood C3, restored |
 | `assets/img/gt-coming-soon-1280.jpg` | 1280×720 | 31 KB | gt.html | GT “coming soon” frame (1280px copy) |
@@ -49,7 +50,7 @@ Credits printed on the pages stay with their photographs.
 | `assets/img/spirit-today-center.jpg` | 1920×1080 | 253 KB | history.html, index.html | The Spirit of Le Mans 76 Corvette today |
 | `assets/img/yenko-deuce.jpg` | 770×932 | 155 KB | history.html | Family archive (supplied by the client): a Yenko “Deuce” flyer stamped by the dealership |
 | `assets/video/hero-v3-mobile.mp4` | 720x406 | 2.7 MB | index.html | Phone copy of hero-v3.mp4 (720px) |
-| `assets/video/hero-v3.mp4` | 1280x720 | 9.3 MB | index.html | 0–10 s the No. 48 → 441 film (black and white for the first 1.6 s, in full colour from 2.1 s), then 30 s of Buzz Fyhrie’s 1977 Road America film |
+| `assets/video/hero-v3.mp4` | 1280x720 | 9.3 MB | index.html | 0–10 s the No. 48 → 441 film (black and white for the first 1.3 s; the coloured No. 48 held, slowed, from 1.8 to 3.6 s, then it turns into the 441), then 30 s of Buzz Fyhrie’s 1977 Road America film |
 | `assets/video/lemans-76.mp4` | 1600x900 | 7.7 MB | index.html | The 1976 Le Mans photograph by Albert Lamberts, animated; number shown as 76. All-intra encode for scroll scrubbing |
 
 The source originals (full-resolution files, the client’s folders) are not part of the site and are kept outside
