@@ -1,6 +1,6 @@
 # Update 1 · changes to www.lakeforestmotorsports.com
 
-**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction and is in the client preview. Apply when all three are approved.
+**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction and 4 was added the same day; both are in the client preview. Apply when all four are approved.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
@@ -13,7 +13,7 @@ on 11 November 2026.
 
 ## Instructions for the agent
 
-You are updating the WordPress theme `aanWordpress` of www.lakeforestmotorsports.com. Apply the three changes below, in order.
+You are updating the WordPress theme `aanWordpress` of www.lakeforestmotorsports.com. Apply the four changes below, in order.
 
 Rules:
 - Change only what is listed. Do not reformat, rename or refactor anything else.
@@ -29,6 +29,7 @@ Rules:
 | 1 | `/` | Hero film: the coloured No. 48 stays longer before it turns into the black 441 | `videos/hero-v3.mp4`, `videos/hero-v3-mobile.mp4`, the homepage hero `<video>` |
 | 2 | `/` (desktop) | GT block: the words show at once, and the picture is lighter | `assets/js/aan-home.js`, `assets/css/style.css` |
 | 3 | `/` and `/rpm/` | RPM Club: the studio picture replaces the yellow-Corvette photograph | `images/mockup/rpm-studio.jpg` (new), the RPM `<img>` on both pages |
+| 4 | `/rpm/` (desktop) | RPM Club page: the hosts' photograph lines up with "Where to listen" | `assets/css/style.css` (one rule added) |
 
 ---
 
@@ -163,3 +164,25 @@ No CSS changes: both slots already crop to a portrait frame (`object-fit: cover`
 both hosts in it. Once both pages are updated, `rpm-yellow-vette.jpg` is no longer used.
 
 **Check:** on `/` and on `/rpm/`, at desktop and on a phone, the RPM CLUB sign and both hosts are in the frame, with nothing cut off.
+
+---
+
+## 4. RPM Club page: the hosts' photograph lines up with "Where to listen"
+
+On `/rpm/`, desktop only (1000px and wider). The photograph in the hero (`<figure class="cp-hero__pic">`) sat against the
+right edge of its column at no more than 420px, so on wide screens its left edge stood well to the right of the
+"Where to listen" block below it (about 170px at 1920). Now it starts on the same line as "Where to listen" and fills
+the same column, never wider than the file itself (576px). Below 1000px nothing changes.
+
+**4a. CSS: `assets/css/style.css`.** Add this rule at the very end of the file. Change nothing else; the existing
+`.cp-hero__pic` rules stay as they are.
+
+```css
+@media (min-width:1000px){.rpage .cp-hero__pic{justify-self:start;width:min(100%,576px)}}
+```
+
+**Check, on `/rpm/` at 1440 and 1920 wide:**
+- The left edge of the photograph and the left edge of "Where to listen" are on one vertical line.
+- The photograph is whole, with its caption "Rob and Rick Mancuso, the hosts." under it.
+- Below 1000px the page looks as before.
+- The homepage RPM Club block is not affected (the rule only applies on the RPM page, `body.rpage`).

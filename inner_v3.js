@@ -13,10 +13,11 @@
   lenis.on('scroll', (e) => { ScrollTrigger.update(); solid(e.scroll); });
   gsap.ticker.add((t) => lenis.raf(t * 1000)); gsap.ticker.lagSmoothing(0);
 
-  gsap.timeline({ defaults: { ease: 'power3.out', duration: 1.6 }, delay: 0.1 })
-    .from('[data-cp-step]', { x: -140, autoAlpha: 0, stagger: 0.18 })
-    .from('[data-cp-pic]', { x: 120, autoAlpha: 0, duration: 1.8 }, 0.25)
-    .from('[data-cp-pic] img', { scale: 1.18, duration: 2.4, ease: 'expo.out' }, 0.25);
+  const hero = gsap.timeline({ defaults: { ease: 'power3.out', duration: 1.6 }, delay: 0.1 })
+    .from('[data-cp-step]', { x: -140, autoAlpha: 0, stagger: 0.18 });
+  /* the side piece is a photograph on Family and RPM, the category index on the Gallery (no image to settle) */
+  if (document.querySelector('[data-cp-pic]')) hero.from('[data-cp-pic]', { x: 120, autoAlpha: 0, duration: 1.8 }, 0.25);
+  if (document.querySelector('[data-cp-pic] img')) hero.from('[data-cp-pic] img', { scale: 1.18, duration: 2.4, ease: 'expo.out' }, 0.25);
 
   /* a block arrives once: its own steps from the left, its picture from its own side */
   document.querySelectorAll('[data-ip-reveal]').forEach((box) => {

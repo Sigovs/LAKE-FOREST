@@ -2,7 +2,7 @@
 """Build the developer handoff of the v3 site into ./handoff/site.
 
 The v3 pages live at the project root under their working names (index_v3.html, styles-v3.css, ...) next to the
-v1 and v2 files. This script copies only what the six v3 pages actually use into a clean tree, renames the pages,
+v1 and v2 files. This script copies only what the seven v3 pages actually use into a clean tree, renames the pages,
 the stylesheet and the scripts to plain names, sorts the assets into brand / img / video, and rewrites every
 reference to match. Run it again after any change to the v3 pages:
 
@@ -22,6 +22,7 @@ PAGES = {
     'gt_v3.html': 'gt.html',
     'rpm_v3.html': 'rpm.html',
     'contact_v3.html': 'contact.html',
+    'gallery_v3.html': 'gallery.html',
 }
 CODE = {
     'styles-v3.css': 'css/styles.css',
@@ -31,6 +32,7 @@ CODE = {
     'history.js': 'js/history.js',
     'inner_v3.js': 'js/inner.js',
     'menu_v3.js': 'js/menu.js',
+    'gallery_v3.js': 'js/gallery.js',
     'micro.js': 'js/micro.js',
     'player.js': 'js/player.js',
     'form.js': 'js/form.js',
@@ -48,6 +50,8 @@ def asset_target(path):
         return 'assets/video/' + name
     if name in BRAND:
         return 'assets/brand/' + name
+    if '/gallery/' in path:   # the gallery's photographs keep their own folder (the CMS will own them)
+        return 'assets/img/gallery/' + name
     return 'assets/img/' + name
 
 

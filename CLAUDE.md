@@ -92,5 +92,12 @@ them. Write it here: the business goal, the audience, what must not change._
   (`handoff/changes/update-N/`), never one per change, and only once the client approves the preview. Packages are written so the devs can hand them to an AI agent as they are: exact
   before/after against the live code, raw download URLs and checks. Update 1: GT and RPM approved. The hero was revised on 11 Nov:
   the client's first note ("black lasts longer") was a mix-up for "the colour stays longer before the black car".
+- **Gallery (11 Nov 2026, Alex).** `gallery_v3.html`: the family's photo archive, which the client will keep filling in the CMS. It is
+  **its own header item after History, not a dropdown** (a History dropdown was built and rejected). Captions stay neutral: only what
+  is visible, the camera date and facts already sourced; the client refines them. No duplicate frames. Photos come from
+  `tools/gallery-data.json` via `tools/prepare-gallery.py` (EXIF/GPS stripped, sRGB, 960 tile + 1600 view, light files).
+  Category filter, **rejected:** a plain hairline list with counts ("1/10"); a title-scale typographic index ("much smaller");
+  a photo popping up beside the cursor on hover. **Current:** a small one-line bar, sticky under the header, control-size words
+  with counts and a sliding 2px marker; it scrolls sideways when categories are added; a choice re-lays the grid with Flip.
 - **v2 (28 Oct 2026):** client notes go into `index_v2.html` / `history_v2.html` / `styles-v2.css`; the delivered v1 (tag
   `client-2026-10-21`) stays untouched. Shared JS changes must keep v1 working (e.g. `data-speed` falls back to 218).

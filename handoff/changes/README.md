@@ -6,4 +6,4 @@ where, and has the files and before/after pictures. Apply the updates in order.
 
 | Update | Changes | Status |
 |---|---|---|
-| [Update 1](update-1/) | Hero film: the colour stays longer · GT block: words at once, a lighter picture · RPM Club: the studio picture instead of the yellow-Corvette photograph | 2 and 3 approved, 1 in client preview |
+| [Update 1](update-1/) | Hero film: the colour stays longer · GT block: words at once, a lighter picture · RPM Club: the studio picture instead of the yellow-Corvette photograph · RPM Club page: the photograph lined up with "Where to listen" | 2 and 3 approved, 1 and 4 in client preview |
