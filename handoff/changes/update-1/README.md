@@ -1,6 +1,6 @@
 # Update 1 · changes to www.lakeforestmotorsports.com
 
-**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction and 4 was added the same day; both are in the client preview. Apply when all four are approved.
+**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction; 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
@@ -13,7 +13,7 @@ on 11 November 2026.
 
 ## Instructions for the agent
 
-You are updating the WordPress theme `aanWordpress` of www.lakeforestmotorsports.com. Apply the four changes below, in order.
+You are updating the WordPress theme `aanWordpress` of www.lakeforestmotorsports.com. Apply the five changes below, in order.
 
 Rules:
 - Change only what is listed. Do not reformat, rename or refactor anything else.
@@ -30,6 +30,7 @@ Rules:
 | 2 | `/` (desktop) | GT block: the words show at once, and the picture is lighter | `assets/js/aan-home.js`, `assets/css/style.css` |
 | 3 | `/` and `/rpm/` | RPM Club: the studio picture replaces the yellow-Corvette photograph | `images/mockup/rpm-studio.jpg` (new), the RPM `<img>` on both pages |
 | 4 | `/rpm/` (desktop) | RPM Club page: the hosts' photograph lines up with "Where to listen" | `assets/css/style.css` (one rule added) |
+| 5 | `/rpm/` and `/contact/` | The History page's background light on the RPM Club and Contact pages | `assets/css/style.css` (four rules added) |
 
 ---
 
@@ -186,3 +187,33 @@ the same column, never wider than the file itself (576px). Below 1000px nothing 
 - The photograph is whole, with its caption "Rob and Rick Mancuso, the hosts." under it.
 - Below 1000px the page looks as before.
 - The homepage RPM Club block is not affected (the rule only applies on the RPM page, `body.rpage`).
+
+---
+
+## 5. RPM Club and Contact: the History page's background
+
+The History page (`/history/`) has a background of its own: one fixed layer of grey, uneven light with a fine grain,
+behind the whole page, which the content scrolls over (the `.hist::before` / `.hist::after` rules in `style.css`).
+The same layer now goes on the RPM Club page and the Contact page, with the same values. Nothing else on those
+pages changes.
+
+**5a. CSS: `assets/css/style.css`.** Add these four rules at the very end of the file (after the rule from change 4).
+They copy the live `.hist` rules exactly and put them on the two pages' WordPress template classes, which WordPress
+already adds to `<body>` (`page-template-template-rpm`, `page-template-template-contact`). Do not change the `.hist` rules.
+
+```css
+.page-template-template-rpm,.page-template-template-contact{--grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 -.35'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");background:#0b0c0d;isolation:isolate}
+.page-template-template-rpm::before,.page-template-template-rpm::after,.page-template-template-contact::before,.page-template-template-contact::after{content:"";position:fixed;z-index:-1;pointer-events:none;-webkit-mask-image:var(--grain);mask-image:var(--grain);-webkit-mask-size:220px 220px;mask-size:220px 220px}
+.page-template-template-rpm::before,.page-template-template-contact::before{left:-14%;top:8%;width:104%;height:120vh;transform:rotate(-6deg);opacity:.62;background:url("/wp-content/themes/aanWordpress/images/mockup/rpm-glow.svg") center/100% 100% no-repeat}
+.page-template-template-rpm::after,.page-template-template-contact::after{content:"";position:fixed;z-index:-1;pointer-events:none;-webkit-mask-image:var(--grain);mask-image:var(--grain);-webkit-mask-size:220px 220px;mask-size:220px 220px}
+```
+
+If the theme's page templates have other names, use the `page-template-…` classes that WordPress prints on the
+`<body>` of `/rpm/` and `/contact/`. The image is the one History already uses:
+`/wp-content/themes/aanWordpress/images/mockup/rpm-glow.svg`.
+
+**Check, on `/rpm/` and `/contact/`, desktop and phone:**
+- Behind the page there is the same soft, grainy light as on `/history/`, and it stays in place while the page scrolls.
+- Text, buttons, the episode player, the form and the map look exactly as before (the map band stays dark).
+- No horizontal scroll appears. The console shows no errors.
+- `/history/` and the homepage look as before.

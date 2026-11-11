@@ -1922,3 +1922,15 @@ html { overflow-x: clip; }
 /* RPM page (client, 11 Nov 2026): the hosts' photograph starts on the same line as "Where to listen" below it and
    fills the same column, never wider than its file (576px) */
 @media (min-width: 1000px) { .rpage .cp-hero__pic { justify-self: start; width: min(100%, 576px); } }
+/* The History page's light (history.css, "v3.3"), same layer and values, on the Gallery, RPM Club and Contact pages
+   (Alex, 11 Nov 2026): one fixed field of grey, uneven light with grain behind the whole page; the content scrolls over it.
+   body.lit; on the live WordPress theme the same rules sit on the pages' template classes */
+.lit { --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 -.35'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: var(--ground); isolation: isolate; }
+.lit::before, .lit::after { content: ""; position: fixed; z-index: -1; pointer-events: none;
+  -webkit-mask-image: var(--grain); mask-image: var(--grain); -webkit-mask-size: 220px 220px; mask-size: 220px 220px; }
+.lit::before { left: -14%; top: 8%; width: 104%; height: 120vh; transform: rotate(-6deg); opacity: .62;
+  background: url("assets/img/final/rpm-glow.svg") center / 100% 100% no-repeat; }
+.lit::after { right: -8%; top: 30vh; width: 48%; height: 70vh; filter: blur(8px);
+  background: radial-gradient(38% 34% at 46% 50%, rgba(237,235,230,.11), transparent 72%),
+              radial-gradient(24% 30% at 64% 38%, rgba(237,235,230,.08), transparent 70%); }
