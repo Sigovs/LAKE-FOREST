@@ -1,6 +1,6 @@
 # Update 1 · changes to www.lakeforestmotorsports.com
 
-**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction; 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
+**Status:** 2 and 3 approved by the client. 1 was revised on 11 November after the client's correction (the hero films in this folder were replaced the same day; see 1c if you downloaded them earlier); 4 and 5 were added the same day. 1, 4 and 5 are in the client preview. Apply when all five are approved.
 **Site:** www.lakeforestmotorsports.com, WordPress theme `wp-content/themes/aanWordpress/`.
 **Reference build with every change applied:** https://sigovs.github.io/LAKE-FOREST/handoff/site/index.html
 **This folder:** https://github.com/Sigovs/LAKE-FOREST/tree/main/handoff/changes/update-1
@@ -64,6 +64,13 @@ After:
 <source src="https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4?v=2" type="video/mp4" media="(max-width: 699px)" />
 <source src="/wp-content/themes/aanWordpress/videos/hero-v3.mp4?v=2" type="video/mp4" />
 ```
+
+**1c. Only if the hero films were already installed from an earlier download of this folder.** The two films here were replaced
+on 11 November. Check the live file: `curl -sI https://www.lakeforestmotorsports.com/wp-content/themes/aanWordpress/videos/hero-v3.mp4`.
+- `Content-Length: 9689496`: the original film is still there. Do 1a and 1b as written.
+- `Content-Length: 9742359`: the current film is already installed. Nothing to do.
+- Any other size (for example `9728409` or `9747712`): an earlier version is installed. Do 1a again, and in 1b use `?v=3` instead of
+  `?v=2` on both sources, so that visitors who already cached `?v=2` get the new film. The checks below then apply to `?v=3`.
 
 **Check:**
 - `curl -sI <video URL>?v=2` returns `Content-Length: 9742359` (desktop) and `2824241` (mobile).
