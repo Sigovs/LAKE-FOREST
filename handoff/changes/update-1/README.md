@@ -37,7 +37,7 @@ Rules:
 ## 1. Homepage hero film: the colour stays longer
 
 The concept film opens with the No. 48 race car in black and white, colours it, and then turns it into the black 441 street car.
-In the new film the colour arrives sooner: full colour from about 2.1 s, where it used to be about 2.8 s. The coloured No. 48 is now on
+In the new film the colour arrives sooner: full colour from about 2.1 s, where it used to be about 2.8 s. The colour comes in evenly, frame by frame (re-graded on 11 November so it no longer pulses on its way in). The coloured No. 48 is now on
 screen about twice as long before it turns black. Only the grade changes. The length (40.04 s), the frame rate, the size, the poster
 and the 10 s point where the second slide starts are all as before, so **no code changes**.
 
@@ -47,8 +47,8 @@ and the 10 s point where the second slide starts are all as before, so **no code
 
 | Download | Size | Overwrite |
 |---|---|---|
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,728,382 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
-| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,744,308 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3.mp4 | 1280×720 · 9,728,409 bytes | `wp-content/themes/aanWordpress/videos/hero-v3.mp4` |
+| https://raw.githubusercontent.com/Sigovs/LAKE-FOREST/main/handoff/changes/update-1/videos/hero-v3-mobile.mp4 | 720×406 · 2,744,230 bytes | `wp-content/themes/aanWordpress/videos/hero-v3-mobile.mp4` |
 
 **1b. Bust the cache (required).** The server sends these videos with `Cache-Control: max-age=31536000`, so without a new URL
 returning visitors would keep the old film for up to a year. In the homepage hero `<video id="home-video">`, add `?v=2` to both sources.
@@ -65,7 +65,7 @@ After:
 ```
 
 **Check:**
-- `curl -sI <video URL>?v=2` returns `Content-Length: 9728382` (desktop) and `2744308` (mobile).
+- `curl -sI <video URL>?v=2` returns `Content-Length: 9728409` (desktop) and `2744230` (mobile).
 - In a private window: the No. 48 is black and white for about 1.6 s, in full colour from about 2 s, then turns into the black 441
   at about 3 s. The same below 700px.
 - The "The GT" / "Since 1923" controller still switches at 10 s.
