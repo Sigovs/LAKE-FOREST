@@ -92,7 +92,7 @@ The three inline scripts on `index.html` are:
 ## Performance
 
 - The heaviest files are the two films:
-  - `hero-v3.mp4`: 9.2 MB desktop, 2.7 MB phone.
+  - `hero-v3.mp4`: 9.3 MB desktop, 2.7 MB phone.
   - `lemans-76.mp4`: 7.7 MB. It is encoded all-intra so scroll scrubbing is smooth; it plays on the homepage only.
 - Images below the first screen are `loading="lazy"`, and the large ones have `srcset` variants.
 - Before launch:

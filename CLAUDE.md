@@ -92,6 +92,10 @@ them. Write it here: the business goal, the audience, what must not change._
   (`handoff/changes/update-N/`), never one per change, and only once the client approves the preview. Packages are written so the devs can hand them to an AI agent as they are: exact
   before/after against the live code, raw download URLs and checks. Update 1: GT and RPM approved. The hero was revised on 11 Nov:
   the client's first note ("black lasts longer") was a mix-up for "the colour stays longer before the black car".
+- **Hero film (11 Nov 2026, Alex).** Never retime the film: a slow-motion hold on the coloured No. 48 was **rejected** ("the
+  slowing shows"), and an earlier saturation boost that pulsed read as "the video stutters". Current: `tools/colour-hero.py`
+  carries the colour back onto the B&W frames along the optical flow (own speed, full colour ~1.3–2.6 s). After any change to the
+  film, check per frame that saturation rises monotonically and that motion (YDIF) matches the original.
 - **Gallery (11 Nov 2026, Alex).** `gallery_v3.html`: the family's photo archive, which the client will keep filling in the CMS. It is
   **its own header item after History, not a dropdown** (a History dropdown was built and rejected). Captions stay neutral: only what
   is visible, the camera date and facts already sourced; the client refines them. No duplicate frames. Photos come from
