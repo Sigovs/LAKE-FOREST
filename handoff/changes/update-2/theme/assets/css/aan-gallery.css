@@ -1,0 +1,134 @@
+/* Lake Forest Motor Sports · the Gallery page (update 2, 11 November 2026).
+   Loaded only on the Gallery template (see inc/gallery.php). Uses the theme's own tokens from style.css
+   (--s-*, --t-*, --ink, --tone, --gutter, --col, --aan-header-h, --aan-header-pull). Reference build:
+   https://sigovs.github.io/LAKE-FOREST/handoff/site/gallery.html */
+
+/* the design tokens. On the live theme they are declared on the homepage's wrapper only (.lf-home); the gallery
+   declares the same set, copied from it verbatim, so it uses exactly the homepage's values */
+.gpage{--ground: #0B0C0D;--ground-2: #121416;--ink: #EDEBE6;--tone: #8D8F91;--mute: #A3A5A7;--hair: rgba(237, 235, 230, 0.42);--accent: #EDEBE6;--accent-fill: #EDEBE6;--accent-ink: #0B0C0D;--navy: #0D2236;--s-1: 4px;--s-2: 8px;--s-3: 12px;--s-4: 16px;--s-5: 24px;--s-6: 32px;--s-7: 48px;--s-8: 64px;--s-9: 96px;--s-10: 128px;--s-11: 192px;--f: Archivo, system-ui, sans-serif;--f-display: Archivo, system-ui, sans-serif;--serif: var(--f-display);--w-display: 640;--display-wdth: 74;--ink-2: #C9CBCD;--lm-blue: #1869D2;--tone-photo: color-mix(in srgb, currentColor 86%, transparent);--t-d1: clamp(64px, 9vw, 148px);--lh-d1: 0.9;--ls-d1: -0.02em;--t-d2: clamp(44px, 5.4vw, 88px);--lh-d2: 0.95;--ls-d2: -0.015em;--t-d3: clamp(36px, 4vw, 60px);--lh-d3: 1;--ls-d3: -0.012em;--t-h3: clamp(26px, 2.2vw, 34px);--lh-h3: 1.05;--ls-h3: -0.008em;--t-h4: clamp(22px, 1.7vw, 28px);--lh-h4: 1.1;--ls-h4: -0.005em;--t-sub: clamp(20px, 1.9vw, 30px);--lh-sub: 1.15;--ls-sub: -0.004em;--t-statement: clamp(19px, 13.6px + 0.72vw, 26px);--lh-statement: 1.45;--t-lead: clamp(19px, 1.45vw, 22px);--lh-lead: 1.45;--t-body: 17px;--lh-body: 1.55;--t-body-sm: 15px;--lh-body-sm: 1.5;--t-caption: 14px;--lh-caption: 1.45;--t-label: 14px;--w-label: 600;--ls-label: 0.14em;--lh-label: 1.25;--t-control: 15px;--w-control: 500;--ease-out: cubic-bezier(0.16, 1, 0.3, 1);--gt-red: #E2342B;--gt-white: #E6E6EA;--gt-blue: #1F5FD0}
+
+/* the template's own reset of Bootstrap's margins, the same as the RPM Club template (.rpage .rp-main) */
+.gpage .gx-main { overflow-x: clip; }
+.gpage :where(.gx-main) p, .gpage :where(.gx-main) h1, .gpage :where(.gx-main) h2, .gpage :where(.gx-main) figure, .gpage :where(.gx-main) li { margin: 0; }
+.gpage :where(.gx-main) ul, .gpage :where(.gx-main) ol { margin: 0; padding: 0; list-style: none; }
+.gpage .pill:hover, .gpage .pill:focus { text-decoration: none; }
+
+/* ================================================================ GALLERY (template-gallery.php, aan-gallery.js)
+   The photo archive the family keeps adding to: the title, a small sticky bar of categories, then the photographs
+   in justified rows: each tile grows in proportion to its own shape (--r = width / height),
+   so a row shares one height and every photograph is shown whole, whatever shape is uploaded. No crop, and no
+   script needed for the layout. On a phone, one photograph per row with its caption. */
+.gx-hero { display: grid; gap: var(--s-7); padding: calc(var(--aan-header-pull) + 96px) calc(var(--gutter) + var(--col) * .5) var(--s-7); }
+.gx-hero__words { display: grid; gap: var(--s-5); }
+.gx-wrap { --gx-pad: calc(var(--gutter) + var(--col) * .5); padding: 0 var(--gx-pad) var(--s-10); }
+/* the category bar: small, one line, held under the header while the photographs scroll (sticky inside .gx-wrap, so it
+   lets go at the end of the photographs). Any number of categories: past the width it scrolls sideways inside
+   itself, with a fade at the edge that has more. Several categories can be on at once, each underlined */
+.gx-filter { display: none; }
+.js .gx-filter { display: block; position: sticky; top: var(--aan-header-h, 80px); z-index: 30; margin: 0 calc(var(--gx-pad) * -1) var(--s-6); padding: 0 var(--gx-pad);
+  background: rgba(11, 12, 13, .9); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(237,235,230,.12); }
+.gx-filter__track { position: relative; max-width: 1880px; margin: 0 auto; overflow-x: auto; overscroll-behavior-x: contain; scrollbar-width: none; }
+.gx-filter__track::-webkit-scrollbar { display: none; }
+.gx-filter__track.is-over-r { -webkit-mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); mask-image: linear-gradient(90deg, #000 calc(100% - 56px), transparent); }
+.gx-filter__track.is-over-l { -webkit-mask-image: linear-gradient(90deg, transparent, #000 56px); mask-image: linear-gradient(90deg, transparent, #000 56px); }
+.gx-filter__track.is-over-l.is-over-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 56px, #000 calc(100% - 56px), transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 56px, #000 calc(100% - 56px), transparent); }
+.gx-filter ul { display: flex; gap: var(--s-6); width: max-content; }
+.gx-filter button { display: inline-flex; align-items: baseline; gap: 6px; padding: var(--s-4) 0; background: none; border: 0; cursor: pointer;   /* the words sit in the middle of the bar, 16px clear above and below */
+  white-space: nowrap; font: inherit; font-size: var(--t-control); font-weight: var(--w-control); line-height: 1.2; color: var(--tone);
+  transition: color .25s var(--ease-out); }
+.gx-filter__n { font-size: var(--t-caption); font-variant-numeric: tabular-nums; color: var(--tone); transition: color .25s var(--ease-out); }
+.gx-filter button:hover, .gx-filter button[aria-pressed="true"] { color: #fff; }
+.gx-filter button[aria-pressed="true"] .gx-filter__n { color: var(--ink-2); }
+.gx-filter button:focus-visible { outline-offset: -2px; }
+/* several categories can be on at once: each one that is on carries its own 2px line, drawn in from the left */
+.gx-filter button { position: relative; }
+.gx-filter button::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: var(--ink);
+  transform: scaleX(0); transform-origin: 0 50%; transition: transform .4s var(--ease-out); }
+.gx-filter button[aria-pressed="true"]::after { transform: none; }
+.gx-wrap:focus { outline: none; }
+.gx { --row: 240px; display: flex; flex-wrap: wrap; gap: var(--s-7) var(--s-4); max-width: 1880px; margin: 0 auto; }
+.gx::after { content: ""; flex: 10000 1 0; }   /* the last row keeps the row height instead of stretching */
+.gx__item { flex: var(--r) 1 calc(var(--r) * var(--row)); min-width: 0; }
+.gx__item[hidden] { display: none; }
+.gx__item figure { display: grid; gap: var(--s-3); align-content: start; }
+.gx__open { display: block; overflow: hidden; border-radius: 14px; background: var(--ground-2); cursor: zoom-in; }
+.gx__open img { display: block; width: 100%; height: auto; aspect-ratio: var(--r); object-fit: cover; transition: transform .7s var(--ease-out), filter .7s var(--ease-out); }
+.gx__open:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.gx__item .caption { max-width: 48ch; }
+@media (hover: hover) and (pointer: fine) {
+  .gx__open:hover img { transform: scale(1.03); filter: brightness(1.06); }
+  .gx__item:has(.gx__open:hover) .caption { color: var(--ink-2); }
+}
+.gx-more { display: flex; justify-content: center; margin: var(--s-8) 0 0; }
+.gx-more[hidden] { display: none; }
+@media (min-width: 1600px) { .gx { --row: 280px; } }
+@media (max-width: 999px) {
+  .gx-hero { gap: var(--s-7); padding: calc(min(var(--aan-header-pull), 72px) + 64px) var(--gutter) var(--s-6); }
+  .gx-wrap { --gx-pad: var(--gutter); padding: 0 var(--gx-pad) var(--s-9); }
+  .gx-filter ul { gap: var(--s-5); }
+  .gx { --row: 180px; gap: var(--s-6) var(--s-3); }
+}
+@media (max-width: 599px) {
+  .gx { gap: var(--s-7); }
+  .gx__item { flex: 1 1 100%; }
+  .gx::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { .gx__open img, .gx-filter button, .gx-filter button::after, .gx-filter__n { transition: none !important; } }
+
+/* the viewer: the photograph at most at its file's size, the caption and its place beneath */
+.gxl { padding: 0; border: 0; margin: 0; width: 100vw; height: 100dvh; max-width: none; max-height: none;
+  background: transparent; color: var(--ink); overflow: hidden; }
+.gxl:not([open]) { display: none; }
+.gxl:focus, .gxl:focus-visible { outline: none; }
+.gxl[open] { display: grid; grid-template-rows: minmax(0, 1fr) auto; }
+.gxl::backdrop { background: rgba(5, 5, 5, .97); }
+.gxl__stage { display: grid; place-items: center; min-height: 0; padding: var(--s-8) calc(var(--s-8) + 40px) var(--s-4); touch-action: pan-y; }
+.gxl__img { width: auto; height: auto; max-width: min(100%, var(--w, 100%)); max-height: calc(100dvh - 200px); object-fit: contain;
+  box-shadow: 0 40px 90px rgba(0,0,0,.7); transition: opacity .2s var(--ease-out); }
+.gxl__img.is-swap { opacity: 0; }
+.gxl__bar { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s-4) var(--s-7);
+  padding: var(--s-4) calc(var(--s-8) + 40px) var(--s-6); }
+.gxl__cap { margin: 0; max-width: 64ch; font-size: var(--t-body-sm); line-height: var(--lh-body-sm); color: var(--ink-2); text-wrap: pretty; }
+.gxl__meta { display: flex; gap: var(--s-4); margin: 0; flex: none; font-size: var(--t-label); font-weight: var(--w-label); line-height: var(--lh-label);
+  letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--mute); font-variant-numeric: tabular-nums; }
+.gxl__btn { position: fixed; display: grid; place-items: center; width: 48px; height: 48px; padding: 0; border-radius: 50%;
+  border: 1px solid rgba(237,235,230,.4); background: rgba(11,12,13,.5); color: var(--ink); cursor: pointer;
+  transition: background-color .25s var(--ease-out), border-color .25s var(--ease-out); }
+.gxl__btn svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.gxl__btn:hover { background: rgba(237,235,230,.12); border-color: var(--ink); }
+.gxl__btn[hidden] { display: none; }
+.gxl__prev, .gxl__next { top: calc(50% - 24px - 40px); }
+.gxl__prev { left: var(--s-5); }
+.gxl__next { right: var(--s-5); }
+.gxl__close { top: var(--s-5); right: var(--s-5); }
+.gxl[open] .gxl__stage, .gxl[open] .gxl__bar { animation: gxl-in .36s var(--ease-out) both; }
+.gxl[open]::backdrop { animation: gx-fade .25s ease-out both; }
+.gxl.is-closing .gxl__stage, .gxl.is-closing .gxl__bar { animation: gxl-in .2s ease-in reverse both; }
+.gxl.is-closing::backdrop { animation: gx-fade .2s ease-in reverse both; }
+@keyframes gxl-in { from { opacity: 0; transform: scale(.97); } to { opacity: 1; transform: none; } }
+@media (max-width: 699px) {
+  .gxl__stage { padding: calc(var(--s-5) + 56px) var(--s-3) var(--s-4); }
+  .gxl__img { max-height: calc(100dvh - 260px); }
+  .gxl__bar { flex-direction: column; gap: var(--s-3); padding: var(--s-3) var(--gutter) calc(var(--s-5) + 64px); }
+  .gxl__prev, .gxl__next { top: auto; bottom: var(--s-5); }
+  .gxl__prev { left: var(--gutter); }
+  .gxl__next { right: var(--gutter); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gxl__img, .gxl__btn { transition: none; }
+  .gxl[open] .gxl__stage, .gxl[open] .gxl__bar, .gxl[open]::backdrop { animation: none; }
+}
+
+/* the History page's background light (the live .hist::before / .hist::after rules, same values) */
+.gpage { --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 -.35'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)'/%3E%3C/svg%3E");
+  background: #0b0c0d; isolation: isolate; }
+.gpage::before, .gpage::after { content: ""; position: fixed; z-index: -1; pointer-events: none;
+  -webkit-mask-image: var(--grain); mask-image: var(--grain); -webkit-mask-size: 220px 220px; mask-size: 220px 220px; }
+.gpage::before { left: -14%; top: 8%; width: 104%; height: 120vh; transform: rotate(-6deg); opacity: .62;
+  background: url("/wp-content/themes/aanWordpress/images/mockup/rpm-glow.svg") center / 100% 100% no-repeat; }
+.gpage::after { right: -8%; top: 30vh; width: 48%; height: 70vh; filter: blur(8px);
+  background: radial-gradient(38% 34% at 46% 50%, rgba(237,235,230,.11), transparent 72%),
+              radial-gradient(24% 30% at 64% 38%, rgba(237,235,230,.08), transparent 70%); }
+
+@keyframes gx-fade { from { opacity: 0; } to { opacity: 1; } }

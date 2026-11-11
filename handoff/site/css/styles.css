@@ -1805,8 +1805,8 @@ html { overflow-x: clip; }
 }
 
 /* ================================================================ v3 GALLERY (gallery.html, gallery_v3.js)
-   The photo archive the family keeps adding to. The title on the left, the categories as an index on the right;
-   then the photographs in justified rows: each tile grows in proportion to its own shape (--r = width / height),
+   The photo archive the family keeps adding to: the title, a small sticky bar of categories, then the photographs
+   in justified rows: each tile grows in proportion to its own shape (--r = width / height),
    so a row shares one height and every photograph is shown whole, whatever shape is uploaded. No crop, and no
    script needed for the layout. On a phone, one photograph per row with its caption. */
 .gx-hero { display: grid; gap: var(--s-7); padding: calc(80px + var(--s-9)) calc(var(--gutter) + var(--col) * .5) var(--s-7); }
@@ -1825,7 +1825,7 @@ html { overflow-x: clip; }
 .gx-filter__track.is-over-l.is-over-r { -webkit-mask-image: linear-gradient(90deg, transparent, #000 56px, #000 calc(100% - 56px), transparent);
   mask-image: linear-gradient(90deg, transparent, #000 56px, #000 calc(100% - 56px), transparent); }
 .gx-filter ul { display: flex; gap: var(--s-6); width: max-content; }
-.gx-filter button { display: inline-flex; align-items: baseline; gap: 6px; min-height: 52px; padding: 0; background: none; border: 0; cursor: pointer;
+.gx-filter button { display: inline-flex; align-items: baseline; gap: 6px; padding: var(--s-4) 0; background: none; border: 0; cursor: pointer;   /* the words sit in the middle of the bar, 16px clear above and below */
   white-space: nowrap; font: inherit; font-size: var(--t-control); font-weight: var(--w-control); line-height: 1.2; color: var(--tone);
   transition: color .25s var(--ease-out); }
 .gx-filter__n { font-size: var(--t-caption); font-variant-numeric: tabular-nums; color: var(--tone); transition: color .25s var(--ease-out); }

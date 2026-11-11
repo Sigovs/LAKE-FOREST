@@ -24,10 +24,13 @@
      motion, the grid simply changes. */
   const flip = !reduce && window.gsap && window.Flip;
   if (flip) gsap.registerPlugin(Flip);
-  const inCat = (li) => !sel.size || sel.has(li.dataset.cat);
+  /* a photograph may sit in several categories: data-cat lists their slugs, separated by spaces */
+  const cats = (li) => (li.dataset.cat || '').split(/\s+/).filter(Boolean);
+  const inCat = (li) => !sel.size || cats(li).some((c) => sel.has(c));
   const visible = () => items.filter((li) => !li.hidden);
   const apply = (animate) => {
     const state = animate && flip ? Flip.getState(items) : null;
+    const before = grid.offsetHeight;
     const match = items.filter(inCat);
     items.forEach((li) => { li.hidden = true; });
     match.slice(0, shown).forEach((li) => { li.hidden = false; });
@@ -35,11 +38,14 @@
     if (moreBox) { moreBox.hidden = rest <= 0; moreBtn.textContent = `Show more photographs (${rest})`; }
     if (status) status.textContent = `${match.length} photograph${match.length === 1 ? '' : 's'}${sel.size ? `: ${[...sel].map((k) => names[k]).join(', ')}` : ''}`;
     if (state) {
+      /* Flip lifts every photograph out of the flow while it animates (absolute), which would collapse the grid and
+         let the browser pull the scroll up; the grid keeps the taller of its two heights until the move ends */
+      grid.style.minHeight = `${Math.max(before, grid.offsetHeight)}px`;
       Flip.from(state, {
         duration: 0.8, ease: 'power3.inOut', absolute: true, scale: true,
         onEnter: (els) => gsap.fromTo(els, { autoAlpha: 0, scale: 0.94 }, { autoAlpha: 1, scale: 1, duration: 0.6, delay: 0.25, ease: 'power2.out', clearProps: 'opacity,visibility,transform' }),
         onLeave: (els) => gsap.to(els, { autoAlpha: 0, scale: 0.94, duration: 0.35, ease: 'power2.in', clearProps: 'opacity,visibility,transform' }),
-        onComplete: () => { if (window.ScrollTrigger) ScrollTrigger.refresh(); },
+        onComplete: () => { grid.style.minHeight = ''; if (window.ScrollTrigger) ScrollTrigger.refresh(); },
       });
     } else if (window.ScrollTrigger) ScrollTrigger.refresh();
   };
@@ -68,14 +74,16 @@
     if (k === 'all') { if (!sel.size) return; sel.clear(); }
     else if (sel.has(k)) sel.delete(k); else sel.add(k);
     if (sel.size && sel.size === buttons.length - 1) sel.clear();   /* every category chosen is the same as All */
+    /* read before the grid changes: a shorter set shrinks the page and the browser pulls the scroll up with it */
+    const deep = wrap && wrap.getBoundingClientRect().top < 0;
     press(); shown = LIMIT; apply(true);
     /* the clicked category scrolls into the bar's view; and if the visitor is deep in the photographs, the page
        returns to the top of the grid, so the new set starts right under the bar */
     if (track) track.scrollTo({ left: Math.max(0, b.offsetLeft - 56), behavior: reduce ? 'auto' : 'smooth' });
-    if (wrap && wrap.getBoundingClientRect().top < 0) {
+    if (deep) {
       /* the target is taken from the real scroll position: the new set has already made the page shorter, so the
          browser may have clamped the scroll under Lenis */
-      const head = innerWidth < 900 ? 72 : 80;
+      const head = parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--aan-header-h')) || (innerWidth < 900 ? 72 : 80);   /* the WordPress theme's header height, when it sets one */
       const y = Math.max(0, wrap.getBoundingClientRect().top + scrollY - head);
       if (window.lenis) { lenis.resize(); lenis.scrollTo(y, { immediate: reduce, force: true }); }
       else scrollTo({ top: y, behavior: reduce ? 'auto' : 'smooth' });
@@ -120,7 +128,7 @@
     };
     if (reduce || !dlg.open) swap(); else setTimeout(swap, 140);
     cap.textContent = li.querySelector('figcaption').textContent;
-    meta.innerHTML = `<span>${names[li.dataset.cat] || ''}</span><span>${at + 1} / ${list.length}</span>`;
+    meta.innerHTML = `<span>${cats(li).map((c) => names[c]).filter(Boolean).join(' · ')}</span><span>${at + 1} / ${list.length}</span>`;
     prev.hidden = next.hidden = list.length < 2;
     history.replaceState(null, '', `#${li.id}`);
     /* the neighbours load now, so the next step is instant */

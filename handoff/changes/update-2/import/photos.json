@@ -1,0 +1,202 @@
+{
+  "note": "The gallery's first 25 photographs, newest first (the import gives them descending publish dates in this order). Files are web-ready: EXIF and GPS removed, sRGB, at most 1600px.",
+  "categories": [
+    {
+      "slug": "collection",
+      "name": "The collection"
+    },
+    {
+      "slug": "racing",
+      "name": "Racing"
+    },
+    {
+      "slug": "dealership",
+      "name": "The dealership"
+    },
+    {
+      "slug": "events",
+      "name": "Events"
+    },
+    {
+      "slug": "archive",
+      "name": "Archive"
+    }
+  ],
+  "photos": [
+    {
+      "slug": "events-67-4-display",
+      "file": "events-67-4-display.jpg",
+      "category": "events",
+      "caption": "The #67 and the #4 on display, October 2026.",
+      "alt": "Two white prototype race cars, the #67 with its doors raised and the #4, parked on the forecourt of a glass-fronted building."
+    },
+    {
+      "slug": "events-c3-16",
+      "file": "events-c3-16.jpg",
+      "category": "events",
+      "caption": "A C3 Corvette, #16, October 2026.",
+      "alt": "A grey C3 Corvette with the number 16 on its door, parked at the kerb on a street lined with palm trees, other sports cars beyond."
+    },
+    {
+      "slug": "collection-hangar",
+      "file": "collection-hangar.jpg",
+      "category": "collection",
+      "caption": "The collection, October 2026.",
+      "alt": "A wide hangar with rows of race cars: a silver #90, a yellow #56 and white prototypes."
+    },
+    {
+      "slug": "collection-90-loading",
+      "file": "collection-90-loading.jpg",
+      "category": "collection",
+      "caption": "The #90 GT1 goes into the transporter. October 2026.",
+      "alt": "Two men guide the silver #90 up a ramp into an enclosed car transporter."
+    },
+    {
+      "slug": "collection-ferraris",
+      "file": "collection-ferraris.jpg",
+      "category": "collection",
+      "caption": "Ferrari race cars, the #21 in front. October 2026.",
+      "alt": "A row of race cars in the hangar, the red Ferrari #21 nearest, white and red Ferraris beyond."
+    },
+    {
+      "slug": "collection-4-gtp",
+      "file": "collection-4-gtp.jpg",
+      "category": "collection",
+      "caption": "The #4 Lola T711 GTP Corvette, 1984.",
+      "alt": "The white and red #4 Corvette GTP front on, a door raised, lettered Lake Forest Motor Sports."
+    },
+    {
+      "slug": "collection-corvettes",
+      "file": "collection-corvettes.jpg",
+      "category": "collection",
+      "caption": "Corvettes in the collection, October 2026.",
+      "alt": "A row of C3 Corvettes in the hangar, a blue one nearest, then yellow and red."
+    },
+    {
+      "slug": "collection-67",
+      "file": "collection-67.jpg",
+      "category": "collection",
+      "caption": "The #67 in BFGoodrich and Mazda colours. October 2026.",
+      "alt": "The white #67 prototype front on, its doors raised, BFGoodrich across its nose."
+    },
+    {
+      "slug": "collection-246-lift",
+      "file": "collection-246-lift.jpg",
+      "category": "collection",
+      "caption": "The Ferrari #246 on the transporter lift. October 2026.",
+      "alt": "Two men in a white Ferrari race car, number 246, raised on the upper-deck lift of a transporter."
+    },
+    {
+      "slug": "collection-56",
+      "file": "collection-56.jpg",
+      "category": "collection",
+      "caption": "The #56, lettered Lake Forest Motor Sports. October 2026.",
+      "alt": "The yellow #56 open prototype front on, Lake Forest Motor Sports on its nose."
+    },
+    {
+      "slug": "events-ferrari-dinner",
+      "file": "events-ferrari-dinner.jpg",
+      "category": "events",
+      "caption": "A Ferrari dinner, October 2023.",
+      "alt": "Two men in dinner jackets at a dinner table, the Ferrari prancing horse on the screen behind them."
+    },
+    {
+      "slug": "dealership-conference-room",
+      "file": "dealership-conference-room.jpg",
+      "category": "dealership",
+      "caption": "The Linda Mancuso Family Conference Room, October 2023.",
+      "alt": "A red-walled conference room, the sign Linda Mancuso Family Conference Room above a screen showing a portrait."
+    },
+    {
+      "slug": "racing-91-pitlane",
+      "file": "racing-91-pitlane.jpg",
+      "category": "racing",
+      "caption": "The #91 Pontiac in the pit lane, April 2008.",
+      "alt": "A crew member in headphones leans into the open door of the silver #91 prototype in the pit lane, grandstands behind."
+    },
+    {
+      "slug": "racing-r-mancuso",
+      "file": "racing-r-mancuso.jpg",
+      "category": "racing",
+      "caption": "R. Mancuso in the pit lane, April 2008.",
+      "alt": "A smiling white-haired driver in a black race suit lettered R. Mancuso, gloves in hand, beside the car."
+    },
+    {
+      "slug": "racing-pitlane-drivers",
+      "file": "racing-pitlane-drivers.jpg",
+      "category": "racing",
+      "caption": "In the pit lane, April 2008.",
+      "alt": "Two drivers in race suits stand by the pit wall, one with arms folded, grandstands behind."
+    },
+    {
+      "slug": "dealership-f1-engine",
+      "file": "dealership-f1-engine.jpg",
+      "category": "dealership",
+      "caption": "The Ferrari Formula 1 car’s twelve-cylinder engine, August 2007.",
+      "alt": "The twelve-cylinder engine of a Ferrari Formula 1 car, its bodywork off, in a workshop."
+    },
+    {
+      "slug": "dealership-f1-plate",
+      "file": "dealership-f1-plate.jpg",
+      "category": "dealership",
+      "caption": "The chassis plate: Ferrari, F1 91, Mat. 122.",
+      "alt": "A Ferrari chassis plate reading Manufactured by Ferrari, Automobili, Modena Italy, F1 91 Mat. 122, above an FIA plate."
+    },
+    {
+      "slug": "dealership-showroom-f1",
+      "file": "dealership-showroom-f1.jpg",
+      "category": "dealership",
+      "caption": "A Ferrari Formula 1 car in the showroom, June 2005.",
+      "alt": "A red Ferrari Formula 1 car, number 27, on the tiled floor of a showroom."
+    },
+    {
+      "slug": "racing-paddock-2005",
+      "file": "racing-paddock-2005.jpg",
+      "category": "racing",
+      "caption": "The Lake Forest Sportscars paddock, May 2005.",
+      "alt": "A paddock on grass: the Lake Forest Sportscars transporter, green sports racers being prepared beside it."
+    },
+    {
+      "slug": "racing-90-paddock",
+      "file": "racing-90-paddock.jpg",
+      "category": "racing",
+      "caption": "The #90 GT1 in the paddock, May 2005.",
+      "alt": "The silver #90 GT1 race car on the grass beside the Lake Forest Sportscars transporter."
+    },
+    {
+      "slug": "racing-blackhawk",
+      "file": "racing-blackhawk.jpg",
+      "category": "racing",
+      "caption": "A green Lola on track at Blackhawk Farms.",
+      "alt": "A green open sports racer with a white star on its nose, cornering on track."
+    },
+    {
+      "slug": "racing-adam-lola",
+      "file": "racing-adam-lola.jpg",
+      "category": "racing",
+      "caption": "Adam in the Lola #1 before a race.",
+      "alt": "A driver in a red helmet sits in the green #1 sports racer in the paddock while the crew look on."
+    },
+    {
+      "slug": "archive-crest",
+      "file": "archive-crest.jpg",
+      "category": "archive",
+      "caption": "The family crest on the nose of the green Lola.",
+      "alt": "The Mancuso family crest, a helmet above a shield with three stars and a red chevron, painted on green bodywork."
+    },
+    {
+      "slug": "archive-signed-photo",
+      "file": "archive-signed-photo.jpg",
+      "category": "archive",
+      "caption": "A signed photograph beside the Mancuso Chevrolet Corvette.",
+      "alt": "A framed, signed photograph of two drivers in white race suits standing beside the Mancuso Chevrolet Corvette."
+    },
+    {
+      "slug": "archive-nomex-card",
+      "file": "archive-nomex-card.jpg",
+      "category": "archive",
+      "caption": "Rick Mancuso’s Nomex order card, 1976.",
+      "alt": "A yellowed order card, handwritten: Mancuso Rick, 4700 Golf Rd, Skokie IL, with measurements and order dates in 1976."
+    }
+  ]
+}

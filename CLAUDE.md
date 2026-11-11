@@ -100,5 +100,8 @@ them. Write it here: the business goal, the audience, what must not change._
   a photo popping up beside the cursor on hover. **Current:** a small one-line bar, sticky under the header, control-size words
   with counts; **multi-select, no checkboxes** (each chosen category underlined, All or none = everything); it scrolls sideways
   when categories are added; a change re-lays the grid with Flip. The gallery will most likely be a **WordPress page** the client fills.
+- **Text never touches an object's edge (11 Nov 2026, Alex, said hard).** Inside any bar, button, panel or frame the text
+  has equal, generous room on every side; measure it (e.g. the gallery bar's words were 5px under its top edge). Check this
+  in every screenshot before reporting.
 - **v2 (28 Oct 2026):** client notes go into `index_v2.html` / `history_v2.html` / `styles-v2.css`; the delivered v1 (tag
   `client-2026-10-21`) stays untouched. Shared JS changes must keep v1 working (e.g. `data-speed` falls back to 218).
